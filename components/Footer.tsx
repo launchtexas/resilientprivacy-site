@@ -15,8 +15,6 @@ export function Footer() {
             <address className="mt-6 text-sm not-italic leading-relaxed">
               <a href={`mailto:${CONTACT.email}`} className="text-white hover:underline">{CONTACT.email}</a>
               {CONTACT.address.map((line) => <span key={line} className="block">{line}</span>)}
-              <Link href="/legal/security" className="mt-3.5 block py-0.5 text-white hover:underline">Report a vulnerability</Link>
-              <span className="block">Legal: <a href={`mailto:${CONTACT.legal}`} className="text-white hover:underline">{CONTACT.legal}</a></span>
             </address>
           </div>
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-9 lg:grid-cols-6">
