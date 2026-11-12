@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Resilient Privacy design tokens — the ONLY place raw values live.
+   Every token becomes a Tailwind utility (bg-navy-900, text-accent, rounded-card, shadow-lift…).
+   See DESIGN.md before adding or changing anything here.
+   ============================================================ */
+@theme {
+  /* Type */
+  --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Display scale (headlines) — fluid, tight tracking set in components */
+  --text-display: clamp(2.5rem, 1.6rem + 4.2vw, 4.75rem);
+  --text-display--line-height: 1.02;
+  --text-h1: clamp(2rem, 1.5rem + 2.4vw, 3.25rem);
+  --text-h1--line-height: 1.06;
+  --text-h2: clamp(1.625rem, 1.3rem + 1.4vw, 2.375rem);
+  --text-h2--line-height: 1.12;
+  --text-h3: 1.25rem;
+  --text-h3--line-height: 1.3;
+  --text-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --text-lead--line-height: 1.55;
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 1.3;
+
+  /* Color: ink scale. Named "navy" for compatibility; the hue is a deep indigo. */
+  --color-navy-950: #110d2e;
+  --color-navy-900: #1a1640;
+  --color-navy-800: #252152;
+  --color-navy-700: #353166;
+  --color-navy-600: #4a4772;
+  --color-navy-500: #636088;
+  --color-navy-400: #9896b8;
+  --color-navy-300: #c3c1d8;
+
+  /* Color: surfaces + lines */
+  --color-canvas: #ffffff;
+  --color-mist: #f7f6fc;    /* alternate section bg */
+  --color-cloud: #f1effa;   /* inset panels, hover fills */
+  --color-line: #e7e5f2;
+  --color-line-strong: #d4d1e6;
+
+  /* Color: the one accent (violet). Never introduce a second brand hue. */
+  --color-accent: #5b47e0;
+  --color-accent-hover: #4a36c8;
+  --color-accent-soft: #efecff;
+  --color-accent-ink: #3d2db0;  /* accent text on soft bg (AA) */
+  --color-accent-on-dark: #a59bff; /* accent text/icons on navy-950 (AA) */
+  --color-accent-active: #3d2db0; /* pressed state */
+
+  /* Color: status — data/UI meaning only, never decoration */
+  --color-critical: #d4331f;
+  --color-critical-soft: #fdecea;
+  --color-high: #e0700b;
+  --color-high-soft: #fef1e4;
+  --color-medium: #b98900;
+  --color-medium-soft: #fdf6dd;
+  --color-ok: #138a52;
+  --color-ok-soft: #e4f5ec;
+  /* status text on white or -soft bg (WCAG AA 4.5:1); the base hues are for fills, dots and bars */
+  --color-critical-ink: #b42318;
+  --color-high-ink: #b54708;
+  --color-medium-ink: #8a6100;
+  --color-ok-ink: #0f7a47;
+
+  /* Radius */
+  --radius-chip: 6px;
+  --radius-control: 10px;
+  --radius-card: 16px;
+  --radius-panel: 24px;
+  --radius-frame: 32px;
+
+  /* Shadow */
+  --shadow-hairline: 0 0 0 1px var(--color-line);
+  --shadow-card: 0 1px 2px rgb(26 22 64 / 0.04), 0 2px 8px -2px rgb(26 22 64 / 0.06), 0 0 0 1px var(--color-line);
+  --shadow-lift: 0 1px 2px rgb(26 22 64 / 0.05), 0 16px 40px -12px rgb(26 22 64 / 0.18), 0 0 0 1px var(--color-line-strong);
+  --shadow-window: 0 2px 4px rgb(26 22 64 / 0.05), 0 40px 90px -30px rgb(61 45 176 / 0.35);
+  --shadow-pill: 0 8px 24px -12px rgb(17 13 46 / 0.6);
+  --shadow-button: 0 1px 0 rgb(255 255 255 / 0.22) inset, 0 1px 2px rgb(26 22 64 / 0.2), 0 4px 12px -4px rgb(91 71 224 / 0.5);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 150ms;
+  --duration-base: 240ms;
+  --duration-slow: 600ms;
+}
+
+/* Spacing uses Tailwind's 4px scale. Section rhythm + container are fixed here. */
+@utility container-rp {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  @media (width >= 48rem) { padding-inline: 2rem; }
+}
+@utility section-y {
+  padding-block: 4rem;
+  @media (width >= 64rem) { padding-block: 6rem; }
+}
+/* Two same-tone sections in a row read as one band: drop the second's top padding so the gap isn't doubled. */
+.section-y.bg-canvas + .section-y.bg-canvas,
+.section-y.bg-mist + .section-y.bg-mist { padding-top: 0; }
+
+@layer base {
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    background: var(--color-canvas);
+    color: var(--color-navy-900);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; border-radius: 4px; }
+  ::selection { background: var(--color-accent-soft); color: var(--color-navy-950); }
+}
+
+/* Restrained scroll reveal: pure CSS, progressive (browsers without view timelines just show content). */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: rp-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+  .pulse-dot { animation: rp-pulse 2s var(--ease-out) infinite; }
+}
+/* Slide only, no fade: a scroll-linked fade leaves text that straddles the fold half-transparent (unreadable, fails contrast). */
+@keyframes rp-reveal { from { transform: translateY(16px); } to { transform: none; } }
+@keyframes rp-pulse { 0% { box-shadow: 0 0 0 0 rgb(91 71 224 / 0.45); } 100% { box-shadow: 0 0 0 8px rgb(91 71 224 / 0); } }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+}
+
+/* Hero wash: faint lavender glow at the top of the page, under the dotted grid */
+.bg-hero-wash {
+  background: radial-gradient(60% 40% at 50% 0%, var(--color-accent-soft), transparent 70%), linear-gradient(var(--color-mist) 55%, var(--color-canvas));
+}
+
+/* Subtle dotted grid used behind the hero and final CTA */
+.bg-grid {
+  background-image: radial-gradient(var(--color-line-strong) 1px, transparent 1px);
+  background-size: 22px 22px;
+}

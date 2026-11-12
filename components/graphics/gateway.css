@@ -1,0 +1,107 @@
+/* Gateway scenes (GatewayStream.tsx). Base = the finished frame; motion only under no-preference.
+   --g is where the gate sits in the lane (cqw of the lane); chips never cross the lane box (overflow hidden). */
+.gw { position: relative; overflow: hidden; border-radius: 12px; background: var(--color-mist); box-shadow: 0 0 0 1px var(--color-line); }
+.gw-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 36px; padding: 0 12px; background: var(--color-canvas); border-bottom: 1px solid var(--color-line); }
+.gw-live { display: inline-flex; flex-shrink: 0; align-items: center; gap: 6px; border-radius: 999px; padding: 1px 8px; background: var(--color-ok-soft); color: var(--color-ok-ink); font-size: 12px; font-weight: 500; line-height: 18px; }
+.gw-dot { width: 6px; height: 6px; border-radius: 999px; background: currentColor; }
+.gw-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; padding: 12px; background: var(--color-canvas); border-bottom: 1px solid var(--color-line); }
+@container (width >= 32rem) { .gw-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 14px 16px; } }
+.gw-t-navy { background: var(--color-navy-400); }
+.gw-t-critical { background: var(--color-critical); }
+.gw-t-high { background: var(--color-high); }
+.gw-t-ok { background: var(--color-ok); }
+.gw-t-accent { background: var(--color-accent); }
+
+/* the lane: track A (clean) on top, track B (review / caught) below, the gate across both */
+.gw-lane {
+  --g: 60cqw; position: relative; height: 128px; overflow: hidden; container-type: inline-size;
+  background-image: radial-gradient(var(--color-line-strong) 1px, transparent 1px); background-size: 16px 16px; background-position: 8px 8px;
+}
+@container (width >= 30rem) { .gw-lane { --g: 50cqw; } }
+.gw-lab { position: absolute; top: 8px; font-size: 12px; line-height: 16px; color: var(--color-navy-500); }
+.gw-gate {
+  position: absolute; z-index: 2; top: 0; bottom: 0; left: var(--g); width: 44px; translate: -50% 0;
+  display: flex; flex-direction: column; align-items: center; gap: 2px; padding-top: 6px; overflow: hidden;
+  color: var(--color-accent); background: color-mix(in oklab, var(--color-accent-soft) 88%, transparent);
+  border-inline: 1px solid color-mix(in oklab, var(--color-accent) 35%, transparent);
+}
+.gw-gate-l { font-size: 12px; line-height: 14px; font-weight: 600; color: var(--color-accent-ink); }
+
+.gw-chip {
+  --y: 50px; position: absolute; z-index: 1; left: 0; top: var(--y); display: inline-flex; align-items: center; gap: 6px;
+  height: 28px; max-width: calc(var(--g) - 34px); padding: 0 10px; border-radius: 8px; white-space: nowrap;
+  font-size: 12px; line-height: 16px; font-weight: 500; color: var(--color-navy-900); background: var(--color-canvas);
+  box-shadow: 0 1px 2px rgb(26 22 64 / 0.06), 0 0 0 1px var(--color-line);
+}
+.gw-ico { width: 14px; height: 14px; flex-shrink: 0; color: var(--color-navy-500); }
+.gw-catch, .gw-review { --y: 86px; z-index: 3; }
+.gw-stamp {
+  /* decision badge hangs below its chip (track B leaves 22px under it), so it never covers a chip */
+  position: absolute; top: calc(100% + 4px); right: 0; padding: 0 5px; border-radius: 5px; rotate: -5deg;
+  font-family: var(--font-mono); font-size: 12px; line-height: 16px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--color-critical-ink); background: var(--color-canvas); border: 1.5px solid var(--color-critical);
+}
+.gw-stamp-review { display: inline-flex; align-items: center; gap: 4px; padding: 0 6px 0 2px; rotate: 0deg; border-radius: 999px; text-transform: none; letter-spacing: 0; color: var(--color-accent-ink); border-color: var(--color-accent); }
+.gw-av { display: grid; place-items: center; width: 18px; height: 18px; margin-block: -2px; border-radius: 999px; background: var(--color-navy-950); color: #fff; font-family: var(--font-sans); font-size: 12px; line-height: 1; font-weight: 600; letter-spacing: -0.04em; }
+
+/* finished frame: one clean input waiting, one passed (dimmed), one caught at the gate */
+.gw-at-in { translate: 12px -50%; }
+.gw-at-out { translate: calc(100cqw - 100% - 12px) -50%; }
+.gw-at-gate { translate: calc(var(--g) - 100% - 30px) -50%; }
+.gw-pass.gw-at-out { color: var(--color-navy-500); background: var(--color-cloud); box-shadow: none; }
+.gw-catch.gw-static { color: var(--color-critical-ink); background: var(--color-critical-soft); box-shadow: 0 0 0 1.5px var(--color-critical); }
+.gw-catch .gw-ico { color: currentColor; }
+.gw[data-run] .gw-static { display: none; }
+@container (width < 30rem) { .gw-at-out { display: none; } }
+
+/* the log the caught items drop into */
+.gw-log { background: var(--color-canvas); border-top: 1px solid var(--color-line); }
+.gw-log-h { display: flex; justify-content: space-between; gap: 12px; padding: 8px 12px; font-size: 12px; line-height: 16px; font-weight: 600; color: var(--color-navy-700); border-bottom: 1px solid var(--color-line); }
+/* empty slots stay ruled, so the panel reads as a log filling up, not a blank box */
+.gw-log ul { min-height: calc(4 * 37px); background: repeating-linear-gradient(to bottom, transparent 0 36px, var(--color-line) 36px 37px); }
+.gw-row { display: flex; align-items: center; gap: 10px; height: 36px; background: var(--color-canvas); padding: 0 12px; font-size: 12px; line-height: 16px; border-bottom: 1px solid var(--color-line); }
+.gw-row:last-child { border-bottom: 0; }
+.gw-time { display: none; flex-shrink: 0; font-family: var(--font-mono); color: var(--color-navy-500); font-variant-numeric: tabular-nums; }
+.gw-pill { flex-shrink: 0; padding: 1px 6px; border-radius: 6px; font-weight: 600; }
+.gw-pill-catch { background: var(--color-critical-soft); color: var(--color-critical-ink); }
+.gw-pill-review { background: var(--color-accent-soft); color: var(--color-accent-ink); }
+.gw-code { display: none; flex-shrink: 0; font-family: var(--font-mono); color: var(--color-accent-ink); }
+.gw-end { flex-shrink: 0; padding: 1px 7px; border-radius: 999px; font-weight: 600; background: var(--color-ok-soft); color: var(--color-ok-ink); }
+.gw-wait { background: var(--color-cloud); color: var(--color-navy-600); }
+@container (width >= 28rem) { .gw-time { display: block; } }
+@container (width >= 36rem) { .gw-code { display: block; } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .gw-run.gw-pass { animation: gw-pass 3000ms linear both; }
+  .gw-run.gw-catch { animation: gw-catch 2800ms both; }
+  .gw-run.gw-catch .gw-stamp { animation: gw-stamp 2800ms both; }
+  .gw-run.gw-review { animation: gw-review 3600ms both; }
+  .gw-run.gw-review .gw-stamp { animation: gw-stamp-r 3600ms both; }
+  .gw[data-idle] .gw-dot { animation: gw-blink 2.4s ease-in-out infinite; }
+  .gw-new { animation: gw-row 1600ms var(--ease-out) both; }
+  .gw-done { animation: gw-done 700ms var(--ease-out) both; }
+}
+@keyframes gw-pass {
+  /* constant speed (no keyframe at the gate), so a chip never catches the one ahead on narrow lanes; it dims as it crosses the gate */
+  0% { translate: -100% -50%; }
+  50% { color: var(--color-navy-900); background: var(--color-canvas); }
+  60% { color: var(--color-navy-500); background: var(--color-cloud); box-shadow: none; }
+  100% { translate: 100cqw -50%; color: var(--color-navy-500); background: var(--color-cloud); box-shadow: none; }
+}
+@keyframes gw-catch {
+  0% { translate: -100% -50%; animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1); }
+  36% { translate: calc(var(--g) - 100% - 30px) -50%; color: var(--color-navy-900); background: var(--color-canvas); box-shadow: 0 0 0 1px var(--color-line); }
+  40% { color: var(--color-critical-ink); background: var(--color-critical-soft); box-shadow: 0 0 0 1.5px var(--color-critical), 0 0 0 6px color-mix(in oklab, var(--color-critical) 18%, transparent); }
+  48%, 74% { translate: calc(var(--g) - 100% - 30px) -50%; opacity: 1; color: var(--color-critical-ink); background: var(--color-critical-soft); box-shadow: 0 0 0 1.5px var(--color-critical); animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0); }
+  86%, 100% { translate: calc(var(--g) - 100% - 30px) calc(-50% + 34px); opacity: 0; color: var(--color-critical-ink); background: var(--color-critical-soft); box-shadow: 0 0 0 1.5px var(--color-critical); }
+}
+@keyframes gw-stamp { 0%, 40% { opacity: 0; scale: 1.6; } 47%, 100% { opacity: 1; scale: 1; } }
+@keyframes gw-review {
+  0% { translate: -100% -50%; animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1); }
+  30%, 56% { translate: calc(var(--g) - 100% - 30px) -50%; box-shadow: 0 0 0 1.5px var(--color-accent); animation-timing-function: cubic-bezier(0.5, 0, 0.6, 1); }
+  100% { translate: 100cqw -50%; color: var(--color-navy-500); background: var(--color-cloud); box-shadow: none; }
+}
+@keyframes gw-stamp-r { 0%, 31% { opacity: 0; scale: 0.6; } 37%, 60% { opacity: 1; scale: 1; } 68%, 100% { opacity: 0; scale: 1; } }
+@keyframes gw-row { from { opacity: 0; translate: 0 -8px; background: var(--color-accent-soft); } 30% { opacity: 1; translate: 0 0; background: var(--color-accent-soft); } to { background: var(--color-canvas); } }
+@keyframes gw-done { from { scale: 1.25; box-shadow: 0 0 0 6px color-mix(in oklab, var(--color-ok) 25%, transparent); } to { scale: 1; box-shadow: 0 0 0 0 transparent; } }
+@keyframes gw-blink { 50% { opacity: 0.35; } }

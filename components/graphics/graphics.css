@@ -1,0 +1,96 @@
+/* Signature graphics. Base styles = the finished state (reduced motion, no JS); motion lives in no-preference.
+   Product scenes are driven by <Scene> (motion.css › Scene); loops sit inside <Live>, so they pause offscreen. */
+
+/* shared: SVG shapes scale/rotate around their own centre (rp-g sits on the <svg> itself or a wrapper) */
+svg.rp-g *, .rp-g svg * { transform-box: fill-box; transform-origin: center; }
+
+/* SocMap feed: the newest event slides in at the top every 2.4s (12s loop over a doubled list; translate only). */
+.rp-feed { mask-image: linear-gradient(transparent, black 12%, black 82%, transparent); }
+@media (prefers-reduced-motion: no-preference) {
+  .rp-feed-track { animation: rp-feed 12s var(--ease-out) infinite both; }
+}
+@keyframes rp-feed {
+  0%, 16% { translate: 0 -50%; }
+  20%, 36% { translate: 0 -40%; }
+  40%, 56% { translate: 0 -30%; }
+  60%, 76% { translate: 0 -20%; }
+  80%, 96% { translate: 0 -10%; }
+  100% { translate: 0 0; }
+}
+
+/* Step-card pipeline (used by components/home/sections.tsx and consulting/TestToEvidence.tsx): steps light up in turn. */
+.rp-pipe-packet { translate: 0 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .rp-pipe-step { animation: rp-pipe-step 8s var(--ease-out) calc(var(--i) * 2s) infinite both; }
+  .rp-pipe-packet { animation: rp-pipe-packet 8s linear infinite both; }
+}
+@keyframes rp-pipe-step {
+  0% { box-shadow: var(--shadow-card); background: var(--color-canvas); }
+  4%, 22% { box-shadow: var(--shadow-lift), 0 0 0 2px var(--color-accent); background: var(--color-accent-soft); }
+  30%, 100% { box-shadow: var(--shadow-card); background: var(--color-canvas); }
+}
+@keyframes rp-pipe-packet { from { translate: -100% 0; } to { translate: 0 0; } }
+
+/* AiAttackSurface: the injected instruction is highlighted when the guardrail fires (beat 4). Background on the inline text itself, so it follows line wraps. */
+.rp-mark { background-color: color-mix(in oklab, var(--color-critical) 15%, transparent); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+@media (prefers-reduced-motion: no-preference) and (scripting: enabled) {
+  .rp-scene .rp-mark { background-color: transparent; transition: background-color 420ms var(--ease-out); }
+  .rp-scene[data-s~="4"] .rp-mark { background-color: color-mix(in oklab, var(--color-critical) 15%, transparent); }
+}
+
+/* <Swap>: no cross-fade. The outgoing state leaves in 150ms, then the incoming one fades in after it (never both drawn at once). */
+@media (prefers-reduced-motion: no-preference) and (scripting: enabled) {
+  .rp-scene .rp-stack > * { transition-duration: 150ms, 300ms, 300ms; transition-delay: 0ms; }
+  .rp-scene .rp-stack > [data-at] { transition-delay: 150ms; }
+  /* a middle state (data-at + data-until) leaves without the delay */
+  .rp-scene[data-s~="1"] .rp-stack > [data-until="1"],
+  .rp-scene[data-s~="2"] .rp-stack > [data-until="2"],
+  .rp-scene[data-s~="3"] .rp-stack > [data-until="3"],
+  .rp-scene[data-s~="4"] .rp-stack > [data-until="4"],
+  .rp-scene[data-s~="5"] .rp-stack > [data-until="5"],
+  .rp-scene[data-s~="6"] .rp-stack > [data-until="6"],
+  .rp-scene[data-s~="7"] .rp-stack > [data-until="7"],
+  .rp-scene[data-s~="8"] .rp-stack > [data-until="8"],
+  .rp-scene[data-s~="9"] .rp-stack > [data-until="9"],
+  .rp-scene[data-s~="10"] .rp-stack > [data-until="10"],
+  .rp-scene[data-s~="11"] .rp-stack > [data-until="11"],
+  .rp-scene[data-s~="12"] .rp-stack > [data-until="12"] { transition-delay: 0ms; }
+}
+
+/* <AiAttackMethod>: the root's data-step (0-4) drives everything; written for exactly 5 steps.
+   Base = step 4 (Retest), the final frame shown to reduced motion and no-JS. */
+.rp-am-show { opacity: 0; }
+.rp-am[data-step="0"] .rp-am-show[data-on="0"],
+.rp-am[data-step="1"] .rp-am-show[data-on="1"],
+.rp-am[data-step="2"] .rp-am-show[data-on="2"],
+.rp-am[data-step="3"] .rp-am-show[data-on="3"],
+.rp-am[data-step="4"] .rp-am-show[data-on="4"],
+.rp-am:is([data-step="2"], [data-step="3"]) .rp-am-tag[data-on="1"],
+.rp-am[data-step="3"] .rp-am-tag[data-on="2"] { opacity: 1; }
+/* wires and nodes: green on Retest, grey before, red once the attack chain reaches them (--hot) */
+.rp-am { --am-wire: var(--color-line-strong); --am-node: var(--color-line); }
+.rp-am[data-step="4"] { --am-wire: var(--color-ok); --am-node: color-mix(in oklab, var(--color-ok) 45%, var(--color-line)); }
+.rp-am:is([data-step="1"], [data-step="2"], [data-step="3"]) :is([data-wire="0"], [data-node="1"]),
+.rp-am:is([data-step="2"], [data-step="3"]) :is([data-wire="1"], [data-node="2"]),
+.rp-am[data-step="3"] :is([data-wire="2"], [data-node="3"]) { --am-wire: var(--color-critical); --am-node: var(--color-critical); }
+.rp-am-wire { background: var(--am-wire); }
+.rp-am-node { border-color: var(--am-node); outline: 1.5px dashed transparent; outline-offset: 3px; }
+.rp-am[data-step="0"] .rp-am-node { outline-color: var(--color-accent); }
+.rp-am[data-step="0"] [data-go="0"],
+.rp-am[data-step="1"] [data-go="1"],
+.rp-am[data-step="2"] [data-go="2"],
+.rp-am[data-step="3"] [data-go="3"],
+.rp-am[data-step="4"] [data-go="4"] { background: var(--color-accent-soft); box-shadow: inset 2px 0 0 var(--color-accent); }
+.rp-am-step:hover { background: var(--color-mist); }
+/* packet: a dot at the far end of a full-length layer that slides along the wire (translate only; the wire clips it) */
+.rp-am-packet { display: none; }
+.rp-am-packet::after { content: ""; position: absolute; left: 0; bottom: 0; width: 2px; height: 8px; border-radius: 2px; background: #fff; }
+@container (width >= 42rem) { .rp-am-packet::after { left: auto; right: 0; top: 0; width: 10px; height: 2px; } }
+@media (prefers-reduced-motion: no-preference) {
+  .rp-am-show, .rp-am-step, .rp-am-wire, .rp-am-node { transition: opacity 300ms var(--ease-out), background-color 300ms var(--ease-out), border-color 300ms var(--ease-out), outline-color 300ms var(--ease-out); }
+  .rp-am:is([data-step="1"], [data-step="2"], [data-step="3"]) .rp-am-packet { display: block; animation: rp-am-v 1.1s linear infinite; }
+  @container (width >= 42rem) { .rp-am:is([data-step="1"], [data-step="2"], [data-step="3"]) .rp-am-packet { animation-name: rp-am-h; } }
+  .rp-am[data-step="3"] [data-wire="2"] .rp-am-packet { animation-direction: reverse; }
+}
+@keyframes rp-am-v { from { translate: 0 -100%; } to { translate: 0 0; } }
+@keyframes rp-am-h { from { translate: -100% 0; } to { translate: 0 0; } }

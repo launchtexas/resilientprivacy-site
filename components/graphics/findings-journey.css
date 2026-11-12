@@ -1,0 +1,49 @@
+/* <FindingsJourney>. Base = final frame (card in the last column, every stamp shown, last stage current).
+   Motion: the Frame's data-s moves the card one column per beat (transform, so it composes with the [data-at] translate). */
+.rp-fj { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; }
+.rp-fj-head { box-shadow: inset 0 0 0 1px var(--color-line); transition: background-color 400ms var(--ease-out), box-shadow 400ms var(--ease-out); }
+.rp-fj-dot { background: var(--color-ok); transition: background-color 400ms var(--ease-out); }
+.rp-fj-head[data-stage="3"] { background: var(--color-accent-soft); box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-accent) 40%, transparent); }
+.rp-fj-head[data-stage="3"] .rp-fj-dot { background: var(--color-accent); }
+.rp-fj-lane { display: none; }
+.rp-fj-card { grid-column: 1 / -1; --col: 3; }
+.rp-fj-stamps { flex-wrap: wrap; }
+
+@container (width >= 36rem) {
+  .rp-fj { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 0.625rem; }
+  .rp-fj-head { grid-row: 1; }
+  .rp-fj-lane { display: block; grid-row: 2; }
+  /* covers the top of lane 1's cards (lane padding 0.375rem); one column step = card width + 2 × padding + gap */
+  .rp-fj-card { grid-row: 2; grid-column: 1; align-self: start; z-index: 2; margin: 0.375rem; transform: translateX(calc(var(--col) * (100% + 1.25rem))); }
+  .rp-fj-stamps { flex-direction: column; flex-wrap: nowrap; align-items: flex-start; }
+  .rp-fj-stamps > * { max-width: 100%; }
+}
+
+@media (prefers-reduced-motion: no-preference) and (scripting: enabled) {
+  .rp-scene .rp-fj-card { --col: 0; transition: opacity 420ms var(--ease-out), translate 560ms var(--ease-out), scale 560ms var(--ease-out), transform 900ms cubic-bezier(0.65, 0, 0.35, 1); }
+  .rp-scene[data-s~="2"] .rp-fj-card { --col: 1; }
+  .rp-scene[data-s~="3"] .rp-fj-card { --col: 2; }
+  .rp-scene[data-s~="4"] .rp-fj-card { --col: 3; }
+
+  /* heads: grey until reached, violet while the card is there, green once it has moved on */
+  .rp-scene .rp-fj-head .rp-fj-dot { background: var(--color-line-strong); }
+  .rp-scene .rp-fj-head[data-stage="3"] { background: transparent; box-shadow: inset 0 0 0 1px var(--color-line); }
+  .rp-scene[data-s~="2"] .rp-fj-head[data-stage="0"] .rp-fj-dot,
+  .rp-scene[data-s~="3"] .rp-fj-head[data-stage="1"] .rp-fj-dot,
+  .rp-scene[data-s~="4"] .rp-fj-head[data-stage="2"] .rp-fj-dot { background: var(--color-ok); }
+  .rp-scene[data-s~="1"]:not([data-s~="2"]) .rp-fj-head[data-stage="0"],
+  .rp-scene[data-s~="2"]:not([data-s~="3"]) .rp-fj-head[data-stage="1"],
+  .rp-scene[data-s~="3"]:not([data-s~="4"]) .rp-fj-head[data-stage="2"],
+  .rp-scene[data-s~="4"] .rp-fj-head[data-stage="3"] { background: var(--color-accent-soft); box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-accent) 40%, transparent); }
+  .rp-scene[data-s~="1"]:not([data-s~="2"]) .rp-fj-head[data-stage="0"] .rp-fj-dot,
+  .rp-scene[data-s~="2"]:not([data-s~="3"]) .rp-fj-head[data-stage="1"] .rp-fj-dot,
+  .rp-scene[data-s~="3"]:not([data-s~="4"]) .rp-fj-head[data-stage="2"] .rp-fj-dot,
+  .rp-scene[data-s~="4"] .rp-fj-head[data-stage="3"] .rp-fj-dot { background: var(--color-accent); }
+
+  /* idle: the "proven" dot breathes once the story has ended (<Live> pauses it offscreen) */
+  .rp-scene[data-s~="5"] .rp-fj-live { animation: rp-fj-live 2.4s var(--ease-out) 600ms infinite; }
+}
+@keyframes rp-fj-live {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-ok) 55%, transparent); }
+  70%, 100% { box-shadow: 0 0 0 6px transparent; }
+}

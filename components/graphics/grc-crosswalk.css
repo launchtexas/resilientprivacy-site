@@ -1,0 +1,23 @@
+/* <GrcCrosswalk>: the root's data-p (0 collecting, 1 collected, 2 credited) drives the framework cards.
+   Base = data-p="2" from the server, the frame reduced motion keeps. Only backgrounds, bars and visibility change: text never fades, so contrast holds on every frame. */
+.gx-fw { --d: calc(var(--i) * 180ms + 150ms); background: var(--color-canvas); box-shadow: inset 0 0 0 1px var(--color-line); }
+.gx-fw .gx-bar { scale: 0 1; transform-origin: left center; }
+.gx-fw .gx-yes { visibility: hidden; }
+.gx[data-p="2"] .gx-fw { background: var(--color-ok-soft); box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-ok) 35%, transparent); }
+.gx[data-p="2"] .gx-fw .gx-bar { scale: 1 1; }
+.gx[data-p="2"] .gx-fw .gx-yes { visibility: visible; }
+.gx[data-p="2"] .gx-fw .gx-no { visibility: hidden; }
+.gx-load.gx-full { scale: 1 1; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .gx-fw { transition: background-color 360ms var(--ease-out), box-shadow 360ms var(--ease-out); }
+  .gx-fw .gx-bar { transition: scale 520ms var(--ease-out); }
+  .gx-fw :is(.gx-yes, .gx-no) { transition: visibility 0s; }
+  /* lighting up is staggered card by card; going back to pending is instant */
+  .gx[data-p="2"] .gx-fw, .gx[data-p="2"] .gx-fw .gx-bar, .gx[data-p="2"] .gx-fw :is(.gx-yes, .gx-no) { transition-delay: var(--d); }
+  .gx-load:not(.gx-full) { animation: gx-load 1.4s var(--ease-out) both; transform-origin: left center; }
+  .gx-ready { transition: width 700ms var(--ease-out) 900ms; }
+  .gx-pulse > span:first-child { animation: gx-pulse 1s ease-in-out infinite alternate; }
+}
+@keyframes gx-load { from { scale: 0 1; } to { scale: 1 1; } }
+@keyframes gx-pulse { from { opacity: 1; } to { opacity: 0.3; } }

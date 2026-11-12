@@ -1,0 +1,233 @@
+/* Motion primitives. See DESIGN.md › Motion.
+   Rule: the base style is the finished, static state (what reduced-motion users see);
+   motion only lives inside `prefers-reduced-motion: no-preference`. */
+
+/* <Live>: anything animated inside pauses while offscreen (or before JS starts it). */
+[data-live="off"],
+[data-live="off"] * { animation-play-state: paused !important; }
+
+/* <Reveal> / <Stagger>: hidden only when motion is allowed AND scripts run, so no-JS shows everything. */
+@media (prefers-reduced-motion: no-preference) and (scripting: enabled) {
+  [data-reveal="wait"],
+  [data-stagger="wait"] > * { opacity: 0; translate: 0 16px; }
+  [data-reveal],
+  [data-stagger] > * {
+    transition: opacity var(--duration-slow) var(--ease-out), translate var(--duration-slow) var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 70ms + var(--delay, 0ms));
+  }
+}
+[data-stagger] > :nth-child(2) { --i: 1; } [data-stagger] > :nth-child(3) { --i: 2; }
+[data-stagger] > :nth-child(4) { --i: 3; } [data-stagger] > :nth-child(5) { --i: 4; }
+[data-stagger] > :nth-child(6) { --i: 5; } [data-stagger] > :nth-child(7) { --i: 6; }
+[data-stagger] > :nth-child(8) { --i: 7; } [data-stagger] > :nth-child(n + 9) { --i: 8; }
+
+/* <Marquee> */
+.rp-marquee { overflow: hidden; mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent); }
+.rp-marquee-track { display: flex; width: max-content; }
+.rp-marquee-group { display: flex; align-items: center; gap: var(--gap, 3rem); padding-right: var(--gap, 3rem); }
+@media (prefers-reduced-motion: no-preference) {
+  .rp-marquee-track { animation: rp-marquee var(--dur, 40s) linear infinite; }
+  .rp-marquee:hover .rp-marquee-track, .rp-marquee:focus-within .rp-marquee-track { animation-play-state: paused; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rp-marquee { mask-image: none; }
+  .rp-marquee-track { width: auto; }
+  .rp-marquee-group { flex-wrap: wrap; justify-content: center; row-gap: 1rem; padding-right: 0; }
+  .rp-marquee-group[aria-hidden] { display: none; }
+}
+@keyframes rp-marquee { to { translate: -50% 0; } }
+
+/* <Parallax>: CSS scroll timeline, no JS. Unsupported browsers stay static. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .rp-parallax { animation: rp-parallax linear both; animation-timeline: view(); }
+  }
+}
+@keyframes rp-parallax {
+  from { translate: 0 calc(var(--speed, 1) * 40px); }
+  to { translate: 0 calc(var(--speed, 1) * -40px); }
+}
+
+/* <Spotlight>: pointer glow; optional tilt on fine pointers. */
+.rp-spot { position: relative; isolation: isolate; }
+.rp-spot::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), color-mix(in oklab, var(--color-accent) 16%, transparent), transparent 70%);
+  opacity: 0; transition: opacity var(--duration-base) var(--ease-out);
+}
+.rp-spot:hover::before { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  .rp-tilt { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out); }
+}
+
+/* <GradientBorder>: a conic gradient that travels around a 1px border. */
+@property --rp-angle { syntax: "<angle>"; inherits: false; initial-value: 120deg; }
+.rp-gborder {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--rp-gb-fill, var(--color-canvas)) 0 0) padding-box,
+    conic-gradient(from var(--rp-angle), var(--color-line) 0deg, var(--color-accent) 60deg, var(--color-accent-on-dark) 100deg, var(--color-line) 160deg, var(--color-line) 360deg) border-box;
+}
+@media (prefers-reduced-motion: no-preference) { .rp-gborder { animation: rp-angle 6s linear infinite; } }
+@keyframes rp-angle { to { --rp-angle: 480deg; } }
+
+/* <Terminal>: each line is n ch wide and un-clipped in n steps. No layout shift: width never changes. */
+.rp-type { display: block; width: calc(var(--n) * 1ch); white-space: pre; }
+.rp-caret { display: inline-block; width: 0.6em; height: 1.1em; vertical-align: text-bottom; background: currentColor; }
+@media (prefers-reduced-motion: no-preference) {
+  .rp-type { animation: rp-type calc(var(--n) * var(--cps, 24ms)) steps(var(--n)) var(--d, 0ms) both; }
+  .rp-caret { animation: rp-show 1ms var(--d, 0ms) both, rp-blink 1s steps(1) var(--d, 0ms) infinite; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .rp-term-card { animation: rp-term-card 420ms var(--ease-out, ease-out) var(--d, 0ms) both; }
+}
+@keyframes rp-term-card { from { opacity: 0; transform: translateY(8px); } }
+@keyframes rp-type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
+@keyframes rp-show { from { visibility: hidden; } }
+@keyframes rp-blink { 50% { opacity: 0; } }
+
+/* <TabUnderline> */
+.rp-underline { position: absolute; left: 0; height: 2px; border-radius: 2px; background: var(--color-accent); pointer-events: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .rp-underline { transition: translate var(--duration-base) var(--ease-out), width var(--duration-base) var(--ease-out); }
+}
+
+/* <Scene>: product scenes. Base = the final frame (reduced motion, no JS): [data-at] shown, [data-until] (before-states) gone.
+   With motion + JS, <Scene> writes data-s="0 1 2…" and each beat reveals [data-at=k] and removes [data-until=k]. */
+.rp-scene [data-until] { opacity: 0; }
+.rp-stack { display: grid; }
+.rp-stack > * { grid-area: 1 / 1; }
+@media (prefers-reduced-motion: no-preference) and (scripting: enabled) {
+  .rp-scene [data-at], .rp-scene [data-until] {
+    transition: opacity 420ms var(--ease-out), translate 560ms var(--ease-out), scale 560ms var(--ease-out);
+    transition-delay: var(--lag, 0ms);
+  }
+  .rp-scene [data-at] { opacity: 0; translate: var(--from, 0 10px); scale: var(--from-scale, 1); }
+  .rp-scene [data-until] { opacity: 1; }
+  .rp-scene [data-at][data-until] { opacity: 0; }
+  .rp-scene[data-s~="1"] [data-at="1"],
+  .rp-scene[data-s~="2"] [data-at="2"],
+  .rp-scene[data-s~="3"] [data-at="3"],
+  .rp-scene[data-s~="4"] [data-at="4"],
+  .rp-scene[data-s~="5"] [data-at="5"],
+  .rp-scene[data-s~="6"] [data-at="6"],
+  .rp-scene[data-s~="7"] [data-at="7"],
+  .rp-scene[data-s~="8"] [data-at="8"],
+  .rp-scene[data-s~="9"] [data-at="9"],
+  .rp-scene[data-s~="10"] [data-at="10"],
+  .rp-scene[data-s~="11"] [data-at="11"],
+  .rp-scene[data-s~="12"] [data-at="12"] { opacity: 1; translate: 0 0; scale: 1; }
+  .rp-scene[data-s~="1"] [data-until="1"],
+  .rp-scene[data-s~="2"] [data-until="2"],
+  .rp-scene[data-s~="3"] [data-until="3"],
+  .rp-scene[data-s~="4"] [data-until="4"],
+  .rp-scene[data-s~="5"] [data-until="5"],
+  .rp-scene[data-s~="6"] [data-until="6"],
+  .rp-scene[data-s~="7"] [data-until="7"],
+  .rp-scene[data-s~="8"] [data-until="8"],
+  .rp-scene[data-s~="9"] [data-until="9"],
+  .rp-scene[data-s~="10"] [data-until="10"],
+  .rp-scene[data-s~="11"] [data-until="11"],
+  .rp-scene[data-s~="12"] [data-until="12"] { opacity: 0; }
+  .rp-scene > * { transition: opacity 400ms var(--ease-out); }
+  .rp-scene[data-fade] > * { opacity: 0; }
+}
+/* bars and rails grow instead of fading: put .rp-grow-x / .rp-grow-y next to data-at */
+.rp-scene .rp-grow-x { --from: 0 0; --from-scale: 0 1; transform-origin: left center; }
+.rp-scene .rp-grow-y { --from: 0 0; --from-scale: 1 0; transform-origin: center top; }
+.rp-scene .rp-pop { --from: 0 0; --from-scale: 0.6; }
+.rp-scene .rp-slide { --from: -16px 0; }
+
+/* <Cursor>: a pointer <Scene> moves to [data-target] elements. Hidden in the final frame. */
+.rp-cursor { position: absolute; left: 0; top: 0; z-index: 30; width: 20px; height: 22px; opacity: 0; pointer-events: none; filter: drop-shadow(0 2px 3px rgb(17 13 46 / 0.35)); }
+@media (prefers-reduced-motion: no-preference) {
+  .rp-cursor { transition: translate 700ms cubic-bezier(0.65, 0, 0.35, 1), opacity 300ms var(--ease-out); }
+  .rp-cursor[data-on="1"] { opacity: 1; }
+}
+
+/* <Enter>: staged entrance on page load (hero eyebrow, CTAs, product window). Not for the h1 (keeps LCP fast). */
+@media (prefers-reduced-motion: no-preference) {
+  .rp-enter { animation: rp-enter 800ms var(--ease-out) calc(var(--i, 0) * 110ms + 80ms) both; }
+}
+@keyframes rp-enter { from { opacity: 0; translate: 0 18px; } }
+
+/* <ScrollRise>: a product window settles into place as it scrolls in (CSS scroll timeline; static where unsupported). */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .rp-rise { animation: rp-rise linear both; animation-timeline: view(); animation-range: entry 0% cover 30%; }
+  }
+}
+@keyframes rp-rise { from { opacity: 0.35; translate: 0 40px; scale: 0.96; } }
+
+/* <Tabs auto>: progress bar on the active tab. animationend advances the tab; hover, focus and offscreen pause it.
+   Sits where <TabUnderline> draws, which dims to a track while auto-advance runs. Reduced motion: never rendered. */
+.rp-tabprog { position: absolute; left: 12px; right: 12px; bottom: 0; height: 2px; border-radius: 2px; background: var(--color-accent); transform-origin: left; transform: scaleX(0); pointer-events: none; animation: rp-tabprog var(--tab-ms, 6s) linear forwards; }
+.rp-tabs:hover .rp-tabprog, .rp-tabs:focus-within .rp-tabprog, .rp-tabs[data-off] .rp-tabprog { animation-play-state: paused; }
+.rp-tabs[data-auto] + .rp-underline { opacity: 0.25; }
+@keyframes rp-tabprog { to { transform: scaleX(1); } }
+
+/* ProcessSteps (ProcessSteps.tsx). Base = finished frame: all steps lit, chips shown, rail full.
+   Phones / narrow columns: vertical rail on the left. Container ≥ 52rem: horizontal rail, one column per step.
+   JS sets [data-on] on the list and data-st="done|cur|todo" on each step; only opacity/transform animate, plus
+   colour on two text nodes and the 32px number (dimmed text stays AA: navy-500 is 5.6:1 on mist). */
+.rp-steps-box { container-type: inline-size; }
+.rp-steps { --gap: 1rem; display: grid; gap: var(--gap); list-style: none; margin: 0; padding: 0 4px; } /* 4px: room for the active number's ring */
+.rp-step { position: relative; display: grid; grid-template-columns: 2rem minmax(0, 1fr); column-gap: 1rem; border-radius: var(--radius-card); outline-offset: 4px; }
+.rp-step-num {
+  display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 999px;
+  background: var(--color-accent-soft); color: var(--color-accent-ink);
+  font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; position: relative; z-index: 1;
+}
+.rp-step-when { margin-bottom: 0.5rem; font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-navy-500); }
+.rp-step-card { position: relative; min-width: 0; border-radius: var(--radius-card); background: var(--color-canvas); box-shadow: var(--shadow-card); padding: 1.25rem; }
+.rp-step-card::before { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: var(--shadow-lift), 0 0 0 2px var(--color-accent); opacity: 0; pointer-events: none; }
+.rp-step-chip {
+  display: inline-block; max-width: 100%; margin-top: 1rem; padding: 0.25rem 0.5rem; border-radius: 6px;
+  background: var(--color-cloud); color: var(--color-accent-ink); box-shadow: inset 0 0 0 1px var(--color-line);
+  font-family: var(--font-mono); font-size: var(--text-micro); line-height: 1.4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+/* rail: each step but the last draws the segment to the next number; ::after is its fill */
+.rp-step:not(:last-child)::before, .rp-step:not(:last-child)::after {
+  content: ""; position: absolute; left: calc(1rem - 1px); top: 2.5rem; bottom: calc(0.5rem - var(--gap)); width: 2px; border-radius: 2px;
+  background: var(--color-line-strong);
+}
+.rp-step:not(:last-child)::after { background: var(--color-accent); transform-origin: top; }
+
+@container (min-width: 52rem) {
+  .rp-steps { grid-template-columns: repeat(var(--n), minmax(0, 1fr)); }
+  .rp-step { grid-template-columns: none; grid-template-rows: auto 1fr; row-gap: 1rem; }
+  .rp-step:not(:last-child)::before, .rp-step:not(:last-child)::after { left: 2.5rem; right: calc(0.5rem - var(--gap)); top: calc(1rem - 1px); bottom: auto; width: auto; height: 2px; }
+  .rp-step:not(:last-child)::after { transform-origin: left; }
+}
+
+/* playing */
+@media (prefers-reduced-motion: no-preference) {
+  .rp-steps[data-on] .rp-step-num { transition: background-color 300ms var(--ease-out), color 300ms var(--ease-out), box-shadow 300ms var(--ease-out); }
+  .rp-steps[data-on] .rp-step-card { transition: translate 400ms var(--ease-out); }
+  .rp-steps[data-on] .rp-step-card::before { transition: opacity 400ms var(--ease-out); }
+  .rp-steps[data-on] .rp-step-card :is(h3, p) { transition: color 400ms var(--ease-out); }
+  .rp-steps[data-on] .rp-step-chip { transition: opacity 300ms var(--ease-out) 250ms, translate 300ms var(--ease-out) 250ms; }
+  .rp-steps[data-on] .rp-step::after { transition: transform 1500ms var(--ease-out); }
+
+  .rp-steps[data-on] .rp-step:not([data-st="cur"]) .rp-step-card :is(h3, p:not(.rp-step-chip, .rp-step-when)) { color: var(--color-navy-500); }
+  .rp-steps[data-on] .rp-step[data-st="todo"] .rp-step-num { background: var(--color-canvas); color: var(--color-navy-500); box-shadow: inset 0 0 0 1px var(--color-line-strong); }
+  .rp-steps[data-on] .rp-step[data-st="todo"] .rp-step-chip { opacity: 0; translate: 0 4px; }
+  .rp-steps[data-on] .rp-step:not([data-st="done"])::after { transform: scale(1, 0); }
+  .rp-steps[data-on] .rp-step[data-st="cur"] .rp-step-num { background: var(--color-accent); color: #fff; box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-accent) 22%, transparent); }
+  .rp-steps[data-on] .rp-step[data-st="cur"] .rp-step-card { translate: 0 -3px; }
+  .rp-steps[data-on] .rp-step[data-st="cur"] .rp-step-card::before { opacity: 1; }
+  @container (min-width: 52rem) { .rp-steps[data-on] .rp-step:not([data-st="done"])::after { transform: scale(0, 1); } }
+}
+
+/* HubConsole feed (components/platform/live.tsx). Base: the 5th row is parked out of flow and invisible. */
+.rp-feed-out { position: absolute; inset-inline: 0; opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .rp-feed-out { transition: opacity 500ms var(--ease-out); }
+  /* new row opens its own height, so the rows below slide down instead of jumping */
+  .rp-feed-in { display: grid; animation: rp-feed-in 600ms var(--ease-out) both; }
+  .rp-feed-in > * { background: var(--color-accent-soft); animation: rp-feed-glow 2400ms var(--ease-out) forwards; }
+  .rp-pop-in { animation: rp-pop-in 360ms var(--ease-out) both; }
+}
+@keyframes rp-feed-in { from { grid-template-rows: 0fr; opacity: 0; } to { grid-template-rows: 1fr; opacity: 1; } }
+@keyframes rp-feed-glow { to { background: transparent; } }
+@keyframes rp-pop-in { from { opacity: 0; scale: 0.6; } }

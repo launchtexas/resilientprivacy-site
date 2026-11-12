@@ -1,0 +1,11 @@
+/* Incident clock (kit.tsx IncidentClock). Base = final frame: token on the last stop, rails full. */
+.ic .ic-token { translate: 300% 0; }
+.ic .ic-fill { --from: 0 0; --from-scale: 1 0; transform-origin: center top; }
+@container (min-width: 42rem) { .ic .ic-fill { --from-scale: 0 1; transform-origin: left center; } }
+@media (prefers-reduced-motion: no-preference) and (scripting: enabled) {
+  .ic .ic-token { translate: 0 0; transition: translate 900ms var(--ease-out); }
+  .ic[data-s~="2"] .ic-token { translate: 100% 0; }
+  .ic[data-s~="3"] .ic-token { translate: 200% 0; }
+  .ic[data-s~="4"] .ic-token { translate: 300% 0; }
+  .ic .ic-fill[data-at] { transition-duration: 420ms, 1000ms, 1000ms; }
+}
