@@ -84,7 +84,7 @@ export function Hero() {
             <Badge tone="accent">Research</Badge> <span className="truncate">Securing AI agents and MCP tools</span> <Arrow />
           </Link>
           <h1 id="hero-title" className="mt-6 text-display font-semibold tracking-[-0.04em] text-balance text-navy-950">
-            Cybersecurity and AI security, <span className="text-accent">tested, governed and proven.</span>
+            We red-team your AI <span className="text-accent">before the internet does.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lead text-navy-600 text-pretty">
             We break, secure and govern the systems and the AI you run: applications, cloud, identity, models, agents and their tools. Then we stay until the fix is shipped, monitored and proven to an auditor.
