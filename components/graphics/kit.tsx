@@ -13,7 +13,8 @@ export function Frame({ title, status, beats, label, dark, className, children }
           {[0, 1, 2].map((i) => <span key={i} className={cx("size-2 rounded-full", dark ? "bg-white/15" : "bg-line-strong")} />)}
         </span>
         <span className={cx("min-w-0 truncate font-mono text-micro", dark ? "text-navy-300" : "text-navy-500")}>{title}</span>
-        {status && <span className="ml-auto shrink-0">{status}</span>}
+        <span className="ml-auto shrink-0 font-mono text-[10px] tracking-[0.04em] text-navy-400 uppercase">Example data</span>
+        {status && <span className="shrink-0">{status}</span>}
       </div>
       <div aria-hidden>{children}</div>
     </Scene>

@@ -27,7 +27,7 @@ export function AppWindow({
           <span className="size-2.5 rounded-full bg-line-strong" />
         </span>
         <span className="mx-auto max-w-[60%] truncate rounded-chip bg-canvas px-3 py-0.5 font-mono text-micro text-navy-500 shadow-hairline">{title}</span>
-        <span aria-hidden className="w-[42px]" />
+        <span aria-hidden className="shrink-0 font-mono text-[10px] tracking-[0.04em] text-navy-400 uppercase">Example data</span>
       </div>
       <div aria-hidden className="flex">
         {sidebar}
@@ -42,7 +42,7 @@ export function AppSidebar({ items, active = 0 }: { items: string[]; active?: nu
     <div className="hidden w-48 shrink-0 flex-col gap-0.5 bg-navy-950 p-3 md:flex">
       <div className="mb-3 flex items-center gap-2 rounded-control bg-white/5 px-2.5 py-2">
         <span className="size-5 rounded-md bg-accent" />
-        <span className="text-xs font-medium text-white">Your company</span>
+        <span className="text-xs font-medium text-white">Example Corp</span>
         <span className="ml-auto text-micro text-navy-500">▾</span>
       </div>
       {items.map((t, i) => (
@@ -210,13 +210,18 @@ export function AlertList({ alerts, className }: { alerts: Alert[]; className?: 
 
 /* ---------- Data table ---------- */
 /** `rowAt[i]`: beat at which row i enters inside a <Scene> (motion/client). */
-export function DataTable({ columns, rows, className, rowAt }: { columns: string[]; rows: ReactNode[][]; className?: string; rowAt?: (number | undefined)[] }) {
+/** `sort`: column index that shows the active sort chevron. `total`: total row count, adds a "1–n of total" pager. */
+export function DataTable({ columns, rows, className, rowAt, sort, total }: { columns: string[]; rows: ReactNode[][]; className?: string; rowAt?: (number | undefined)[]; sort?: number; total?: number }) {
   return (
     <div className={cx("overflow-x-auto max-sm:[mask-image:linear-gradient(to_left,transparent,black_28px)]", className)}>
-      <table className="w-full min-w-[420px] text-left text-[0.8125rem]">
+      <table className="w-full min-w-[420px] text-left text-[0.8125rem] tabular-nums">
         <thead>
           <tr className="border-b border-line">
-            {columns.map((c) => <th key={c} className="px-3 py-2 font-mono text-micro font-medium tracking-[0.06em] text-navy-500 uppercase">{c}</th>)}
+            {columns.map((c, j) => (
+              <th key={c} className="px-3 py-2 font-mono text-micro font-medium tracking-[0.06em] whitespace-nowrap text-navy-500 uppercase">
+                {c}{j === sort && <span className="ml-1 text-navy-700">▾</span>}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody className="divide-y divide-line">
@@ -227,6 +232,12 @@ export function DataTable({ columns, rows, className, rowAt }: { columns: string
           ))}
         </tbody>
       </table>
+      {total !== undefined && (
+        <div className="flex min-w-[420px] items-center justify-between border-t border-line px-3 pt-2 font-mono text-micro text-navy-500 tabular-nums">
+          <span>1–{rows.length} of {total.toLocaleString("en-US")}</span>
+          <span className="flex gap-3"><span className="text-navy-300">‹ Prev</span><span className="text-navy-700">Next ›</span></span>
+        </div>
+      )}
     </div>
   );
 }

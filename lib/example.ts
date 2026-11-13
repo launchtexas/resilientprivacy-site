@@ -1,4 +1,6 @@
-// The site's one canonical example finding and engagement (illustrative data, no client, no real CVE).
+// The site's one canonical example finding, engagement, tenant and incident (example data: no client, no real CVE).
+// Naming follows real conventions: RFC 2606 domains, RFC 5737 documentation IPs, the AWS docs account 111122223333,
+// MITRE ATT&CK technique IDs, CWE IDs and CVSS 3.1 vectors whose base score matches the stated score.
 // Every page that shows RP-0142 or the example engagement imports from here, so they never disagree.
 
 export type ExampleSev = "critical" | "high" | "medium" | "low";
@@ -9,10 +11,29 @@ export const FINDING = {
   title: "Broken object-level authorization on invoices API",
   sev: "critical" as const,
   cvss: "9.1",
-  vector: "AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+  // PR:N: the public web-app API key is enough, no user login. This vector scores 9.1.
+  vector: "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+  cwe: "CWE-639",
+  owasp: "API1:2023",
   endpoint: "GET /v2/invoices/{id}",
   host: "api.example.com",
   fix: "Check the tenant in Invoice.get()",
+  found: "2026-10-14T09:42:17Z",
+};
+
+/** The example customer every console shows. */
+export const TENANT = { name: "Example Corp", aws: "111122223333", domain: "example.com" };
+
+/** One SOC incident shared by the SOC, MDR and hunt scenes, so times, hosts and IDs agree. */
+export const INCIDENT = {
+  id: "INC-2026-0419",
+  title: "Valid account used from new country",
+  technique: "T1078.004",
+  user: "svc-billing@example.com",
+  host: "prod-api-02.internal",
+  srcIp: "203.0.113.47",
+  detected: "2026-11-03T02:14:06Z",
+  contained: "2026-11-03T02:22:41Z",
 };
 
 // One web app and API test: 9-week plan, testing in weeks 3 to 5 (two weeks of active testing after recon).
