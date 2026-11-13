@@ -18,7 +18,7 @@ export function FixDiff({ className }: { className?: string }) {
   return (
     <Frame
       className={className}
-      title="invoices/service.ts · PR #418"
+      title="example-corp/billing · PR #418 · invoices/service.ts"
       status={<Swap steps={[[<Chip key="o" tone="critical" dot>RP-0142 open</Chip>, undefined, 3], [<Chip key="c" tone="ok"><Check className="size-3" />Retest passed</Chip>, 3]]} />}
       beats={[600, 1600, 3600]}
       label="Code diff fixing an insecure direct object reference: the line that returned any tenant's invoice is replaced by a tenant check that throws Forbidden, and the retest passes."
@@ -39,7 +39,7 @@ export function FixDiff({ className }: { className?: string }) {
         })}
       </pre>
       <div className="flex items-center justify-between gap-2 border-t border-line px-3.5 py-2.5">
-        <span className="min-w-0 truncate font-mono text-micro text-navy-500">GET /v2/invoices/981 as tenant B</span>
+        <span className="min-w-0 truncate font-mono text-micro text-navy-500">retest 2026-10-21 · GET /v2/invoices/981 (tenant B)</span>
         <Swap className="shrink-0" steps={[[<Chip key="a">200 · leaked</Chip>, undefined, 3], [<Chip key="b" tone="ok">403 · blocked</Chip>, 3]]} />
       </div>
     </Frame>

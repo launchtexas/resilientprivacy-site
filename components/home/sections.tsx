@@ -137,7 +137,7 @@ const CLOSURE = {
   item: { id: FINDING.id, title: FINDING.title, tag: "Critical", tone: "critical", owner: "JP" },
   stages: [
     { label: "Reported", value: QUARTER.reported },
-    { label: "Fixed", value: QUARTER.fixed, stamp: ["pr", "PR #482"] },
+    { label: "Fixed", value: QUARTER.fixed, stamp: ["pr", "PR #418"] },
     { label: "Retest passed", value: QUARTER.retested, stamp: ["check", "Retest passed"] },
     { label: "Evidence filed", value: QUARTER.retested, stamp: ["file", "SOC 2 CC7.1"] },
   ],
