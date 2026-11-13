@@ -41,7 +41,7 @@ export function AppWindow({
         {/* With a sidebar the brand lives there; the sidebar hides below md, so the title bar carries it until then. */}
         <MockBrand className={sidebar ? "md:hidden" : undefined} />
         <span className="mx-auto min-w-0 max-w-[60%] truncate rounded-chip bg-canvas px-3 py-0.5 font-mono text-micro text-navy-500 shadow-hairline">{title}</span>
-        <span aria-hidden className="shrink-0 font-mono text-[10px] tracking-[0.04em] text-navy-400 uppercase">Example data</span>
+        <span aria-hidden className="shrink-0 font-mono text-[10px] tracking-[0.04em] text-navy-400 uppercase">Simulated</span>
       </div>
       <div aria-hidden className="flex">
         {sidebar}

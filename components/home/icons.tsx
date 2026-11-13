@@ -18,4 +18,4 @@ export function Icon({ name, className = "size-5" }: { name: IconName; className
   );
 }
 
-export const PLACEHOLDER_NOTE = "Example data";
+export const PLACEHOLDER_NOTE = "Simulated environment, real workflow.";

@@ -174,7 +174,7 @@ function Stream({ cfg, className }: { cfg: Cfg; className?: string }) {
           <div className="gw-bar">
             <MockBrand nameClass="hidden @md:inline" />
             <span className="mr-auto min-w-0 truncate font-mono text-[12px] text-navy-500">{cfg.app}</span>
-            <span className="gw-live"><span className="gw-dot" />Example data</span>
+            <span className="gw-live"><span className="gw-dot" />Simulated</span>
           </div>
           <dl className="gw-stats">
             {cfg.stats.map(([l, v, tone, hero]) => (

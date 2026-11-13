@@ -23,7 +23,7 @@ export default function DemoPage() {
   return (
     <>
       <PageHero badge="Book a demo" title="See it working on" accent="problems like yours." lead="A 30-minute walkthrough with a solutions engineer. No slides you could have read on the website."
-        aside={<figure className="mx-auto w-full max-w-lg"><ThreatPipeline /><figcaption className="mt-3 text-center text-micro text-navy-500">Example data</figcaption></figure>} />
+        aside={<figure className="mx-auto w-full max-w-lg"><ThreatPipeline /><figcaption className="mt-3 text-center text-micro text-navy-500">Simulated environment, real workflow.</figcaption></figure>} />
 
       <Section tone="mist" labelledBy="form-title">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">

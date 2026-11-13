@@ -30,7 +30,7 @@ const SEO: Record<string, [string, string]> = {
   vciso: ["Virtual CISO (vCISO) Services", "Virtual CISO (vCISO) services: a named CISO for strategy, board reporting, AI governance and customer assurance, without the full-time hire."],
 };
 
-const NOTE = <p className="mt-3 text-micro text-navy-500">Example data</p>;
+const NOTE = <p className="mt-3 text-micro text-navy-500">Simulated environment, real workflow.</p>;
 const GRAPHIC: Record<string, { title: string; lead: string; node: ReactNode }> = {
   "penetration-testing": {
     title: "Findings are written while we test.",

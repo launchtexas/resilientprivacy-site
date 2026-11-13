@@ -21,7 +21,7 @@ function PlatformConsole() {
   return (
     <AppWindow
       title="app.resilientprivacy.com/overview"
-      label="Resilient Privacy console overview showing open findings, monitored APIs, a weekly alert trend and an alert feed. Example data."
+      label="Resilient Privacy console overview showing open findings, monitored APIs, a weekly alert trend and an alert feed. Simulated data."
       sidebar={<AppSidebar items={["Overview", "Findings", "API inventory", "Detections", "Privacy", "Compliance", "Reports"]} />}
     >
       <div className="bg-mist p-4 sm:p-5">

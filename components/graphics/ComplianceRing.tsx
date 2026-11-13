@@ -26,7 +26,7 @@ export function ComplianceRing({ frameworks = DEFAULT, className }: { frameworks
       title="evidence · audit readiness"
       status={<Swap steps={[[<Chip key="c" tone="accent" dot>Collecting</Chip>, undefined, DONE], [<Chip key="r" tone="ok"><Check className="size-3" />Audit-ready</Chip>, DONE]]} />}
       beats={[400, 1300, 2000, 2700, 3400, 4100]}
-      label={`Example data. Compliance evidence collected automatically from Okta, the SIEM, GitHub and AWS; control coverage ${fw.map((f) => `${f.name} ${f.pct}%`).join(", ")}.`}
+      label={`Simulated data. Compliance evidence collected automatically from Okta, the SIEM, GitHub and AWS; control coverage ${fw.map((f) => `${f.name} ${f.pct}%`).join(", ")}.`}
     >
       <div className="grid gap-4 p-3.5 @md:p-4 @xl:grid-cols-[10rem_minmax(0,1fr)]">
         <div className="min-w-0">

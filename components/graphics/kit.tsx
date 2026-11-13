@@ -15,7 +15,7 @@ export function Frame({ title, status, beats, label, dark, className, children }
         </span>
         <MockBrand dark={dark} nameClass="hidden @md:inline" />
         <span className={cx("min-w-0 truncate font-mono text-micro", dark ? "text-navy-300" : "text-navy-500")}>{title}</span>
-        <span className="ml-auto shrink-0 font-mono text-[10px] tracking-[0.04em] text-navy-400 uppercase">Example data</span>
+        <span className="ml-auto shrink-0 font-mono text-[10px] tracking-[0.04em] text-navy-400 uppercase">Simulated</span>
         {status && <span className="shrink-0">{status}</span>}
       </div>
       <div aria-hidden>{children}</div>

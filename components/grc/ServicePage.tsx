@@ -10,7 +10,7 @@ import { ProcessSteps } from "@/components/motion/ProcessSteps";
 
 export const GRC_CTA = { title: "Find out how close you are to audit-ready.", lead: "A 30-minute readiness conversation with a Risk & Compliance lead, scoped to the frameworks you are asked for.", kind: "practice" } as const;
 export const AI_GOV = "/ai-security/governance";
-export const PLACEHOLDER_NOTE = "Example data";
+export const PLACEHOLDER_NOTE = "Simulated environment, real workflow.";
 const STATUS: Record<Status, [Tone, string]> = { pass: ["ok", "Passing"], progress: ["medium", "In progress"], gap: ["critical", "Gap"], todo: ["neutral", "Not started"] };
 
 /* ---------- Control-progress mockup ---------- */

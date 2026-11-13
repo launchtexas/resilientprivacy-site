@@ -31,7 +31,7 @@ export function SocMap({ className }: { className?: string }) {
     </li>
   );
   return (
-    <Live className={`@container overflow-hidden rounded-panel bg-navy-950 shadow-window ring-1 ring-white/10 ${className ?? ""}`} role="img" aria-label="Example SIEM incident queue: shadow-copy deletion, a sign-in from a new country, a VPN password spray, a lookalike domain and beaconing, each tagged with its MITRE ATT&CK technique and escalated, contained, blocked or taken down. Example data.">
+    <Live className={`@container overflow-hidden rounded-panel bg-navy-950 shadow-window ring-1 ring-white/10 ${className ?? ""}`} role="img" aria-label="Example SIEM incident queue: shadow-copy deletion, a sign-in from a new country, a VPN password spray, a lookalike domain and beaconing, each tagged with its MITRE ATT&CK technique and escalated, contained, blocked or taken down. Simulated data.">
       <div aria-hidden className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-3 @md:px-5">
         <MockBrand dark nameClass="hidden @md:inline" />
         <span className="mr-auto flex shrink-0 items-center gap-2 font-mono text-micro tracking-[0.08em] whitespace-nowrap text-white uppercase">
