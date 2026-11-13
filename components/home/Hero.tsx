@@ -2,7 +2,7 @@ import Link from "next/link";
 import { CtaButtons } from "@/components/sections";
 import { Tabs } from "@/components/Tabs";
 import { Arrow, Badge, Button } from "@/components/ui";
-import { Parallax } from "@/components/motion";
+import { Marquee, Parallax } from "@/components/motion";
 import { MdrConsole } from "@/components/managed/mockups";
 import { ReportMockup } from "@/components/consulting/parts";
 import { SERVICES } from "@/components/consulting/data";
@@ -118,21 +118,15 @@ export function Hero() {
 
         <div className="mx-auto mt-16 max-w-5xl text-center lg:mt-20">
           <p className="text-sm text-navy-600">Every engagement maps to the public frameworks your auditors and engineers already use</p>
-          <div className="mt-6 grid gap-px overflow-hidden rounded-xl bg-line text-left shadow-hairline sm:grid-cols-3" aria-label="Frameworks we work to">
-            {FRAMEWORKS.map((g) => (
-              <div key={g.group} className="bg-canvas p-5">
-                <h3 className="text-xs font-semibold uppercase tracking-wide text-navy-500">{g.group}</h3>
-                <ul className="mt-3 space-y-3">
-                  {g.items.map(([name, use]) => (
-                    <li key={name}>
-                      <span className="block font-mono text-[0.8125rem] font-medium text-navy-900">{name}</span>
-                      <span className="block text-xs text-navy-600">{use}</span>
-                    </li>
-                  ))}
-                </ul>
+          <Marquee label="Frameworks we work to" className="mt-6" gap="0.75rem">
+            {FRAMEWORKS.flatMap((g) => g.items.map(([name, use]) => (
+              <div key={name} className="w-64 shrink-0 rounded-xl bg-canvas px-4 py-3 text-left shadow-hairline">
+                <span className="block text-[0.6875rem] font-semibold uppercase tracking-wide text-navy-500">{g.group}</span>
+                <span className="mt-1 block font-mono text-[0.8125rem] font-medium text-navy-900">{name}</span>
+                <span className="mt-0.5 block text-xs text-navy-600">{use}</span>
               </div>
-            ))}
-          </div>
+            )))}
+          </Marquee>
         </div>
       </div>
     </section>
