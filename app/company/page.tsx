@@ -7,7 +7,7 @@ import { ContactCard, Icon, ICONS, PageHero } from "@/components/company/parts";
 import { Reveal, Spotlight, Stagger } from "@/components/motion";
 import { DivisionOrbit } from "@/components/graphics";
 import { ENGAGEMENT, RadarChart, Timeline } from "@/components/charts";
-import { founder, JsonLd } from "@/lib/schema";
+import { founder, JsonLd, leader } from "@/lib/schema";
 import { CONTACT } from "@/lib/nav";
 
 export const metadata: Metadata = {
@@ -40,10 +40,31 @@ const PRINCIPLES = [
   ["One named lead", "The practitioner who scopes the work does the work, and stays from kickoff to the retest and the auditor's sign-off."],
 ];
 
+// Facts from the human (2026-11-13); never add employers, degrees or counts beyond these.
+type Leader = { name: string; title: string; bio?: string; photo?: string; w?: number; h?: number; linkedin?: string };
+const LEADERS: Leader[] = [
+  { name: "Mitt Mehta", title: "CFO & COO", bio: "Serial entrepreneur, investor and advisor bringing 15+ years of experience.", photo: "/team/mitt-mehta.jpg", linkedin: "https://www.linkedin.com/in/mitt-mehta/", w: 960, h: 1280 },
+  { name: "Siddhi Patel", title: "Chief Human Resources Officer", bio: "15+ years of enterprise experience as CHRO and Chief Administrative Officer (CAO).", photo: "/team/siddhi-patel.png", linkedin: "https://www.linkedin.com/in/siddhipatel772", w: 1183, h: 1329 },
+  { name: "Vishwaa Shah", title: "Chief Product Officer" },
+  { name: "Aditya Desai", title: "Board Member & Advisor", bio: "Serves on the Resilient Privacy board and advises its leadership.", photo: "/team/aditya-desai.png", w: 1254, h: 1254 },
+];
+
+// Photos to come: the card shows a silhouette until a photo is added.
+const TEAM = [
+  ["Nilavra Sinha", "Forward Deployed Engineer (FDE)"],
+  ["Hung Hoang", "Forward Deployed Engineer (FDE)"],
+  ["Maxwell Peng", "Forward Deployed Engineer (FDE)"],
+  ["Mustafa Khan", "Product Engineer"],
+  ["Raphael Ogundare", "Product Engineer"],
+  ["Vince Ong", "Platform Architect"],
+  ["Yugandhari Narayanam", "Lead GTM Strategist"],
+];
+const PERSON = "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 20a8 8 0 0 1 16 0";
+
 export default function CompanyPage() {
   return (
     <>
-      <JsonLd data={founder()} />
+      <JsonLd data={[founder(), ...LEADERS.map(leader)]} />
       <PageHero
         badge="About Resilient Privacy"
         title="Cybersecurity and AI security consulting,"
@@ -101,7 +122,7 @@ export default function CompanyPage() {
             </div>
           </div>
           <div className="lg:col-span-7">
-            <SectionHeading id="founder-title" eyebrow="Founder" title="Vishva Patel" lead="Founder & CEO. Ethical hacker. Serial entrepreneur, investor and advisor." />
+            <SectionHeading id="founder-title" eyebrow="Leadership" title="Vishva Patel" lead="Founder & CEO. Ethical hacker. Serial entrepreneur, investor and advisor." />
             <div id="vishva-patel" className="reveal mt-6 space-y-4 text-navy-700 text-pretty">
               <p>Vishva has spent more than ten years in cybersecurity, much of it as an ethical hacker: breaking into systems, with permission, so the people who own them find the weak points before an attacker does. That instinct runs every Resilient Privacy engagement. Test it like an adversary. Fix it. Prove the fix.</p>
               <p>As a serial entrepreneur, investor and advisor, Vishva has watched organizations buy security from a stack of vendors that never talk to each other, and pay for the gaps between them. Resilient Privacy exists to end that: one accountable partner, from the first test to the auditor&apos;s sign-off.</p>
@@ -121,6 +142,39 @@ export default function CompanyPage() {
             </dl>
           </div>
         </div>
+        <Stagger className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {LEADERS.map((l) => (
+            <Card key={l.name} className="flex h-full flex-col p-6">
+              {l.photo ? (
+                <Image src={l.photo} alt={`Portrait of ${l.name}, ${l.title} of Resilient Privacy`} width={l.w} height={l.h} sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 90vw" className="aspect-square w-full rounded-panel object-cover object-top" />
+              ) : (
+                <span className="grid aspect-square w-full place-items-center rounded-panel bg-cloud text-navy-400"><Icon d={PERSON} className="size-16" /></span>
+              )}
+              <h3 className="mt-6 text-h3 font-semibold tracking-[-0.015em] text-navy-950">{l.name}</h3>
+              <p className="mt-1 font-mono text-micro tracking-[0.08em] text-navy-500 uppercase">{l.title}</p>
+              {l.bio && <p className="mt-3 text-[0.9375rem] leading-relaxed text-navy-600 text-pretty">{l.bio}</p>}
+              {l.linkedin && (
+                <a href={l.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${l.name} on LinkedIn (opens in a new tab)`} className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-medium text-accent hover:text-accent-hover">
+                  <Image src="/logos/linkedin-in-bug.png" alt="" width={23} height={20} unoptimized />
+                  LinkedIn <Arrow />
+                </a>
+              )}
+            </Card>
+          ))}
+        </Stagger>
+      </Section>
+
+      <Section labelledBy="team-title">
+        <Reveal><SectionHeading id="team-title" eyebrow="Team" title="The practitioners who do the work." /></Reveal>
+        <Stagger className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {TEAM.map(([name, role]) => (
+            <Card key={name} className="flex h-full flex-col items-start p-6">
+              <span className="grid size-14 place-items-center rounded-full bg-cloud text-navy-400"><Icon d={PERSON} className="size-7" /></span>
+              <h3 className="mt-6 text-h3 font-semibold tracking-[-0.015em] text-navy-950">{name}</h3>
+              <p className="mt-1 text-[0.9375rem] text-navy-600">{role}</p>
+            </Card>
+          ))}
+        </Stagger>
       </Section>
 
       <Section labelledBy="values-title">

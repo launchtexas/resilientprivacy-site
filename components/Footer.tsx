@@ -11,7 +11,7 @@ export function Footer() {
           <div className="lg:col-span-3">
             <Logo inverse />
             <p className="mt-4 max-w-xs text-sm leading-relaxed">
-              Cybersecurity and AI consulting, backed by 24/7 operations and our own platform.
+              Securing the systems and AI the world depends on.
             </p>
             <address className="mt-6 text-sm not-italic leading-relaxed">
               <a href={`mailto:${CONTACT.email}`} className="text-white hover:underline">{CONTACT.email}</a>

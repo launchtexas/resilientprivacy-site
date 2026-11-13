@@ -59,6 +59,17 @@ export const founder = (): Thing => ({
   hasCredential: [cert("CompTIA Security+", "CompTIA"), cert("CCNA", "Cisco"), cert("CISA", "ISACA"), cert("CISM", "ISACA")],
 });
 
+/** Leadership team member; only the facts shown on /company. */
+export const leader = (l: { name: string; title: string; bio?: string; photo?: string; linkedin?: string }): Thing => ({
+  "@type": "Person",
+  name: l.name,
+  jobTitle: l.title,
+  description: l.bio,
+  ...(l.photo && { image: abs(l.photo) }),
+  ...(l.linkedin && { sameAs: [l.linkedin] }),
+  worksFor: { "@id": ORG_ID },
+});
+
 export const website = (): Thing => ({ "@type": "WebSite", "@id": `${SITE_URL}/#website`, name: SITE_NAME, url: SITE_URL, publisher: { "@id": ORG_ID } });
 
 export const faqPage = (items: [string, string][]): Thing => ({
