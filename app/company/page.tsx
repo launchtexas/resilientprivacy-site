@@ -8,6 +8,7 @@ import { Reveal, Spotlight, Stagger } from "@/components/motion";
 import { DivisionOrbit } from "@/components/graphics";
 import { ENGAGEMENT, RadarChart, Timeline } from "@/components/charts";
 import { founder, JsonLd } from "@/lib/schema";
+import { CONTACT } from "@/lib/nav";
 
 export const metadata: Metadata = {
   title: "About",
@@ -149,6 +150,12 @@ export default function CompanyPage() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <CtaButtons kind="expert" />
             </div>
+            <p className="mt-8 text-[0.9375rem] leading-relaxed text-navy-600">
+              Want to join us? See <Link href="/company/careers" className="font-medium text-accent hover:text-accent-hover">open roles</Link> or email <a href={`mailto:${CONTACT.careers}`} className="font-medium text-accent hover:text-accent-hover">{CONTACT.careers}</a>.
+            </p>
+            <a href={CONTACT.linkedin} target="_blank" rel="noopener noreferrer" aria-label="Resilient Privacy on LinkedIn (opens in a new tab)" className="group mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-hover">
+              Follow us on LinkedIn <Arrow />
+            </a>
           </div>
           <ContactCard className="reveal lg:col-span-7" />
         </div>
