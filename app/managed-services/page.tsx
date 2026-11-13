@@ -84,7 +84,7 @@ function Showcase() {
       <Pane title="Hunts with a written outcome" body="Each hunt starts from a hypothesis and ends with findings, new detections or logging fixes." points={["Hypotheses from current intelligence", "Findings escalated straight to response", "Every hunt leaves a new detection"]} href="/managed-services/threat-hunting"><HuntConsole /></Pane>
     ) },
     { label: "Response", icon: <Icon name="siren" className="size-4" />, content: (
-      <Pane title="Responders already on retainer" body="When something big happens, a team that knows your environment takes command and preserves evidence." points={["24/7 hotline with named responders", "Forensics with chain of custody", "Reports fit for counsel and insurers"]} href="/managed-services/incident-response"><IrConsole /></Pane>
+      <Pane title="Responders already on retainer" body="When something big happens, a team that knows your environment takes command and preserves evidence." points={["24/7 response from named responders", "Forensics with chain of custody", "Reports fit for counsel and insurers"]} href="/managed-services/incident-response"><IrConsole /></Pane>
     ) },
   ];
   return (

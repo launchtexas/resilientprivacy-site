@@ -7,13 +7,13 @@ import { PageHero } from "@/components/resources/parts";
 
 export const metadata: Metadata = {
   title: "Case studies",
-  description: "Illustrative examples of how API protection, compliance and managed detection work together. Anonymized, illustrative examples.",
+  description: "Illustrative engagements showing how API protection, compliance and managed detection work together. Sector only, no client names, typical outcomes.",
 };
 
 export default function CaseStudies() {
   return (
     <>
-      <PageHero eyebrow="Case studies" title="How the work fits together, end to end." lead="Three anonymized, illustrative stories that show how our platform, managed services, consulting and GRC teams combine. Real customer stories will replace them when cleared for publication." />
+      <PageHero eyebrow="Case studies" title="How the work fits together, end to end." lead="Three illustrative engagements that show how our platform, managed services, consulting and GRC teams combine. Each names a sector only, with no client names, logos or quotes, and describes the outcomes this kind of engagement typically delivers." />
       <section aria-label="Stories" className="pb-20 lg:pb-28">
         <div className="container-rp space-y-6">
           {STORIES.map((s) => (
@@ -38,7 +38,7 @@ export default function CaseStudies() {
                     <CheckList items={s.approach} className="mt-4 text-navy-800" />
                   </div>
                   <div className="rounded-card bg-mist p-5">
-                    <Eyebrow>Outcome</Eyebrow>
+                    <Eyebrow>Typical outcome</Eyebrow>
                     <CheckList items={s.outcome} className="mt-4 text-navy-800" />
                   </div>
                 </div>

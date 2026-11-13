@@ -15,12 +15,12 @@ const data: ServiceData = {
   eyebrow: "Incident response retainer · DFIR",
   title: "When it happens, your first call is not your first conversation.",
   lead: "A retainer gives you named responders who already know your environment, with hours and response times agreed in advance. Forensics follows, so legal, insurers and regulators get evidence they can rely on.",
-  note: "Under attack and not yet a client? Use the contact form and mark it urgent. Retainer clients get the hotline number at onboarding.",
+  note: "Under attack and not yet a client? Use the contact form or email us and mark it urgent. Retainer clients escalate through their named lead and the channel agreed at onboarding.",
   model: {
     title: "Declare, contain, investigate, recover.",
     lead: "Most of the value of a retainer is spent before the incident: onboarding, a tested plan and contacts that already work.",
     coverage: [
-      ["Availability", "24/7 hotline: a responder on critical incidents in under 15 minutes"],
+      ["Availability", "24/7: a responder on critical incidents in under 15 minutes"],
       ["Hours", "Pre-paid block sized in your retainer, usable for incidents or readiness work"],
       ["Team", "Incident commander, forensic analysts and a communications lead"],
       ["Onboarding", "Environment review, contact tree and evidence-collection access set up in advance"],
@@ -29,13 +29,13 @@ const data: ServiceData = {
     ],
     stamp: 0,
     steps: [
-      { title: "Declare", body: "You call the hotline. A responder scopes the situation and opens an engagement under your retainer.", when: "Critical: responder in under 15 minutes, 24/7", clock: ["00:09", "responder scoping"] },
+      { title: "Declare", body: "You escalate through your named lead and the channel agreed at onboarding. A responder scopes the situation and opens an engagement under your retainer.", when: "Critical: responder in under 15 minutes, 24/7", clock: ["00:09", "responder scoping"] },
       { title: "Contain", body: "We stop the spread first: isolate systems, cut attacker access and preserve evidence before it is lost.", when: "Remote start: per retainer terms", clock: ["+3h", "spread stopped"] },
       { title: "Investigate", body: "Forensic analysis of hosts, identities, email and cloud logs to establish what happened and what was taken.", when: "On site: when the case needs it", clock: ["+2d", "root cause found"] },
       { title: "Recover and report", body: "Guided recovery, then a written report with timeline, root cause and fixes, fit for legal and insurers.", when: "Report: on the timeline agreed at close", clock: ["+3w", "report delivered"] },
     ],
     commits: [
-      ["Critical response", "Under 15 minutes, 24/7: you call the hotline → a responder is scoping with you"],
+      ["Critical response", "Under 15 minutes, 24/7: you escalate through your agreed channel → a responder is scoping with you"],
       ["Remote start", "Incident declared → remote containment and forensics begin"],
       ["On-site arrival", "On-site requested → responder at your location"],
     ],
@@ -72,7 +72,7 @@ const data: ServiceData = {
       "AI incidents are in scope: prompt logs, tool calls and retrieval history are preserved like disk images.",
       "Root cause goes back to consulting as a retest, and to the SOC as a detection.",
     ],
-    graphic: <Terminal title="ir — case log" label="Incident case log: a hotline call is logged, a host is isolated, a token is revoked, evidence is hashed and the case moves to investigation." lines={[
+    graphic: <Terminal title="ir — case log" label="Incident case log: an urgent escalation is logged, a host is isolated, a token is revoked, evidence is hashed and the case moves to investigation." lines={[
       { text: "$ rp-ir open --severity critical", tone: "prompt", pause: 400 },
       { text: "› case IR-0217 · commander assigned", tone: "muted" },
       { text: "! host fin-ws-14 isolated (EDR)", tone: "warn" },

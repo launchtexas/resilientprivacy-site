@@ -7,7 +7,7 @@ import { PageHero } from "@/components/resources/parts";
 
 export const metadata: Metadata = {
   title: "Trust center",
-  description: "How Resilient Privacy protects customer data: security practices, data handling, subprocessors and compliance status.",
+  description: "How Resilient Privacy protects customer data: security practices, data handling, subprocessors and team certifications.",
 };
 
 const PRACTICES = [
@@ -17,6 +17,7 @@ const PRACTICES = [
   ["Monitoring", "Centralized logging and 24/7 monitoring of our own environment by our security operations team."],
   ["Testing", "Independent penetration tests of the platform, with findings tracked to verified fix."],
   ["Incident response", "A documented, exercised incident response plan with customer notification steps."],
+  ["People", "Background checks before hire where local law allows, confidentiality agreements, and security awareness training at hire and every year."],
 ];
 const DATA = [
   "We process customer data only to deliver the services in your agreement.",
@@ -25,24 +26,27 @@ const DATA = [
   "You can request export or deletion of your data at any time.",
   "Staff access to customer data is limited, logged and reviewed.",
 ];
-const COMPLIANCE = [
-  ["SOC 2 Type II", "Status on request"],
-  ["ISO/IEC 27001", "Status on request"],
-  ["GDPR and CCPA privacy program", "Status on request"],
-  ["HIPAA (business associate agreements)", "Status on request"],
+// Individual certifications held by our team; the company holds no audit report or certification.
+const CERTS = [
+  ["CISSP", "Security leadership and architecture"],
+  ["CISM", "Security program management"],
+  ["CISA", "Information systems audit"],
+  ["OSCP", "Hands-on penetration testing"],
+  ["CEH", "Ethical hacking"],
+  ["Security+", "Security fundamentals"],
+  ["CCNA", "Networking"],
 ];
 
 const SUBPROCESSORS = [
-  ["Cloud hosting", "Infrastructure and storage"],
-  ["Email delivery", "Transactional email"],
-  ["Customer support", "Support ticketing"],
-  ["Billing", "Payment processing"],
+  ["Vercel", "Website hosting", "https://vercel.com"],
+  ["Resend", "Delivery of website form email", "https://resend.com"],
+  ["Binary", "Careers applications", "https://binary.so"],
 ];
 
 export default function Trust() {
   return (
     <>
-      <PageHero eyebrow="Trust center" title="How we protect your data." lead="The controls we run on ourselves, how we handle customer data, who processes it on our behalf, and where our compliance work stands." />
+      <PageHero eyebrow="Trust center" title="How we protect your data." lead="The controls we run on ourselves, how we handle customer data, who processes it on our behalf, and the certifications our team holds." />
       <Section labelledBy="prac-title" className="pt-0!">
         <Reveal><SectionHeading id="prac-title" eyebrow="Security practices" title="The controls we run on ourselves." lead="The same practices we deliver to clients, applied to our own environment first." /></Reveal>
         <Stagger className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -64,24 +68,24 @@ export default function Trust() {
       <Section labelledBy="comp-title">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-12">
           <div>
-            <SectionHeading id="comp-title" eyebrow="Compliance" title="Compliance status." lead="Ask us for the current status of each program. Any audit reports are shared under NDA." />
+            <SectionHeading id="comp-title" eyebrow="Certifications" title="Certified people, not a certified company." lead="Resilient Privacy does not hold a company audit report or certification such as SOC 2 or ISO 27001. Our team holds these individual certifications." />
             <dl className="reveal mt-8 divide-y divide-line rounded-card bg-canvas shadow-card">
-              {COMPLIANCE.map(([k, v]) => (
+              {CERTS.map(([k, v]) => (
                 <div key={k} className="flex flex-wrap items-center justify-between gap-3 px-5 py-4">
                   <dt className="font-medium text-navy-950">{k}</dt>
-                  <dd><Badge tone="medium">{v}</Badge></dd>
+                  <dd><Badge>{v}</Badge></dd>
                 </div>
               ))}
             </dl>
           </div>
           <div>
-            <SectionHeading id="sub-title" eyebrow="Subprocessors" title="Who processes data for us." lead="We give notice before adding a subprocessor." />
+            <SectionHeading id="sub-title" eyebrow="Subprocessors" title="Who processes data for us." lead="The vendors that process data for this website and our hiring. Tools used in client engagements are listed in each engagement's agreement. We give notice before adding a subprocessor." />
             <div className="reveal mt-8 overflow-x-auto rounded-card bg-canvas shadow-card">
               <table aria-labelledby="sub-title" className="w-full min-w-[420px] text-left text-sm">
-                <thead className="bg-mist text-navy-500"><tr><th scope="col" className="px-5 py-3 font-medium">Subprocessor</th><th scope="col" className="px-5 py-3 font-medium">Purpose</th><th scope="col" className="px-5 py-3 font-medium">Location</th></tr></thead>
+                <thead className="bg-mist text-navy-500"><tr><th scope="col" className="px-5 py-3 font-medium">Subprocessor</th><th scope="col" className="px-5 py-3 font-medium">Purpose</th><th scope="col" className="px-5 py-3 font-medium">Website</th></tr></thead>
                 <tbody className="divide-y divide-line">
-                  {SUBPROCESSORS.map(([c, p]) => (
-                    <tr key={c}><th scope="row" className="px-5 py-4 font-medium text-navy-950">{c} provider</th><td className="px-5 py-4 text-navy-600">{p}</td><td className="px-5 py-4 text-navy-500">Named in your DPA</td></tr>
+                  {SUBPROCESSORS.map(([c, p, u]) => (
+                    <tr key={c}><th scope="row" className="px-5 py-4 font-medium text-navy-950">{c}</th><td className="px-5 py-4 text-navy-600">{p}</td><td className="px-5 py-4"><a href={u} target="_blank" rel="noopener noreferrer" className="text-accent underline underline-offset-2 hover:text-accent-hover">{u.slice(8)}<span className="sr-only"> (opens in a new tab)</span></a></td></tr>
                   ))}
                 </tbody>
               </table>

@@ -581,7 +581,7 @@ export type Story = {
   services: [string, string][];
 };
 
-export const STORY_LABEL = "Illustrative example";
+export const STORY_LABEL = "Illustrative engagement";
 
 export const STORIES: Story[] = [
   {
@@ -595,8 +595,8 @@ export const STORIES: Story[] = [
       "Added schema validation and per-client rate limits at the edge, and authorization tests to CI.",
     ],
     outcome: [
-      "Deprecated API versions retired before launch.",
-      "Authorization findings fixed and retested before partners received credentials.",
+      "Typically: deprecated API versions retired before launch.",
+      "Typically: authorization findings fixed and retested before partners receive credentials.",
     ],
     services: [["APIWall (API protection)", "/platform/api-protection"], ["Penetration testing", "/consulting/penetration-testing"]],
   },
@@ -611,8 +611,8 @@ export const STORIES: Story[] = [
       "A fractional CISO owned the program and the auditor relationship through the review period.",
     ],
     outcome: [
-      "Type I report first, then Type II after the review period.",
-      "Security reviews answered from a shared answer library and trust page.",
+      "Typically: a Type I report first, then Type II after the review period.",
+      "Typically: security reviews answered from a shared answer library and trust page.",
     ],
     services: [["SOC 2", "/grc/soc-2"], ["ComplyLoop (continuous compliance)", "/platform/compliance-automation"], ["vCISO", "/consulting/vciso"]],
   },
@@ -627,8 +627,8 @@ export const STORIES: Story[] = [
       "Ran a ransomware tabletop with plant managers and leadership.",
     ],
     outcome: [
-      "Alerts triaged around the clock, with host isolation pre-approved for confirmed threats.",
-      "A written, tested decision path for a ransomware event.",
+      "Typically: alerts triaged around the clock, with host isolation pre-approved for confirmed threats.",
+      "Typically: a written, tested decision path for a ransomware event.",
     ],
     services: [["MDR", "/managed-services/mdr"], ["NOC", "/managed-services/noc"], ["Incident response", "/managed-services/incident-response"]],
   },

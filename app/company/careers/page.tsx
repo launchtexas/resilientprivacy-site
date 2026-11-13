@@ -61,7 +61,7 @@ export default function CareersPage() {
         <Card className="reveal mt-4 grid grid-cols-1 gap-6 p-6 lg:grid-cols-12 lg:items-center lg:p-8">
           <div className="lg:col-span-12">
             <h3 className="text-h3 font-semibold tracking-[-0.015em]">Benefits</h3>
-            <p className="mt-2 text-[0.9375rem] leading-relaxed text-navy-600">Benefits, time off, working location and the training budget are set out in each offer letter. Ask us during the first call and we will tell you what applies to the role.</p>
+            <p className="mt-2 text-[0.9375rem] leading-relaxed text-navy-600">Full-time roles in the USA include medical, dental and vision coverage, a 401(k) plan, paid time off and holidays, paid parental leave, and a yearly training budget that covers certification exams and renewals. Roles outside the USA get equivalent benefits under local law and practice. The exact package is set out in each offer letter.</p>
           </div>
         </Card>
       </Section>
@@ -102,7 +102,7 @@ export default function CareersPage() {
           </div>
           <Faq className="lg:col-span-8" items={[
             ["Don't see a role that fits?", `Send a short note and your résumé through the careers page or to ${CONTACT.careers}. We keep strong profiles on file and reach out when a fit opens.`],
-            ["Do you sponsor visas?", "It depends on the role. Ask us in your first call and we will give you a straight answer."],
+            ["Do you sponsor visas?", "We consider sponsorship case by case for some roles, and each posting says whether it is available. Otherwise, you need to be authorized to work in the country of the role. Ask us in your first call and we will give you a straight answer."],
             ["Is the work remote?", "It depends on the role, and each posting says so. Our headquarters is in Richardson, Texas."],
             ["Do I need certifications?", "No. Practical skill matters more than letters. We support certifications once you're here."],
           ]} />

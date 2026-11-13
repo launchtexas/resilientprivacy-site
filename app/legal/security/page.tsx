@@ -21,10 +21,9 @@ export default function SecurityPage() {
             <li>Any proof-of-concept code, screenshots or logs.</li>
             <li>How you would like to be credited, if at all.</li>
           </ul>
-          {/* gap: PGP key fingerprint for encrypted reports */}
         </>],
         ["Scope", <>
-          <p><strong>In scope:</strong> resilientprivacy.com and its subdomains, and the Resilient Privacy platform.{/* gap: confirm in-scope asset list */}</p>
+          <p><strong>In scope:</strong> resilientprivacy.com and its subdomains, including the Resilient Privacy platform at app.resilientprivacy.com and its API at api.resilientprivacy.com.</p>
           <p><strong>Out of scope:</strong> denial-of-service, social engineering or phishing of our staff, physical attacks, third-party services we do not control, automated scanner output without a demonstrated impact, missing best-practice headers without a working exploit, and systems belonging to our customers.</p>
         </>],
         ["Rules of engagement", <ul>
@@ -40,7 +39,7 @@ export default function SecurityPage() {
         </ul>],
         ["Safe harbor", <p>If you make a good-faith effort to follow this policy, we will consider your research authorized, will not pursue legal action against you for it, and will not ask law enforcement to do so. If a third party brings action against you for activity that complied with this policy, we will make it known that your actions were authorized. This does not apply to activity that violates the law or this policy.</p>],
         ["Testing is authorized only as described here", <p>This policy authorizes good-faith research on our own systems only. It does not authorize testing of our customers&rsquo; systems or any third party&rsquo;s systems, and it does not create a services relationship or any guarantee that our systems are free of vulnerabilities. Any dispute about this policy is governed by Delaware law and resolved under the dispute sections of our <a href="/legal/terms#notice-of-dispute-and-informal-resolution">Terms of Use</a>, including binding individual arbitration and the jury trial waiver.</p>],
-        ["Bug bounty", <p>We do not currently run a paid bug bounty program.{/* gap: update if a bounty program launches */}</p>],
+        ["Bug bounty", <p>We do not currently run a paid bug bounty program. We still welcome reports under this policy and credit researchers who want it.</p>],
         ["How we protect our systems", <>
           <p>We apply the same practices we deliver to customers:</p>
           <ul>
@@ -48,9 +47,10 @@ export default function SecurityPage() {
             <li>Single sign-on, multi-factor authentication and least-privilege access for staff.</li>
             <li>24/7 monitoring of our own environment by our security operations team.</li>
             <li>Regular penetration testing and vulnerability management.</li>
-            {/* gap: confirm staff security awareness training and background checks before listing them */}
+            <li>Security awareness training for all staff at hire and every year after.</li>
+            <li>Background checks before hire where local law allows, and confidentiality agreements for all staff and contractors.</li>
           </ul>
-          <p>{/* gap: audit reports and certifications, list only once issued */}Customers can request security documentation through their account team.</p>
+          <p>The company does not hold an audit report or certification such as SOC 2 or ISO 27001. Our team holds individual industry certifications, including CISSP, CISM, CISA, OSCP, CEH, Security+ and CCNA. Customers can request our security documentation through their account team.</p>
         </>],
       ]}
     />
