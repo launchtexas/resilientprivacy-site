@@ -7,11 +7,12 @@ const DEFAULT: Framework[] = [
   { name: "ISO 27001", pct: 81 },
   { name: "GDPR", pct: 74 },
 ];
+// [control ID, name, evidence file · source]. SOC 2 TSC 2017 and ISO/IEC 27001:2022 Annex A IDs.
 const CONTROLS = [
-  ["CC6.1", "Quarterly access review", "Okta"],
-  ["CC7.2", "Alerting on admin logins", "SIEM"],
-  ["CC8.1", "Change approval", "GitHub"],
-  ["A.8.24", "Key rotation", "AWS KMS"],
+  ["CC6.3", "Quarterly access review", "access_review_q3.csv · Okta"],
+  ["CC7.2", "Alerting on admin logins", "rule_admin_signin.kql · SIEM"],
+  ["CC8.1", "Change approval", "pr_approvals_oct.json · GitHub"],
+  ["A.8.24", "Key rotation", "kms_rotation_status.json · AWS KMS"],
 ];
 const DONE = 6; // beat when the last control lands
 
@@ -25,7 +26,7 @@ export function ComplianceRing({ frameworks = DEFAULT, className }: { frameworks
       title="evidence · audit readiness"
       status={<Swap steps={[[<Chip key="c" tone="accent" dot>Collecting</Chip>, undefined, DONE], [<Chip key="r" tone="ok"><Check className="size-3" />Audit-ready</Chip>, DONE]]} />}
       beats={[400, 1300, 2000, 2700, 3400, 4100]}
-      label={`Compliance evidence collected automatically from Okta, the SIEM, GitHub and AWS; control coverage ${fw.map((f) => `${f.name} ${f.pct}%`).join(", ")}.`}
+      label={`Example data. Compliance evidence collected automatically from Okta, the SIEM, GitHub and AWS; control coverage ${fw.map((f) => `${f.name} ${f.pct}%`).join(", ")}.`}
     >
       <div className="grid gap-4 p-3.5 @md:p-4 @xl:grid-cols-[10rem_minmax(0,1fr)]">
         <div className="min-w-0">
@@ -48,7 +49,7 @@ export function ComplianceRing({ frameworks = DEFAULT, className }: { frameworks
               <span className="w-12 shrink-0 font-mono text-micro text-navy-500">{id}</span>
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-[13px] font-medium text-navy-950">{name}</span>
-                <span className="block truncate font-mono text-micro text-navy-500">from {src}</span>
+                <span className="block truncate font-mono text-micro text-navy-500">{src}</span>
               </span>
               <Swap
                 className="shrink-0"

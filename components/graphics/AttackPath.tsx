@@ -2,12 +2,13 @@ import { Check, Chip, Cross, Frame, Swap } from "./kit";
 import { Cursor } from "../motion";
 import { cx } from "../ui";
 
+// Each hop names the real resource and the MITRE ATT&CK technique used to cross it. Example data (AWS docs account).
 const HOPS = [
-  { name: "Internet", sub: "anonymous" },
-  { name: "Exposed API", sub: "api.example.test /v1/export" },
-  { name: "Leaked token", sub: "CI log · deploy-bot" },
-  { name: "Admin role", sub: "iam: AdminAccess" },
-  { name: "Customer DB", sub: "crown jewel · PII" },
+  { name: "Internet", sub: "203.0.113.47 · anonymous", tid: "" },
+  { name: "Exposed API", sub: "api.example.com /v1/export", tid: "T1190" },
+  { name: "Leaked token", sub: "CI log · build #2231 · deploy-bot", tid: "T1552.001" },
+  { name: "Admin role", sub: "arn:aws:iam::111122223333:role/AdminAccess", tid: "T1078.004" },
+  { name: "Customer DB", sub: "arn:aws:rds:us-east-1:111122223333:db:prod-customers", tid: "T1530" },
 ];
 const FIX = 6; // beat where the token is rotated
 const CUT = 2; // the token hop (index) the fix lands on
@@ -17,7 +18,7 @@ export function AttackPath({ className }: { className?: string }) {
   return (
     <Frame
       className={className}
-      title="exposure graph · example-prod"
+      title="attack path · aws 111122223333 · us-east-1"
       status={<Swap steps={[[<Chip key="s" tone="neutral">Scanning</Chip>, undefined, 5], [<Chip key="r" tone="critical" dot>Path reachable</Chip>, 5, FIX], [<Chip key="c" tone="ok"><Check className="size-3" />Path closed</Chip>, FIX]]} />}
       beats={[600, 1300, 2000, 2700, 3400, { at: 5000, click: "fix" }]}
       label="Attack path from the internet through an exposed API, a leaked token and an admin role to the customer database; rotating the token closes the path."
@@ -42,7 +43,10 @@ export function AttackPath({ className }: { className?: string }) {
                 {i === CUT && <span data-at={FIX} className="rp-pop grid place-items-center rounded-full bg-ok text-white"><Check /></span>}
               </span>
               <span className="min-w-0 flex-1">
-                <span className={cx("block truncate text-[13px] font-semibold", i === HOPS.length - 1 ? "text-navy-950" : "text-navy-900")}>{h.name}</span>
+                <span className="flex items-baseline gap-2">
+                  <span className={cx("truncate text-[13px] font-semibold", i === HOPS.length - 1 ? "text-navy-950" : "text-navy-900")}>{h.name}</span>
+                  {h.tid && <span className="shrink-0 font-mono text-[10px] text-navy-500">{h.tid}</span>}
+                </span>
                 <span className="block truncate font-mono text-micro text-navy-500">{h.sub}</span>
               </span>
               {i === CUT && (

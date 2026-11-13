@@ -23,14 +23,14 @@ export function AiAttackSurface({ className }: { className?: string }) {
           <Shield className="mt-0.5" />
           <div className="min-w-0">
             <p className="font-semibold">Blocked: prompt injection</p>
-            <p className="truncate font-mono text-micro opacity-90">OWASP LLM01 · 12 ms</p>
+            <p className="truncate font-mono text-micro opacity-90">OWASP LLM01:2025 · ATLAS AML.T0051 · 12 ms</p>
           </div>
         </div>
         <p data-at="5" className="w-fit max-w-[85%] rounded-2xl rounded-bl-md bg-accent-soft px-3 py-2 text-navy-900">I can&apos;t share that. Anything else about your order?</p>
       </div>
       <div className="flex items-center justify-between gap-2 border-t border-line px-3.5 py-2.5">
-        <span data-at="6" className="min-w-0 truncate font-mono text-micro text-navy-500">AI-0193 → SIEM</span>
-        <Chip tone="ok" className="shrink-0"><Check className="size-3" />0 data left the model</Chip>
+        <span data-at="6" className="min-w-0 truncate font-mono text-micro text-navy-500">evt ai-0193 → SIEM · 2026-11-03T14:02:09Z</span>
+        <Chip tone="ok" className="shrink-0"><Check className="size-3" />0 records returned</Chip>
       </div>
     </Frame>
   );

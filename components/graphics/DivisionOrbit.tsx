@@ -3,10 +3,10 @@ import { cx } from "../ui";
 
 // Consulting and AI Security lead; Managed and Platform support. [name, task, beat it starts, beat it settles, settled label]
 const ROWS = [
-  ["Consulting", "Pentest finds the token leak", 1, 2, "Done"],
-  ["AI Security", "Red team on the support bot", 2, 3, "Done"],
-  ["Managed SOC/NOC", "Watches the fixed systems", 3, 4, "Monitoring"],
-  ["Platform", "Maps evidence to SOC 2", 4, 5, "Reporting"],
+  ["Consulting", "API test: RP-0142, CWE-639, fixed", 1, 2, "Done"],
+  ["AI Security", "Red team: LLM01:2025 on support bot", 2, 3, "Done"],
+  ["Managed SOC/NOC", "Detection for T1190 on api.example.com", 3, 4, "Monitoring"],
+  ["Platform", "Retest filed to SOC 2 CC7.1", 4, 5, "Reporting"],
 ] as const;
 
 /** One engagement handed across the four practices under one named lead: each row goes Queued → Active → Done/Ongoing. Plays once in view. */
@@ -14,7 +14,7 @@ export function DivisionOrbit({ core = "One accountable team", className }: { co
   return (
     <Frame
       className={cx("mx-auto max-w-md", className)}
-      title="engagement · your-org"
+      title="engagement RP-2026-0142 · Example Corp"
       status={<Chip tone="accent">{core}</Chip>}
       beats={[500, 1700, 2900, 4100, 5300]}
       label={`${core}: one engagement passes from Consulting to AI Security, then Managed SOC/NOC monitors and Platform maps the evidence.`}

@@ -171,7 +171,7 @@ function Stream({ cfg, className }: { cfg: Cfg; className?: string }) {
         <div aria-hidden>
           <div className="gw-bar">
             <span className="min-w-0 truncate font-mono text-[12px] text-navy-500">{cfg.app}</span>
-            <span className="gw-live"><span className="gw-dot" />Live</span>
+            <span className="gw-live"><span className="gw-dot" />Example data</span>
           </div>
           <dl className="gw-stats">
             {cfg.stats.map(([l, v, tone, hero]) => (
@@ -226,7 +226,7 @@ const AI: Cfg = {
   ],
   seed: [
     { kind: "review", row: ["14:01:52", "LLM06", "Human review", "Logged"] },
-    { kind: "review", row: ["14:01:40", "LLM08", "Tool call approved", "Logged"] },
+    { kind: "review", row: ["14:01:40", "LLM06", "Tool call approved", "Logged"] },
     { kind: "catch", row: ["14:01:31", "LLM01", "Prompt injection", "Logged"] },
   ],
 };
@@ -245,17 +245,17 @@ const SOC: Cfg = {
   verdict: { catch: "Incident", review: "Benign" },
   settle: "Containing…",
   stats: [["Alerts", alerts, "navy"], ["Triaged", triaged, "accent"], ["Incidents", incidents, "critical"], ["Contained", contained, "ok", true]],
-  clean: [["bell", "Failed login · vpn-gw"], ["bell", "New device · m.chen"], ["bell", "DNS spike · build-07"], ["bell", "AV signature update"], ["bell", "Port scan · edge-fw"]],
+  clean: [["bell", "Failed login · vpn-gw"], ["bell", "New device · LT-0442"], ["bell", "DNS spike · build-07"], ["bell", "AV signature update"], ["bell", "Port scan · edge-fw"]],
   hits: [
-    { kind: "catch", icon: "bell", text: "Ransomware · fs-02", row: ["14:02:09", "INC-418", "Ransomware", "Contained · 9 min"] },
-    { kind: "review", icon: "bell", text: "Admin login, new IP", row: ["14:02:16", "AL-9921", "Admin login, new IP", "Closed"] },
-    { kind: "catch", icon: "bell", text: "Token theft · okta", row: ["14:02:24", "INC-419", "Token theft", "Contained · 13 min"] },
-    { kind: "catch", icon: "bell", text: "Admin takeover", row: ["14:02:31", "INC-420", "Admin takeover", "Contained · 11 min"] },
+    { kind: "catch", icon: "bell", text: "Ransomware · fs-02", row: ["14:02:09", "INC-418", "T1486 Data encrypted · fs-02", "Contained · 9 min"] },
+    { kind: "review", icon: "bell", text: "Admin login, new IP", row: ["14:02:16", "AL-9921", "T1078 Admin login · 198.51.100.9", "Closed"] },
+    { kind: "catch", icon: "bell", text: "Token theft · idp", row: ["14:02:24", "INC-419", "T1528 OAuth token theft", "Contained · 13 min"] },
+    { kind: "catch", icon: "bell", text: "Admin takeover", row: ["14:02:31", "INC-420", "T1098 Admin role added", "Contained · 11 min"] },
   ],
   seed: [
-    { kind: "review", row: ["14:01:52", "AL-9917", "Impossible travel", "Closed"] },
-    { kind: "catch", row: ["14:01:40", "INC-417", "Phishing click", "Contained · 12 min"] },
-    { kind: "review", row: ["14:01:31", "AL-9910", "MFA fatigue", "Closed"] },
+    { kind: "review", row: ["14:01:52", "AL-9917", "T1078 Impossible travel", "Closed"] },
+    { kind: "catch", row: ["14:01:40", "INC-417", "T1566.002 Phishing link", "Contained · 12 min"] },
+    { kind: "review", row: ["14:01:31", "AL-9910", "T1621 MFA push spam", "Closed"] },
   ],
 };
 

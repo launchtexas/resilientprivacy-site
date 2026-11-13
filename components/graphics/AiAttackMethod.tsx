@@ -19,9 +19,9 @@ const NODES = [
 const WIRES = ["LLM01", "LLM06", "LLM02"]; // edge tags shown on Retest: injection, excessive agency, sensitive data
 const LOG = [
   "› recon · 4 nodes · 11 tools · 2 MCP servers",
-  "! inject · hidden text in a ticket · LLM01",
-  "! tool abuse · refund_api called · LLM06",
-  "! exfil · 3 customer emails left · LLM02",
+  "! inject · hidden text in a ticket · LLM01:2025",
+  "! tool abuse · refund_api called · LLM06:2025",
+  "! exfil · 3 customer emails left · LLM02:2025",
   "✓ retest · 3/3 chains blocked + logged",
 ];
 const BEAT = 2400; // ms per step; the CSS in graphics.css (.rp-am) is written for exactly 5 steps
