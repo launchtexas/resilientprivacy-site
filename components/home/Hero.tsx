@@ -56,24 +56,12 @@ const Labeled = ({ children }: { children: React.ReactNode }) => (
   </>
 );
 
-// Public frameworks we map work to: text chips, never logos.
-const FRAMEWORKS: { group: string; items: [string, string][] }[] = [
-  { group: "Attack and testing", items: [
-    ["MITRE ATT&CK", "Technique IDs on every finding and detection"],
-    ["MITRE ATLAS", "Adversary techniques against AI systems"],
-    ["OWASP LLM Top 10 (2025)", "Test cases for models, agents and tools"],
-    ["OWASP ASVS", "Application test depth and pass criteria"],
-  ] },
-  { group: "AI governance", items: [
-    ["NIST AI RMF", "Risk register and controls for AI use"],
-    ["ISO/IEC 42001", "AI management system readiness"],
-    ["EU AI Act", "Risk classification and obligations"],
-  ] },
-  { group: "Security and audit", items: [
-    ["NIST CSF 2.0", "Program maturity and roadmap"],
-    ["ISO/IEC 27001:2022", "Annex A control evidence"],
-    ["SOC 2", "Trust Services Criteria mapping"],
-  ] },
+// Platforms RP secures and works in. Unaltered Simple Icons marks, one-colour via CSS mask; sources in public/logos/SOURCES.md.
+// Splunk's mark is a wordmark centred in a square viewBox: no extra label, and cover-scaled so it reaches the row height.
+const PLATFORMS: [slug: string, name: string, wordmark?: true][] = [
+  ["googlecloud", "Google Cloud"], ["kubernetes", "Kubernetes"], ["docker", "Docker"], ["terraform", "Terraform"],
+  ["github", "GitHub"], ["cloudflare", "Cloudflare"], ["okta", "Okta"], ["splunk", "Splunk", true],
+  ["elastic", "Elastic"], ["datadog", "Datadog"], ["paloaltonetworks", "Palo Alto Networks"], ["anthropic", "Anthropic"],
 ];
 
 export function Hero() {
@@ -117,15 +105,14 @@ export function Hero() {
         </div>
 
         <div className="mx-auto mt-16 max-w-5xl text-center lg:mt-20">
-          <p className="text-sm text-navy-600">Every engagement maps to the public frameworks your auditors and engineers already use</p>
-          <Marquee label="Frameworks we work to" className="mt-6" gap="0.75rem">
-            {FRAMEWORKS.flatMap((g) => g.items.map(([name, use]) => (
-              <div key={name} className="w-64 shrink-0 rounded-xl bg-canvas px-4 py-3 text-left shadow-hairline">
-                <span className="block text-[0.6875rem] font-semibold uppercase tracking-wide text-navy-500">{g.group}</span>
-                <span className="mt-1 block font-mono text-[0.8125rem] font-medium text-navy-900">{name}</span>
-                <span className="mt-0.5 block text-xs text-navy-600">{use}</span>
-              </div>
-            )))}
+          <p className="text-sm text-navy-600">Platforms we secure and work in</p>
+          <Marquee label="Platforms we secure and work in" className="mt-6">
+            {PLATFORMS.map(([slug, name, wordmark]) => (
+              <span key={slug} role="img" aria-label={name} className="flex h-7 shrink-0 items-center gap-2 text-navy-500 transition-colors hover:text-navy-700">
+                <span aria-hidden className={`h-full bg-current [mask-position:center] [mask-repeat:no-repeat] ${wordmark ? "w-24 [mask-size:cover]" : "w-7 [mask-size:contain]"}`} style={{ maskImage: `url(/logos/${slug}.svg)` }} />
+                {!wordmark && <span aria-hidden className="text-base font-semibold whitespace-nowrap">{name}</span>}
+              </span>
+            ))}
           </Marquee>
         </div>
       </div>
