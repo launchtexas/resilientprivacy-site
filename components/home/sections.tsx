@@ -127,13 +127,13 @@ export function AiSecurity() {
 const STATIONS = [
   { tag: "Test", title: "Found", body: "Broken object-level authorization exposes other tenants' invoices", meta: `${FINDING.id} · Critical`, tone: "bg-critical" },
   { tag: "Fix", title: "Retested", body: "Ownership check added; our retest confirms the fix", meta: "Retest passed", tone: "bg-ok" },
-  { tag: "Detect", title: "Watched", body: "The same technique becomes a SOC detection rule", meta: "Rule live in SOC", tone: "bg-ok" },
-  { tag: "Evidence", title: "Proven", body: "Report, retest and rule filed against the control", meta: "SOC 2 CC7.2 ✓", tone: "bg-ok" },
+  { tag: "Detect", title: "Watched", body: "The same technique becomes a SOC detection rule", meta: "Sigma rule DET-118 · T1190", tone: "bg-ok" },
+  { tag: "Evidence", title: "Proven", body: "Report, retest and rule filed against the control", meta: "SOC 2 CC7.1 · ISO A.8.16 ✓", tone: "bg-ok" },
 ];
 
 const CLOSURE = {
   title: "Findings from report to proof, one quarter",
-  board: "findings · Q3 board",
+  board: "findings · Example Corp · Q3 2026",
   item: { id: FINDING.id, title: FINDING.title, tag: "Critical", tone: "critical", owner: "JP" },
   stages: [
     { label: "Reported", value: QUARTER.reported },
@@ -143,10 +143,10 @@ const CLOSURE = {
   ],
   notes: [["sign", "9 risks accepted in writing", "signed by owner"], ["clock", "2 in fix window", "inside SLA"]],
   others: [
-    ["Stored XSS", "Medium"], ["Public S3 bucket", "Low"], ["JWT never expires", "High"],
-    ["Session valid after logout", "Medium"], ["Weak TLS ciphers", "Low"], ["SSRF in image proxy", "High"],
-    ["Rate limit on /login", "Medium"], ["Server version in headers", "Low"], ["Exposed admin panel", "High"],
-    ["CSRF on settings", "Medium"], ["Outdated jQuery", "Low"], ["Secrets in CI logs", "High"],
+    ["CWE-79 Stored XSS", "Medium"], ["CWE-284 Public S3 bucket", "Low"], ["CWE-613 JWT never expires", "High"],
+    ["CWE-613 Session after logout", "Medium"], ["CWE-327 Weak TLS ciphers", "Low"], ["CWE-918 SSRF in image proxy", "High"],
+    ["CWE-307 No rate limit /login", "Medium"], ["CWE-200 Server version header", "Low"], ["CWE-306 Exposed admin panel", "High"],
+    ["CWE-352 CSRF on settings", "Medium"], ["CWE-1104 jQuery 1.12.4", "Low"], ["CWE-532 Secrets in CI logs", "High"],
   ],
   done: "All accounted for",
   label: "One quarter of findings on a board. A critical broken object-level authorization finding moves from Reported to Fixed with PR 482, passes its retest and is filed as SOC 2 CC7.1 evidence. Totals: 142 reported, 133 fixed, 131 retest passed, 131 evidence filed, 9 risks accepted in writing, 2 still in the fix window.",
@@ -254,9 +254,9 @@ const PRODUCTS: [string, string, string, PIconName, ReactNode][] = [
       {[[6, 8], [60, 4], [114, 12]].map(([x, y]) => <circle key={x} cx={x} cy={y} r="3.5" fill="currentColor" className="text-navy-700" />)}
     </svg><Flip a={<Badge>3 assets</Badge>} b={<Badge tone="critical" dot>1 reachable path</Badge>} /></>],
   ["AlertRank", "Threat Detection · Correlated incidents with timelines, handed to our SOC.", "/platform/threat-detection", "eye",
-    <><span className={row}>CASE-8812 · lateral move</span><Flip a={<Badge tone="medium" dot>Investigating</Badge>} b={<Badge tone="ok" dot>Contained</Badge>} /></>],
+    <><span className={row}>CASE-8812 · T1003.001 LSASS dump</span><Flip a={<Badge tone="medium" dot>Investigating</Badge>} b={<Badge tone="ok" dot>Contained</Badge>} /></>],
   ["PrivacyFlow", "Privacy Automation · Data discovery, live data map and DSAR workflows.", "/platform/privacy-automation", "lock",
-    <><span className={row}>DSAR-0217 · access</span><Flip a={<Badge tone="medium" dot>Due in 9d</Badge>} b={<Badge tone="ok" dot>Sent · day 6</Badge>} /></>],
+    <><span className={row}>DSR-1042 · access</span><Flip a={<Badge tone="medium" dot>Due in 9d</Badge>} b={<Badge tone="ok" dot>Sent · day 6</Badge>} /></>],
 ];
 
 export function Platform() {

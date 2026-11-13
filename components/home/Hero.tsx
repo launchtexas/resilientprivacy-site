@@ -15,21 +15,21 @@ const AI_REPORT = AI_SERVICES.find((s) => s.slug === "red-teaming") ?? AI_SERVIC
 
 function PlatformConsole() {
   const alerts: Alert[] = [
-    { sev: "critical", title: "Unauthenticated admin endpoint exposed", meta: "api.example.com · /v2/admin/users", time: "2m" },
-    { sev: "high", title: "Impossible travel sign-in", meta: "Okta · j.rivera · contained by SOC", time: "9m" },
-    { sev: "medium", title: "S3 bucket allows public listing", meta: "aws · prod-exports", time: "31m" },
-    { sev: "ok", title: "Phishing payload quarantined", meta: "M365 · 14 mailboxes", time: "1h" },
+    { sev: "critical", title: "Admin endpoint without auth · CWE-306", meta: "api.example.com · GET /v2/admin/users", time: "2m" },
+    { sev: "high", title: "Sign-in from new country · T1078.004", meta: "svc-billing@example.com · 203.0.113.47 · contained", time: "9m" },
+    { sev: "medium", title: "S3 ListBucket allowed to *", meta: "arn:aws:s3:::prod-exports · 111122223333", time: "31m" },
+    { sev: "ok", title: "Phishing link quarantined · T1566.002", meta: "M365 · 14 mailboxes", time: "1h" },
   ];
   return (
     <AppWindow
       title="app.resilientprivacy.com/overview"
-      label="Resilient Privacy console overview showing open findings, monitored APIs, a weekly alert trend and a live alert feed."
+      label="Resilient Privacy console overview showing open findings, monitored APIs, a weekly alert trend and an alert feed. Example data."
       sidebar={<AppSidebar items={["Overview", "Findings", "API inventory", "Detections", "Privacy", "Compliance", "Reports"]} />}
     >
       <div className="bg-mist p-4 sm:p-5">
         <div className="mb-4">
           <p className="text-sm font-semibold text-navy-950">Security overview</p>
-          <p className="text-xs text-navy-500">All environments · last 7 days</p>
+          <p className="text-xs text-navy-500">Example Corp · all environments · last 7 days</p>
         </div>
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
           <StatTile label="Open critical findings" value="7" delta="−42% vs last week" good spark={[14, 13, 12, 12, 10, 9, 7]} />
@@ -40,7 +40,7 @@ function PlatformConsole() {
           <Panel title="Alerts triaged" action={<Legend items={[["bg-accent", "This week"], ["bg-navy-300", "Last week"]]} />} className="lg:col-span-3">
             <AreaChart data={[42, 55, 48, 70, 64, 82, 76, 90, 84, 98, 92, 104]} compare={[38, 44, 46, 50, 58, 54, 60, 66, 63, 70, 68, 72]} labels={["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]} />
           </Panel>
-          <Panel title="Live alerts" className="lg:col-span-2">
+          <Panel title="Alerts · newest first" className="lg:col-span-2">
             <AlertList alerts={alerts} />
           </Panel>
         </div>

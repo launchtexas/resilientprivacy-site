@@ -5,13 +5,13 @@ import { Badge, type Tone } from "@/components/ui";
 
 // Illustrative events, alternating a new finding (+1 open incident, gets an owner) and a resolution (−1).
 const POOL: { sev: Tone; title: string; meta: string; owner?: string }[] = [
-  { sev: "critical", title: "Admin endpoint with no auth", meta: "APIWall · GET /v2/admin/users", owner: "API" },
-  { sev: "ok", title: "Token replay contained", meta: "Detection · finance-admin" },
-  { sev: "high", title: "Public bucket listing", meta: "CloudGrade · prod-exports", owner: "Data" },
-  { sev: "ok", title: "OAuth app with mail.read revoked", meta: "Detection · auto-contained" },
-  { sev: "critical", title: "Exploitable path to prod-db", meta: "Exposure · vpn.example.com", owner: "Infra" },
-  { sev: "ok", title: "Access review evidence collected", meta: "Compliance · CC6.2" },
-  { sev: "high", title: "Token replayed from new country", meta: "Detection · finance-admin", owner: "SOC" },
+  { sev: "critical", title: "Admin endpoint with no auth · CWE-306", meta: "APIWall · GET /v2/admin/users", owner: "API" },
+  { sev: "ok", title: "Token replay contained", meta: "Detection · INC-2304 · T1550.004" },
+  { sev: "high", title: "S3 ListBucket allowed to *", meta: "CloudGrade · arn:aws:s3:::prod-exports", owner: "Data" },
+  { sev: "ok", title: "OAuth app with Mail.Read revoked · T1528", meta: "Detection · auto-contained" },
+  { sev: "critical", title: "Exploitable path to prod-db-01", meta: "Exposure · CVE-2024-21762 on vpn.example.com", owner: "Infra" },
+  { sev: "ok", title: "Access review evidence collected", meta: "Compliance · SOC 2 CC6.3 · ISO A.5.18" },
+  { sev: "high", title: "Session cookie replayed from 198.51.100.9", meta: "Detection · INC-2304 · T1550.004", owner: "SOC" },
   { sev: "ok", title: "Deletion request completed", meta: "Privacy · DSR-1039" },
 ];
 const LABEL: Partial<Record<Tone, string>> = { critical: "Critical", high: "High", ok: "Resolved" };
