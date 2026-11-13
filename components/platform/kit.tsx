@@ -23,7 +23,7 @@ export function Icon({ name, className = "size-5" }: { name: IconName; className
   );
 }
 
-export const PLACEHOLDER_NOTE = "Illustrative product data";
+export const PLACEHOLDER_NOTE = "Example data";
 export const Note = ({ className }: { className?: string }) => <p className={cx("mt-3 text-micro text-navy-500", className)}>{PLACEHOLDER_NOTE}</p>;
 
 /** Horizontal bars for mockups: [label, value]; widths relative to the largest value. */

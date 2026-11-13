@@ -18,4 +18,4 @@ export function Icon({ name, className = "size-5" }: { name: IconName; className
   );
 }
 
-export const PLACEHOLDER_NOTE = "Illustrative product data";
+export const PLACEHOLDER_NOTE = "Example data";

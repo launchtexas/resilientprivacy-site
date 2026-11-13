@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return s ? { title: s.name, description: s.desc } : {};
 }
 
-const NOTE = <p className="mt-3 text-micro text-navy-500">Illustrative data</p>;
+const NOTE = <p className="mt-3 text-micro text-navy-500">Example data</p>;
 const GRAPHIC: Record<string, { title: string; lead: string; node: ReactNode }> = {
   "penetration-testing": {
     title: "Findings are written while we test.",

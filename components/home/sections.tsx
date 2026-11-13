@@ -115,7 +115,7 @@ export function AiSecurity() {
           <div className="sm:rounded-frame sm:bg-accent-soft sm:p-6 sm:ring-1 sm:ring-accent/10">
             <div className="sm:rounded-panel sm:bg-canvas sm:p-6 sm:shadow-card"><AiAttackSurface /></div>
           </div>
-          <p className="mt-3 text-micro text-navy-500">Illustrative attack classes, not client data</p>
+          <p className="mt-3 text-micro text-navy-500">Example attack classes, not client data</p>
           <Link href="/ai-security" className={more}>The AI Security practice <Arrow /></Link>
         </div>
       </div>

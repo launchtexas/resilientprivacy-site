@@ -64,7 +64,7 @@ export default function ResourcesHub() {
           </div>
           <figure className="mx-auto w-full max-w-lg lg:col-span-6">
             <AiAttackSurface />
-            <figcaption className="mt-3 text-center text-micro text-navy-500">Illustrative product data</figcaption>
+            <figcaption className="mt-3 text-center text-micro text-navy-500">Example data</figcaption>
           </figure>
         </div>
       </Section>

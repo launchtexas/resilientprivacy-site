@@ -134,7 +134,7 @@ export function DocPage({ d, crumb, check }: { d: Doc; crumb: [string, string]; 
         aside={graphic && (
           <figure className="mx-auto max-w-md print:hidden">
             {graphic()}
-            {!CHARTED.has(d.category) && <figcaption className="mt-3 text-center text-micro text-navy-500">Illustrative product data</figcaption>}
+            {!CHARTED.has(d.category) && <figcaption className="mt-3 text-center text-micro text-navy-500">Example data</figcaption>}
           </figure>
         )}
       >

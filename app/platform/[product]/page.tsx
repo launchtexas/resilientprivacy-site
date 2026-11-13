@@ -122,7 +122,7 @@ export default async function ProductPage({ params }: Props) {
           {g && (
             <figure className="lg:col-span-7">
               {g.node}
-              <figcaption className="mt-3 text-micro text-navy-500">{g.caption} Illustrative product data</figcaption>
+              <figcaption className="mt-3 text-micro text-navy-500">{g.caption} Example data</figcaption>
             </figure>
           )}
         </div>

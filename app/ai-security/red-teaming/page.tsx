@@ -37,7 +37,7 @@ const REPLAY = (
         { text: "✓ retest passed · evidence filed", tone: "accent" },
       ]}
     />
-    <p className="mt-3 text-micro text-navy-500">Illustrative transcript</p>
+    <p className="mt-3 text-micro text-navy-500">Example transcript</p>
   </>
 );
 

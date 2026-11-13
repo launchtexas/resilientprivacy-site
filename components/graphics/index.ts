@@ -1,4 +1,4 @@
-// Signature product scenes (animated UI, not decoration). Illustrative data: caption each with `Illustrative product data [placeholder]` where a reader could take it as real.
+// Signature product scenes (animated UI, not decoration). Example data: caption each with `Example data` where a reader could take it as real.
 export { ThreatPipeline } from "./ThreatPipeline";
 export { AiAttackSurface } from "./AiAttackSurface";
 export { SocMap } from "./SocMap";

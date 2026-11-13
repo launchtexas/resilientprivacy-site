@@ -12,7 +12,7 @@ import { Check, Chip, lag } from "@/components/graphics/kit";
 import "./managed.css";
 import { JsonLd, breadcrumbs, service } from "@/lib/schema";
 
-export const PLACEHOLDER_NOTE = "Illustrative product data";
+export const PLACEHOLDER_NOTE = "Example data";
 
 /* ---------- icons (24px grid, 1.6 stroke, same style as homepage) ---------- */
 const ICONS = {

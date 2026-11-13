@@ -78,7 +78,7 @@ export default function IntegrationsPage() {
       "asset": "GET /v2/admin/users", "owner": "identity-team" }
 ] }`}
             </pre>
-            <p className="mt-3 text-micro text-navy-500">Illustrative request, not the published schema</p>
+            <p className="mt-3 text-micro text-navy-500">Example request, not the published schema</p>
           </div>
         </div>
       </Section>

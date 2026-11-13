@@ -92,7 +92,7 @@ export default function HowWeWorkPage() {
       <Section labelledBy="te-title">
         <SectionHeading id="te-title" eyebrow={"From test to evidence"} title="One finding, followed all the way to the audit file." lead="The loop most firms split across separate teams. We run it as one: the finding is fixed, retested, watched by the SOC and filed as evidence." />
         <TestToEvidence className="mt-12" />
-        <p className="mt-3 text-micro text-navy-500">Illustrative report data</p>
+        <p className="mt-3 text-micro text-navy-500">Example data</p>
       </Section>
 
       <Section tone="mist" labelledBy="em-title">

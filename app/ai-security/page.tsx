@@ -126,7 +126,7 @@ export default function AiSecurityPage() {
                 </div>
               ))}
             </dl>
-            <p className="mt-3 text-micro text-navy-500">Illustrative finding</p>
+            <p className="mt-3 text-micro text-navy-500">Example finding</p>
           </Card>
         </div>
       </Section>

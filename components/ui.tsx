@@ -64,7 +64,7 @@ export function Badge({ tone = "neutral", dot, children, className }: { tone?: T
 }
 
 /** Caption under illustrative mockups and charts (DESIGN.md "Honest gaps"). No visible [placeholder] tags. */
-export const ILLUSTRATIVE = "Illustrative data";
+export const ILLUSTRATIVE = "Example data";
 
 /* ---------- Eyebrow (small label above a heading) ---------- */
 export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {

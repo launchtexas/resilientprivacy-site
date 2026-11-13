@@ -4,7 +4,7 @@ import { Badge, Section, SectionHeading, cx } from "@/components/ui";
 import { AppWindow, Panel } from "@/components/mockup";
 import { SEV_LABEL, type Service } from "./data";
 
-export const PLACEHOLDER_NOTE = "Illustrative report data";
+export const PLACEHOLDER_NOTE = "Example data";
 
 export function Icon({ d, className = "size-5" }: { d: string; className?: string }) {
   return (

@@ -81,7 +81,7 @@ const data: ServiceData = {
       { text: "  prompt and tool-call logs preserved", tone: "plain", pause: 400 },
       { text: "✓ contained · investigation started", tone: "accent" },
     ]} />,
-    caption: "Illustrative case log",
+    caption: "Example case log",
   },
   monthly: {
     lead: "Unused hours are not wasted. They go into readiness work, reported every month.",

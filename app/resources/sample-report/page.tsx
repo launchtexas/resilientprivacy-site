@@ -93,7 +93,7 @@ export default function SampleReport() {
               <Eyebrow>Executive summary</Eyebrow>
               <h2 id="summary-title" className="mt-3 text-h2 font-semibold tracking-[-0.025em] text-balance">Web application and API penetration test</h2>
             </div>
-            <Badge tone="medium">Example report · {ILLUSTRATIVE}</Badge>
+            <Badge tone="medium">Example report</Badge>
           </div>
           <dl className="grid grid-cols-2 gap-x-6 gap-y-5 border-b border-line py-6 md:grid-cols-4">
             {meta("Client", "Example organization")}
