@@ -4,10 +4,9 @@ import { AppSidebar, AppWindow, AreaChart, DataTable, Legend, Panel, Progress, S
 
 const SIDEBAR = ["Overview", "Cases", "Detections", "Hunts", "Network", "Reports", "Playbooks"];
 
-const Live = ({ children = "Live" }: { children?: string }) => (
-  <span className="inline-flex items-center gap-1.5 rounded-full bg-canvas px-2.5 py-1 text-micro font-medium text-navy-700 shadow-card">
-    <span className="pulse-dot size-1.5 rounded-full bg-accent" /> {children}
-  </span>
+// Neutral scope label (time range, sort, poll interval) in place of a "live" badge: the data is an example.
+const Live = ({ children }: { children: string }) => (
+  <span className="inline-flex items-center rounded-control border border-line bg-canvas px-2 py-0.5 font-mono text-micro text-navy-600">{children}</span>
 );
 
 function Header({ title, sub, right }: { title: string; sub: string; right?: React.ReactNode }) {
@@ -43,12 +42,12 @@ const mono = (s: string) => <span className="font-mono text-xs">{s}</span>;
 export function OpsConsole() {
   return (
     <AppWindow
-      title="ops.resilientprivacy.com/queue"
+      title="ops.example.com/queue"
       label="Managed operations console with open cases, response time, uptime and a shared case queue across SOC, MDR and NOC."
       sidebar={<AppSidebar items={SIDEBAR} active={1} />}
     >
       <div className="bg-mist p-4 sm:p-5">
-        <Header title="Case queue" sub="All services · Your company · last 24 hours" right={<Live>Analysts on shift: 6</Live>} />
+        <Header title="Case queue" sub="All services · Example Corp" right={<Live>Last 24 h · UTC ▾</Live>} />
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           <StatTile label="Open cases" value="14" delta="−5 since 08:00" good spark={[22, 21, 19, 18, 17, 15, 14]} />
           <StatTile label="Median time to triage" value="6m" delta="−2m vs last week" good spark={[11, 10, 9, 9, 8, 7, 6]} />
@@ -59,11 +58,13 @@ export function OpsConsole() {
           <DataTable
             className="-mx-3"
             columns={["Case", "Summary", "Service", "Severity", "Status"]}
+            sort={3}
+            total={14}
             rows={[
-              [mono("CASE-8812"), "Ransomware precursor on FIN-LT-044", "MDR", sev("critical", "Critical"), sev("ok", "Contained")],
-              [mono("CASE-8810"), "OAuth app granted mail.read to all users", "SOC", sev("high", "High"), sev("accent", "Investigating")],
-              [mono("CASE-8807"), "Core switch packet loss 4% · DAL-02", "NOC", sev("medium", "Medium"), sev("neutral", "Monitoring")],
-              [mono("CASE-8803"), "Password spray on VPN gateway", "SOC", sev("high", "High"), sev("ok", "Blocked")],
+              [mono("CASE-8812"), "T1003.001 LSASS dump on fin-lt-044", "MDR", sev("critical", "Critical"), sev("ok", "Contained")],
+              [mono("CASE-8810"), "T1528 OAuth app granted Mail.Read tenant-wide", "SOC", sev("high", "High"), sev("accent", "Investigating")],
+              [mono("CASE-8807"), "Packet loss 4% · dal-02-core-sw1", "NOC", sev("medium", "Medium"), sev("neutral", "Monitoring")],
+              [mono("CASE-8803"), "T1110.003 Password spray · 198.51.100.23", "SOC", sev("high", "High"), sev("ok", "Blocked")],
             ]}
           />
         </Panel>
@@ -76,30 +77,30 @@ export function OpsConsole() {
 export function MdrConsole() {
   return (
     <AppWindow
-      title="ops.resilientprivacy.com/cases/CASE-8812"
+      title="ops.example.com/cases/CASE-8812"
       label="MDR incident view: a ransomware precursor contained in minutes, with timeline, response actions and affected assets."
       sidebar={<AppSidebar items={SIDEBAR} active={1} />}
     >
       <div className="bg-mist p-4 sm:p-5">
-        <Header title="CASE-8812 · Ransomware precursor on FIN-LT-044" sub="Opened 02:14 · lead analyst M. Osei" right={<Badge tone="ok" dot>Contained</Badge>} />
+        <Header title="CASE-8812 · Credential dumping on fin-lt-044 (T1003.001)" sub="Opened 2026-11-03T02:14:06Z · tier 2 on call" right={<Badge tone="ok" dot>Contained</Badge>} />
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-5">
           <Panel title="Timeline" className="lg:col-span-3">
             <Timeline items={[
-              ["02:14", "EDR: credential dumping tool on FIN-LT-044", "Detection"],
-              ["02:17", "Analyst confirms malicious, pages on-call", "Triage"],
-              ["02:19", "Host isolated from network", "Response · pre-approved"],
-              ["02:22", "User sessions revoked, password reset forced", "Response · pre-approved"],
-              ["02:41", "Customer notified with summary and next steps", "Escalation"],
+              ["02:14:06Z", "EDR: lsass.exe read by rundll32.exe comsvcs.dll MiniDump", "Detection · T1003.001"],
+              ["02:17:30Z", "Analyst confirms malicious; parent winword.exe, src 203.0.113.47", "Triage"],
+              ["02:19:12Z", "fin-lt-044 isolated in EDR", "Response · pre-approved"],
+              ["02:22:41Z", "j.doe@example.com sessions revoked, reset forced", "Response · pre-approved"],
+              ["02:41:00Z", "Example Corp notified with summary and next steps", "Escalation"],
             ]} />
           </Panel>
           <div className="grid grid-cols-1 gap-3 lg:col-span-2">
             <div className="grid grid-cols-2 gap-3">
-              <StatTile label="Detect → contain" value="8m" />
+              <StatTile label="Detect → contain" value="8m 35s" />
               <StatTile label="Hosts affected" value="1" />
             </div>
             <Panel title="Actions taken">
               <ul className="space-y-2 text-[0.8125rem]">
-                {["Isolate host", "Revoke sessions", "Block hash in EDR", "Disable account"].map((a, i) => (
+                {["Isolate host", "Revoke sessions", "Block SHA-256 9f2c…e41a", "Disable account"].map((a, i) => (
                   <li key={a} className="flex items-center justify-between gap-2">
                     <span className="text-navy-800">{a}</span>
                     {i < 3 ? sev("ok", "Done") : sev("neutral", "Awaiting you")}
@@ -118,19 +119,19 @@ export function MdrConsole() {
 export function SocConsole() {
   return (
     <AppWindow
-      title="ops.resilientprivacy.com/detections"
+      title="ops.example.com/detections"
       label="Managed SOC console: alert volume after tuning, triage queue with time-to-acknowledge, and recently tuned detection rules."
       sidebar={<AppSidebar items={SIDEBAR} active={2} />}
     >
       <div className="bg-mist p-4 sm:p-5">
-        <Header title="Detections and triage" sub="SIEM · EDR · identity · email" right={<Live>Shift B · 4 analysts</Live>} />
+        <Header title="Detections and triage" sub="SIEM · EDR · identity · email" right={<Live>Status: New, Active ▾</Live>} />
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-5">
           <Panel title="Alerts needing a human" action={<Legend items={[["bg-accent", "After tuning"], ["bg-navy-300", "Before"]]} />} className="lg:col-span-3">
             <AreaChart data={[120, 104, 96, 80, 72, 61, 58, 50, 46, 44, 41, 38]} compare={[124, 128, 122, 130, 126, 132, 129, 135, 131, 128, 134, 130]} labels={["W1", "W3", "W5", "W7", "W9", "W12"]} />
           </Panel>
           <Panel title="Recently tuned" className="lg:col-span-2">
             <ul className="space-y-2.5 text-[0.8125rem]">
-              {[["Impossible travel · VPN egress", "−71% noise"], ["PowerShell encoded command", "+2 sources"], ["Mailbox forwarding rule", "New rule"]].map(([r, c]) => (
+              {[["T1078 Impossible travel · VPN egress", "−71% noise"], ["T1059.001 PowerShell -enc", "+2 sources"], ["T1114.003 Mailbox forwarding", "New rule"]].map(([r, c]) => (
                 <li key={r} className="flex items-center justify-between gap-2">
                   <span className="min-w-0 truncate text-navy-800">{r}</span>
                   <Badge tone="accent">{c}</Badge>
@@ -141,12 +142,14 @@ export function SocConsole() {
           <Panel title="Triage queue" className="lg:col-span-5">
             <DataTable
               className="-mx-3"
-              columns={["Alert", "Source", "Severity", "Ack", "Owner"]}
+              columns={["Alert", "Technique", "Source", "Severity", "Ack"]}
+              sort={3}
+              total={38}
               rows={[
-                ["Mailbox rule forwards to external domain", "M365", sev("high", "High"), mono("3m"), "A. Khan"],
-                ["Admin role assigned outside change window", "Entra ID", sev("high", "High"), mono("5m"), "R. Silva"],
-                ["Beaconing to newly registered domain", "Firewall", sev("medium", "Medium"), mono("9m"), "A. Khan"],
-                ["Disabled AV on build server", "EDR", sev("critical", "Critical"), mono("1m"), "L. Chen"],
+                ["Defender tamper protection off · build-07", mono("T1562.001"), "EDR", sev("critical", "Critical"), mono("1m")],
+                ["Inbox rule forwards to external domain", mono("T1114.003"), "M365", sev("high", "High"), mono("3m")],
+                ["Global Admin assigned outside change window", mono("T1098.003"), "Entra ID", sev("high", "High"), mono("5m")],
+                ["Beaconing to domain registered 2 days ago", mono("T1071.001"), "Firewall", sev("medium", "Medium"), mono("9m")],
               ]}
             />
           </Panel>
@@ -165,12 +168,12 @@ export function NocConsole() {
   const tone = { ok: "bg-ok", medium: "bg-medium", critical: "bg-critical" };
   return (
     <AppWindow
-      title="ops.resilientprivacy.com/network"
+      title="ops.example.com/network"
       label="Managed NOC console: uptime, site health grid with one degraded site, latency trend and scheduled changes."
       sidebar={<AppSidebar items={SIDEBAR} active={4} />}
     >
       <div className="bg-mist p-4 sm:p-5">
-        <Header title="Network health" sub="12 sites · 1,840 devices" right={<Live>NOC watching</Live>} />
+        <Header title="Network health" sub="12 sites · 1,840 devices" right={<Live>SNMP poll 60 s</Live>} />
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           <StatTile label="Uptime (30 days)" value="99.98%" delta="within target" good />
           <StatTile label="Devices patched" value="96%" delta="+4% this month" good />
@@ -195,6 +198,7 @@ export function NocConsole() {
             <DataTable
               className="-mx-3"
               columns={["Change", "Window", "Risk", "Status"]}
+              total={5}
               rows={[
                 [mono("CHG-2207"), "Firewall firmware · edge cluster", sev("medium", "Medium"), sev("neutral", "Sat 02:00")],
                 [mono("CHG-2204"), "Replace optic · DAL-02 core", sev("high", "High"), sev("accent", "Approved")],
@@ -213,12 +217,12 @@ export function IrConsole() {
   const phases: [string, "done" | "now" | "next"][] = [["Scope", "done"], ["Contain", "done"], ["Investigate", "now"], ["Recover", "next"], ["Report", "next"]];
   return (
     <AppWindow
-      title="ops.resilientprivacy.com/ir/ENG-0417"
+      title="ops.example.com/ir/ENG-0417"
       label="Incident response engagement view: phase tracker, retainer hours, evidence collected and next stakeholder update."
       sidebar={<AppSidebar items={["Overview", "Engagements", "Evidence", "Retainer", "IR plan", "Contacts"]} active={1} />}
     >
       <div className="bg-mist p-4 sm:p-5">
-        <Header title="ENG-0417 · Business email compromise" sub="Declared Tue 09:02 · incident commander J. Park" right={<Badge tone="high" dot>Active</Badge>} />
+        <Header title="ENG-0417 · Business email compromise" sub="Declared 2026-11-04T09:02Z · T1114.003 inbox rule · IC: RP on call" right={<Badge tone="high" dot>Active</Badge>} />
         <ol className="mb-3 grid grid-cols-5 gap-1.5">
           {phases.map(([p, s]) => (
             <li key={p}>
@@ -231,12 +235,13 @@ export function IrConsole() {
           <Panel title="Evidence collected" className="lg:col-span-3">
             <DataTable
               className="-mx-3"
-              columns={["Source", "Item", "Hash verified"]}
+              columns={["Source", "Item", "SHA-256"]}
+              total={9}
               rows={[
-                ["M365", "Unified audit log, 90 days", sev("ok", "Yes")],
-                ["Entra ID", "Sign-in logs, 3 accounts", sev("ok", "Yes")],
-                ["FIN-LT-021", "Memory image + triage package", sev("ok", "Yes")],
-                ["Mail gateway", "Message traces, 412 items", sev("neutral", "Pending")],
+                ["M365", "Unified audit log, 90 days", mono("4be1…07c9 ✓")],
+                ["Entra ID", "Sign-in logs, 3 accounts", mono("a3f0…5d12 ✓")],
+                ["fin-lt-021", "Memory image + KAPE triage", mono("71cd…e2b8 ✓")],
+                ["Mail gateway", "Message traces, 412 items", sev("neutral", "Hashing")],
               ]}
             />
           </Panel>
@@ -260,17 +265,18 @@ export function IrConsole() {
 export function HuntConsole() {
   return (
     <AppWindow
-      title="ops.resilientprivacy.com/hunts"
+      title="ops.example.com/hunts"
       label="Threat hunting board: hunts by hypothesis with technique, data searched and outcome, plus findings by week."
       sidebar={<AppSidebar items={SIDEBAR} active={3} />}
     >
       <div className="bg-mist p-4 sm:p-5">
-        <Header title="Hunt board · Q4 cycle" sub="Hypotheses from current intel and your incident history" right={<Live>2 hunts running</Live>} />
+        <Header title="Hunt board · Q4 cycle" sub="Hypotheses from current intel and your incident history" right={<Live>Q4 2026 · ATT&CK v16</Live>} />
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-5">
           <Panel title="Hunts" className="lg:col-span-3">
             <DataTable
               className="-mx-3"
               columns={["Hypothesis", "Technique", "Outcome"]}
+              total={11}
               rows={[
                 ["Attackers persist through scheduled tasks on servers", mono("T1053"), sev("high", "2 findings")],
                 ["Stolen tokens replayed from new ASNs", mono("T1550"), sev("accent", "Running")],
