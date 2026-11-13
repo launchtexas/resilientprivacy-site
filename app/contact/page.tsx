@@ -4,7 +4,7 @@ import { CTA } from "@/lib/nav";
 import { Reveal, Stagger } from "@/components/motion";
 import { Arrow, Button, Card, Section, SectionHeading } from "@/components/ui";
 import { ContactCard, PageHero } from "@/components/company/parts";
-import { InquiryForm, type Field } from "@/components/company/InquiryForm";
+import { InquiryForm } from "@/components/company/InquiryForm";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -12,18 +12,6 @@ export const metadata: Metadata = {
 };
 
 // ?topic=<word> / ?intent=<word> in the URL preselect the option containing that word (InquiryForm), e.g. ?intent=engagement from CTA.scope.
-const INTENTS = ["Talk to an expert", "Scope an engagement", "Ask a question"];
-const TOPICS = ["Consulting & penetration testing", "AI security", "Managed SOC & NOC", "Security platform", "Risk & compliance (GRC)", "Partnerships", "Something else"];
-
-const FIELDS: Field[] = [
-  { name: "name", label: "Full name", required: true, autoComplete: "name" },
-  { name: "email", label: "Work email", type: "email", required: true, autoComplete: "email" },
-  { name: "company", label: "Company", required: true, autoComplete: "organization" },
-  { name: "phone", label: "Phone", autoComplete: "tel" },
-  { name: "intent", label: "I'd like to", type: "select", required: true, options: INTENTS },
-  { name: "topic", label: "Topic", type: "select", required: true, options: TOPICS },
-  { name: "message", label: "Message", type: "textarea", required: true },
-];
 
 export default function ContactPage() {
   return (
@@ -35,7 +23,7 @@ export default function ContactPage() {
           <Card className="p-6 sm:p-8 lg:col-span-7">
             <h2 id="form-title" className="text-h3 font-semibold tracking-[-0.015em]">Send us a message</h2>
             <p className="mt-1 mb-6 text-sm text-navy-500">Fields marked * are required. We reply within 2 business days.</p>
-            <InquiryForm fields={FIELDS} subject="Website inquiry" submitLabel="Send message" />
+            <InquiryForm form="contact" submitLabel="Send message" />
           </Card>
           <div className="space-y-6 lg:col-span-5">
             <ContactCard />
