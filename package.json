@@ -8,9 +8,10 @@
     "prebuild": "npm run -s check:copy",
     "build": "next build",
     "start": "next start",
-    "check:forms": "node --no-warnings components/company/inquiry.check.mjs && node --no-warnings app/api/inquiry/route.check.mjs"
+    "check:forms": "node --no-warnings components/company/inquiry.check.mjs && node --no-warnings --experimental-test-module-mocks app/api/inquiry/route.check.mjs"
   },
   "dependencies": {
+    "botid": "^1.5.13",
     "geist": "^1.9.2",
     "next": "^16.1.5",
     "react": "^19.3.1",

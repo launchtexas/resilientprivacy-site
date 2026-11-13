@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withBotId } from "botid/next/config";
 
 const dev = process.env.NODE_ENV === "development";
 
@@ -35,4 +36,5 @@ const config: NextConfig = {
   // AI work moved to its own practice (audit v3, section 3).
   redirects: async () => [{ source: "/consulting/ai-security", destination: "/ai-security/red-teaming", permanent: true }],
 };
-export default config;
+// BotID proxies its challenge through same-origin rewrites, so the CSP needs no new sources.
+export default withBotId(config);

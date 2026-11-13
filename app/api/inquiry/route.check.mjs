@@ -1,6 +1,10 @@
 // Self-check for POST /api/inquiry with fetch mocked; no real email is sent. Run: npm run check:forms
 import assert from "node:assert/strict";
-import { POST } from "./route.ts";
+import { mock } from "node:test";
+
+let verdict = { isBot: false }; // BotID mocked: real verdicts need a Vercel deployment
+mock.module("botid/server", { namedExports: { checkBotId: async () => verdict } });
+const { POST } = await import("./route.ts");
 
 const sent = [];
 globalThis.fetch = async (url, init) => (sent.push({ url, init }), new Response("{}", { status: 200 }));
@@ -37,6 +41,12 @@ assert.equal((await post({ ...ok, name: ["Ann"] })).status, 400);
 const bad = await post({ ...ok, email: "ann@acme" });
 assert.equal(bad.status, 400);
 assert.ok(!JSON.stringify(bad.body).includes("ann@acme")); // never echoes input
+assert.equal(sent.length, 0);
+
+// BotID says bot: 403 before anything is parsed or sent; human continues (every other case here).
+verdict = { isBot: true };
+assert.deepEqual(await post(ok), { status: 403, body: { ok: false, error: "Request not allowed." } });
+verdict = { isBot: false };
 assert.equal(sent.length, 0);
 
 // Valid: one Resend call, CR/LF stripped from subject, reply_to is the visitor.

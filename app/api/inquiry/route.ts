@@ -1,5 +1,6 @@
 // POST /api/inquiry: validates a contact/demo form and emails it to the inbox through Resend.
 // The only server code on the site; every page stays static. Other methods get Next's automatic 405.
+import { checkBotId } from "botid/server";
 import { FORMS, compose, validate, clean, type FormId } from "../../../components/company/inquiry.ts";
 
 const MAX_BODY = 16 * 1024;
@@ -37,6 +38,8 @@ export async function POST(req: Request) {
 
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() || req.headers.get("x-real-ip") || "unknown";
   if (limited(ip)) return fail(429, "Too many messages. Try again in a few minutes.", { "Retry-After": "600" });
+  // Vercel BotID (client side: instrumentation-client.ts). Off Vercel it answers "human", so local `next start` still works.
+  if ((await checkBotId({ developmentOptions: { isDevelopment: !process.env.VERCEL } })).isBot) return fail(403, "Request not allowed.");
 
   let data: Record<string, unknown>;
   try {
