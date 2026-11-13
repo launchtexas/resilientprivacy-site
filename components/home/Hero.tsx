@@ -2,7 +2,7 @@ import Link from "next/link";
 import { CtaButtons } from "@/components/sections";
 import { Tabs } from "@/components/Tabs";
 import { Arrow, Badge, Button } from "@/components/ui";
-import { Marquee, Parallax } from "@/components/motion";
+import { Parallax } from "@/components/motion";
 import { MdrConsole } from "@/components/managed/mockups";
 import { ReportMockup } from "@/components/consulting/parts";
 import { SERVICES } from "@/components/consulting/data";
@@ -57,7 +57,24 @@ const Labeled = ({ children }: { children: React.ReactNode }) => (
 );
 
 // Public frameworks we map work to: text chips, never logos.
-const FRAMEWORKS = ["OWASP Top 10 for LLM Applications", "MITRE ATLAS", "MITRE ATT&CK", "NIST AI RMF", "ISO/IEC 42001", "EU AI Act", "NIST CSF 2.0", "ISO/IEC 27001", "SOC 2", "OWASP ASVS"];
+const FRAMEWORKS: { group: string; items: [string, string][] }[] = [
+  { group: "Attack and testing", items: [
+    ["MITRE ATT&CK", "Technique IDs on every finding and detection"],
+    ["MITRE ATLAS", "Adversary techniques against AI systems"],
+    ["OWASP LLM Top 10 (2025)", "Test cases for models, agents and tools"],
+    ["OWASP ASVS", "Application test depth and pass criteria"],
+  ] },
+  { group: "AI governance", items: [
+    ["NIST AI RMF", "Risk register and controls for AI use"],
+    ["ISO/IEC 42001", "AI management system readiness"],
+    ["EU AI Act", "Risk classification and obligations"],
+  ] },
+  { group: "Security and audit", items: [
+    ["NIST CSF 2.0", "Program maturity and roadmap"],
+    ["ISO/IEC 27001:2022", "Annex A control evidence"],
+    ["SOC 2", "Trust Services Criteria mapping"],
+  ] },
+];
 
 export function Hero() {
   // Consulting first; each tab is that practice's own work artefact.
@@ -101,11 +118,21 @@ export function Hero() {
 
         <div className="mx-auto mt-16 max-w-5xl text-center lg:mt-20">
           <p className="text-sm text-navy-600">Every engagement maps to the public frameworks your auditors and engineers already use</p>
-          <Marquee label="Frameworks we work to" className="mt-6" gap="0.75rem">
-            {FRAMEWORKS.map((f) => (
-              <span key={f} className="whitespace-nowrap rounded-full bg-canvas px-4 py-2 font-mono text-xs text-navy-700 shadow-hairline">{f}</span>
+          <div className="mt-6 grid gap-px overflow-hidden rounded-xl bg-line text-left shadow-hairline sm:grid-cols-3" aria-label="Frameworks we work to">
+            {FRAMEWORKS.map((g) => (
+              <div key={g.group} className="bg-canvas p-5">
+                <h3 className="text-xs font-semibold uppercase tracking-wide text-navy-500">{g.group}</h3>
+                <ul className="mt-3 space-y-3">
+                  {g.items.map(([name, use]) => (
+                    <li key={name}>
+                      <span className="block font-mono text-[0.8125rem] font-medium text-navy-900">{name}</span>
+                      <span className="block text-xs text-navy-600">{use}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </Marquee>
+          </div>
         </div>
       </div>
     </section>
