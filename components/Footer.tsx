@@ -32,8 +32,11 @@ export function Footer() {
             ))}
           </div>
         </div>
-        <div className="mt-16 flex flex-col gap-4 border-t border-white/10 pt-8 text-xs sm:flex-row sm:items-center sm:justify-between">
-          <p>{CONTACT.copyright.replace("©", `© ${new Date().getFullYear()}`)} All rights reserved. All trademarks are the property of their respective owners.</p>
+        <div className="mt-16 flex flex-col gap-4 border-t border-white/10 pt-8 text-xs sm:flex-row sm:items-start sm:justify-between">
+          <div className="space-y-1.5">
+            <p className="text-navy-300">{CONTACT.copyright.replace("©", `© ${new Date().getFullYear()}`)} All rights reserved.</p>
+            <p className="text-navy-400">Third-party trademarks belong to their respective owners.</p>
+          </div>
           <ul className="flex gap-6">
             {LEGAL.map((l) => (
               <li key={l.href}><Link href={l.href} className="hover:text-white">{l.label}</Link></li>
