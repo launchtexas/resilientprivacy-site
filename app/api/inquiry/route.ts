@@ -55,7 +55,7 @@ export async function POST(req: Request) {
   if (form.fields.some((f) => data[f.name] != null && typeof data[f.name] !== "string")) return fail(400, "Invalid request.");
   if (data.agree !== true || Object.keys(validate(form.fields, data)).length) return fail(400, "Check the form and try again.");
 
-  const key = process.env.RESEND_API_KEY;
+  const key = process.env.RESEND_API_KEY || process.env.RESENT_API_KEY; // Vercel holds it as RESENT_API_KEY (sensitive vars cannot be renamed)
   if (!key) return json(503, { ok: false, fallback: "mailto" }); // Resend not set up yet: the client opens the email app
 
   const { subject: kind, body } = compose(form.subject, form.fields, data); // kind = form type + topic, e.g. "Demo request"
