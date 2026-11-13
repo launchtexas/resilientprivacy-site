@@ -12,10 +12,10 @@ import { FinalCta } from "@/components/sections";
 import { HuntConsole, IrConsole, MdrConsole, NocConsole, OpsConsole, SocConsole } from "@/components/managed/mockups";
 import { ProcessSteps } from "@/components/motion/ProcessSteps";
 
-const DESC = "Managed SOC, MDR, NOC and incident response from a cybersecurity and AI security consultancy. What our testers prove, our analysts watch for, 24/7.";
+const DESC = "Managed SOC, MDR, NOC and incident response services from a cybersecurity and AI security consultancy. What our testers prove, our analysts watch for, 24/7.";
 
 export const metadata: Metadata = {
-  title: "Managed SOC, MDR and NOC",
+  title: "Managed SOC, MDR & NOC Services",
   description: DESC,
 };
 

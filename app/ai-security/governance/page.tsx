@@ -7,7 +7,7 @@ import { RadarChart, RADAR_AI } from "@/components/charts";
 import { ChartBand } from "@/components/consulting/parts";
 
 const s = aiBySlug("governance");
-export const metadata: Metadata = { title: "AI Governance (ISO 42001, EU AI Act)", description: s.desc };
+export const metadata: Metadata = { title: "AI Governance: ISO 42001 & EU AI Act", description: s.desc };
 
 export default function Page() {
   return (

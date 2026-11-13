@@ -6,7 +6,7 @@ import { PageHero } from "@/components/company/parts";
 import { CONTACT } from "@/lib/nav";
 
 export const metadata: Metadata = {
-  title: "Careers",
+  title: "Cybersecurity Careers",
   description: "Join Resilient Privacy: security engineers, SOC analysts, penetration testers and GRC consultants working as one team.",
 };
 

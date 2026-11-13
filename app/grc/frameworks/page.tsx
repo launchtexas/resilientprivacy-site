@@ -6,7 +6,7 @@ import { FRAMEWORKS, GRC } from "@/components/grc/data";
 import { ServicePage } from "@/components/grc/ServicePage";
 
 const s = GRC.frameworks;
-export const metadata: Metadata = { title: "Compliance frameworks", description: s.lead };
+export const metadata: Metadata = { title: "Compliance Framework Consulting", description: "Compliance framework consulting for healthcare, payments, government, EU regulation and AI: map your controls once, reuse the work for each framework." };
 export default function Page() {
   return (
     <ServicePage s={s}>

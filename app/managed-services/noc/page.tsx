@@ -4,8 +4,8 @@ import { ServicePage, type ServiceData } from "@/components/managed/kit";
 import { NocConsole } from "@/components/managed/mockups";
 
 export const metadata: Metadata = {
-  title: "Managed NOC",
-  description: "Network monitoring, patching and change control around the clock, with clear uptime reporting.",
+  title: "Managed NOC Services",
+  description: "Managed NOC services: network monitoring, patching and change control around the clock, with clear uptime reporting.",
 };
 
 const data: ServiceData = {

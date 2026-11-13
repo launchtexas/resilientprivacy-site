@@ -7,7 +7,7 @@ import { CtaButtons } from "@/components/sections";
 import { Chip } from "@/components/graphics/kit";
 
 const s = aiBySlug("red-teaming");
-export const metadata: Metadata = { title: "AI Red Teaming for LLMs, Agents and MCP", description: s.desc };
+export const metadata: Metadata = { title: "AI Red Teaming Services: LLMs and Agents", description: s.desc };
 
 // Prompt-injection replay (audit idea 6.3): types once when seen; reduced motion shows every line.
 const REPLAY = (

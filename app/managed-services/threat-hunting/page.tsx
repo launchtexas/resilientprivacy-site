@@ -6,8 +6,8 @@ import { ServicePage, type ServiceData } from "@/components/managed/kit";
 import { HuntConsole } from "@/components/managed/mockups";
 
 export const metadata: Metadata = {
-  title: "Threat Hunting",
-  description: "Hypothesis-led hunts in your data. Analysts look for what automated rules missed and turn each finding into a new detection.",
+  title: "Threat Hunting Services",
+  description: "Threat hunting services: hypothesis-led hunts in your data. Analysts look for what automated rules missed and turn each finding into a new detection.",
 };
 
 const data: ServiceData = {

@@ -13,8 +13,8 @@ import { JsonLd, SITE_URL, breadcrumbs, service } from "@/lib/schema";
 import { NAV } from "@/lib/nav";
 import { ProcessSteps } from "@/components/motion/ProcessSteps";
 
-const DESC = "Cybersecurity and AI security consulting: penetration testing, red teaming, AI security, advisory and compliance from practitioners who stay until the fix ships.";
-export const metadata: Metadata = { title: "Cybersecurity and AI Security Consulting", description: DESC };
+const DESC = "Cybersecurity and AI security consulting: penetration testing, red teaming, AI security, advisory and compliance from practitioners who stay until fixes ship.";
+export const metadata: Metadata = { title: "Cybersecurity Consulting Services", description: DESC };
 
 function Hero() {
   return (

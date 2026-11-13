@@ -5,8 +5,8 @@ import { ServicePage, type ServiceData } from "@/components/managed/kit";
 import { MdrConsole } from "@/components/managed/mockups";
 
 export const metadata: Metadata = {
-  title: "Managed Detection & Response",
-  description: "24/7 monitoring with hands-on containment. Our analysts investigate, act under playbooks you approve, and tell you exactly what they did.",
+  title: "Managed Detection and Response (MDR)",
+  description: "Managed detection and response (MDR): 24/7 monitoring and hands-on containment. Analysts act under playbooks you approve and tell you exactly what they did.",
 };
 
 const data: ServiceData = {

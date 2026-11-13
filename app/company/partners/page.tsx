@@ -5,7 +5,7 @@ import { Faq, FinalCta } from "@/components/sections";
 import { Icon, PageHero } from "@/components/company/parts";
 
 export const metadata: Metadata = {
-  title: "Partners",
+  title: "Partner Program",
   description: "Technology and channel partner programs for integrators, resellers, MSPs and advisory firms working with Resilient Privacy.",
 };
 

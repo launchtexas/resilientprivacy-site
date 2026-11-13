@@ -11,7 +11,7 @@ import { hrefOf } from "@/components/consulting/data";
 import { AiAttackMethod, AiGatewayStream } from "@/components/graphics";
 
 const DESC = "AI security consulting: red teaming for LLMs, agents and MCP, AI governance for ISO/IEC 42001, NIST AI RMF and the EU AI Act, and secure AI adoption.";
-export const metadata: Metadata = { title: "AI Security Consulting", description: DESC };
+export const metadata: Metadata = { title: "AI Security Consulting & LLM Security", description: DESC };
 
 const METHOD: [string, string][] = [
   ["Recon", "Inventory models, agents, tools and data. Find where untrusted text gets in."],

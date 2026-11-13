@@ -10,7 +10,7 @@ export const generateStaticParams = () => POSTS.map((p) => ({ slug: p.slug }));
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const p = postBySlug((await params).slug);
-  return p ? { title: p.seo ?? p.title, description: p.excerpt, authors: [{ name: "Resilient Privacy Research" }] } : {};
+  return p ? { title: p.seo ?? p.title, description: p.seoDescription ?? p.excerpt, authors: [{ name: "Resilient Privacy Research" }] } : {};
 }
 
 export default async function Post({ params }: Props) {

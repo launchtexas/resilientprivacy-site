@@ -5,7 +5,7 @@ import { RadarChart, RiskHeatmap, RADAR_NIST, RISK_MATRIX } from "@/components/c
 import { ChartBand } from "@/components/consulting/parts";
 
 const s = GRC["risk-assessment"];
-export const metadata: Metadata = { title: s.name, description: s.lead };
+export const metadata: Metadata = { title: "Cybersecurity Risk Assessment Services", description: "Cybersecurity risk assessment: we identify threats to your business, rate them against your controls and put a range on the loss. A short list to fund." };
 export default function Page() {
   return (
     <ServicePage s={s}>

@@ -5,8 +5,8 @@ import { ServicePage, type ServiceData } from "@/components/managed/kit";
 import { SocConsole } from "@/components/managed/mockups";
 
 export const metadata: Metadata = {
-  title: "Managed SOC",
-  description: "Around-the-clock security monitoring. We run and tune your SIEM so analysts see what matters and escalate with context.",
+  title: "Managed SOC Services (SOC as a Service)",
+  description: "Managed SOC services: around-the-clock security monitoring. We run and tune your SIEM so analysts see what matters and escalate with context.",
 };
 
 const data: ServiceData = {

@@ -20,7 +20,7 @@ export const generateStaticParams = () => PRODUCTS.map((p) => ({ product: p.slug
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const p = productBySlug((await params).product);
-  return p ? { title: `${p.name} · ${p.kind}`, description: p.summary } : {};
+  return p ? { title: `${p.kind} (${p.name})`, description: p.summary } : {};
 }
 
 // One signature graphic per product where it shows the hand-off to people (DESIGN.md › Motion budget).

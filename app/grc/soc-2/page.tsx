@@ -5,7 +5,7 @@ import { Donut, CONTROLS } from "@/components/charts";
 import { ChartBand } from "@/components/consulting/parts";
 
 const s = GRC["soc-2"];
-export const metadata: Metadata = { title: s.name, description: s.lead };
+export const metadata: Metadata = { title: "SOC 2 Readiness & Audit Consulting", description: "SOC 2 readiness consulting: we scope the trust criteria, close the gaps, collect the evidence and sit beside you through audit fieldwork." };
 export default function Page() {
   return (
     <ServicePage s={s}>

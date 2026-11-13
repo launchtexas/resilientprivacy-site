@@ -16,8 +16,19 @@ export const generateStaticParams = () => SERVICES.map((s) => ({ service: s.slug
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const s = bySlug((await params).service);
-  return s ? { title: s.name, description: s.desc } : {};
+  if (!s) return {};
+  const seo = SEO[s.slug];
+  return { title: seo?.[0] ?? s.name, description: seo?.[1] ?? s.desc };
 }
+
+// Search titles and descriptions lead with the buyer's query; facts are the page's own.
+const SEO: Record<string, [string, string]> = {
+  "penetration-testing": ["Penetration Testing Services", "Penetration testing services: web, API, mobile, network and cloud tests by senior testers, mapped to OWASP and PTES, with a retest of every fix."],
+  "red-team": ["Red Team & Purple Team Services", "Red team and purple team services: objective-based campaigns mapped to MITRE ATT&CK. Every gap we find becomes a working detection in your SOC."],
+  appsec: ["Application Security Consulting", "Application security consulting: secure code review, threat modeling, DevSecOps guardrails and review of AI-written code, delivered with your engineers."],
+  architecture: ["Security Architecture Consulting", "Security architecture consulting: Zero Trust, identity, cloud and secure AI architecture reviews that end in a phased roadmap your team can build."],
+  vciso: ["Virtual CISO (vCISO) Services", "Virtual CISO (vCISO) services: a named CISO for strategy, board reporting, AI governance and customer assurance, without the full-time hire."],
+};
 
 const NOTE = <p className="mt-3 text-micro text-navy-500">Example data</p>;
 const GRAPHIC: Record<string, { title: string; lead: string; node: ReactNode }> = {

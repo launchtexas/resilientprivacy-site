@@ -2,8 +2,9 @@
 import { createElement } from "react";
 import { CONTACT } from "@/lib/nav";
 
-export const SITE_URL = "https://resilientprivacy.com";
+export const SITE_URL = "https://www.resilientprivacy.com"; // apex 308-redirects here; canonicals, sitemap and JSON-LD must use this host
 export const SITE_NAME = "Resilient Privacy";
+export const SITE_DESCRIPTION = "Cybersecurity and AI security consulting: we break, secure and govern your systems and AI, then stay until the fix is shipped, monitored and proven.";
 const ORG_ID = `${SITE_URL}/#organization`;
 const FOUNDER_ID = `${SITE_URL}/company#vishva-patel`;
 const abs = (path: string) => (path.startsWith("http") ? path : `${SITE_URL}${path === "/" ? "" : path}`);
@@ -22,7 +23,9 @@ export const organization = (): Thing => ({
   name: SITE_NAME,
   legalName: CONTACT.legalName,
   url: SITE_URL,
-  logo: abs("/icon.svg"),
+  logo: { "@type": "ImageObject", url: abs("/brand/logo-512.png"), width: 512, height: 512 },
+  image: abs("/brand/logo-512.png"),
+  sameAs: [CONTACT.linkedin],
   email: CONTACT.email,
   address: { "@type": "PostalAddress", streetAddress: CONTACT.address[0], addressLocality: "Richardson", addressRegion: "TX", postalCode: "75082", addressCountry: "US" },
   founder: { "@id": FOUNDER_ID },

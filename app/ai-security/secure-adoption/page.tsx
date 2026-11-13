@@ -4,7 +4,7 @@ import { ServiceView } from "@/components/consulting/ServiceView";
 import { AiAttackSurface } from "@/components/graphics";
 
 const s = aiBySlug("secure-adoption");
-export const metadata: Metadata = { title: "Secure AI Adoption", description: s.desc };
+export const metadata: Metadata = { title: "Secure AI Adoption Consulting", description: s.desc };
 
 export default function Page() {
   return (

@@ -5,7 +5,7 @@ import { Donut, INK, SEV } from "@/components/charts";
 import { ChartBand } from "@/components/consulting/parts";
 
 const s = GRC["iso-27001"];
-export const metadata: Metadata = { title: s.name, description: s.lead };
+export const metadata: Metadata = { title: "ISO 27001 Implementation Consulting", description: "ISO 27001 consulting: we build the ISMS around how you already work, test it with an internal audit and prepare you for certification." };
 export default function Page() {
   return (
     <ServicePage s={s}>

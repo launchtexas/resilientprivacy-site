@@ -5,7 +5,7 @@ import { RadarChart, RADAR_VENDOR } from "@/components/charts";
 import { ChartBand } from "@/components/consulting/parts";
 
 const s = GRC["vendor-risk"];
-export const metadata: Metadata = { title: s.name, description: s.lead };
+export const metadata: Metadata = { title: "Vendor Risk Management Services", description: "Vendor risk management: we tier suppliers by what they can touch, assess the ones that matter and keep watching after signature. Procurement stays fast." };
 export default function Page() {
   return (
     <ServicePage s={s}>

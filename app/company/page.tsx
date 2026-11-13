@@ -11,7 +11,7 @@ import { founder, JsonLd } from "@/lib/schema";
 import { CONTACT } from "@/lib/nav";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About Our Security Consultancy",
   description: "Resilient Privacy is a cybersecurity and AI security consultancy, backed by its own 24/7 SOC and security platform. Who we are and how we work.",
 };
 

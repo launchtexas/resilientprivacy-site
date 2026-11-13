@@ -9,7 +9,7 @@ import { JsonLd, article, breadcrumbs } from "@/lib/schema";
 import { ENGAGEMENT, FINDING } from "@/lib/example";
 
 const TITLE = "Sample penetration test report";
-const DESC = "An example findings report: executive summary, severity breakdown, findings with reproduction steps, impact, fix and retest status, mapped to audit evidence. Illustrative data.";
+const DESC = "An example penetration test report: executive summary, severity breakdown, findings with reproduction steps, fix and retest status. Illustrative data.";
 const PATH = "/resources/sample-report";
 
 export const metadata: Metadata = { title: TITLE, description: DESC, alternates: { canonical: PATH } };

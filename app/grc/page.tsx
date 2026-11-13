@@ -15,7 +15,7 @@ import { AI_GOV, ControlMockup, Faq, GRC_CTA, PLACEHOLDER_NOTE } from "@/compone
 const DESCRIPTION = "The Risk & Compliance practice: SOC 2, ISO 27001, privacy, risk, vendor and AI governance on one control set, with evidence from the security work.";
 
 export const metadata: Metadata = {
-  title: "Risk & Compliance",
+  title: "Risk & Compliance (GRC) Consulting",
   description: DESCRIPTION,
 };
 

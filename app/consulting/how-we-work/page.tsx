@@ -9,7 +9,7 @@ import { Timeline } from "@/components/charts";
 import { TestToEvidence } from "@/components/consulting/TestToEvidence";
 
 const DESC = "How Resilient Privacy runs consulting engagements: our method, fixed-scope engagement models, severity rubric, retest policy and a named lead.";
-export const metadata: Metadata = { title: "How We Work: Method and Engagements", description: DESC };
+export const metadata: Metadata = { title: "How Our Security Consulting Works", description: DESC };
 
 const MODELS = [
   { name: "Fixed-scope test", for: "A pentest, AI red team, appsec review or MCP permission review", length: "1–4 weeks", team: "Named lead + 1–2 testers", out: "Report, readout, retest, attestation", price: "From $5,000 (web app or API from $6,000)" },

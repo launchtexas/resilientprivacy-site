@@ -6,7 +6,7 @@ import { IrConsole } from "@/components/managed/mockups";
 
 export const metadata: Metadata = {
   title: "Incident Response Retainer & DFIR",
-  description: "Named responders on call, pre-agreed hours and response times, plus digital forensics when you need evidence that holds up.",
+  description: "Incident response retainer and DFIR: named responders on call, pre-agreed hours and response times, plus digital forensics when you need evidence that holds up.",
 };
 
 const data: ServiceData = {

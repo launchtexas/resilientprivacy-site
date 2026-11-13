@@ -7,7 +7,7 @@ import { ContactCard, PageHero } from "@/components/company/parts";
 import { InquiryForm } from "@/components/company/InquiryForm";
 
 export const metadata: Metadata = {
-  title: "Contact",
+  title: "Contact a Security Consultant",
   description: "Talk to a Resilient Privacy practitioner about consulting, AI security, managed SOC and NOC, the platform or compliance. Email info@resilientprivacy.com.",
 };
 

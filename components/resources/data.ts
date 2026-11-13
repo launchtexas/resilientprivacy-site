@@ -7,6 +7,7 @@ export type Doc = {
   title: string;
   /** Shorter <title> when `title` would push the tab title past 60 chars. */
   seo?: string;
+  seoDescription?: string; // when the excerpt runs past 160 characters
   category: string;
   excerpt: string;
   date: string; // ISO
@@ -26,6 +27,7 @@ export const POSTS: Doc[] = [
     slug: "ai-agent-mcp-security",
     title: "AI agents and MCP: securing the tools your models can call",
     seo: "AI agent and MCP security",
+    seoDescription: "AI agent and MCP security: the Model Context Protocol makes connecting tools easy, which moves the attack surface to tool permissions, tokens and servers.",
     category: "AI security",
     excerpt: "Agents turn text into actions. The Model Context Protocol makes connecting tools easy, which moves the real attack surface to tool permissions, tokens and the servers you install.",
     date: "2026-11-09",
