@@ -7,7 +7,8 @@
     "check:copy": "! grep -rnE '\\[(placeholder|proposed name)' app components | grep -vE ':[0-9]+:[[:space:]]*(//|/\\*|\\{/\\*|\\*)' | grep -v 'data-gap'",
     "prebuild": "npm run -s check:copy",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "check:forms": "node --no-warnings components/company/inquiry.check.mjs"
   },
   "dependencies": {
     "geist": "^1.9.2",

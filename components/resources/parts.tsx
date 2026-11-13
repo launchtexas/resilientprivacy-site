@@ -189,7 +189,7 @@ export function Newsletter() {
           <input type="hidden" name="subject" value="Newsletter" />
           <label htmlFor="news-email" className="text-sm font-medium text-navy-800">Work email</label>
           <div className="mt-2 flex flex-col gap-3 sm:flex-row">
-            <input id="news-email" name="body" type="email" required autoComplete="email" placeholder="you@company.com" className="h-12 min-w-0 flex-1 rounded-full bg-canvas px-5 text-navy-950 shadow-hairline placeholder:text-navy-500" />
+            <input id="news-email" name="body" type="email" required maxLength={254} pattern="[A-Za-z0-9._%+\-]+@[A-Za-z0-9\-]+(\.[A-Za-z0-9\-]+)*\.[A-Za-z]{2,}" title="A work email, like name@company.com" autoComplete="email" placeholder="you@company.com" className="h-12 min-w-0 flex-1 rounded-full bg-canvas px-5 text-navy-950 shadow-hairline placeholder:text-navy-500" />
             <button type="submit" className="h-12 rounded-full bg-accent px-6 font-medium text-white transition-colors duration-(--duration-fast) hover:bg-accent-hover">Subscribe</button>
           </div>
           <div className="mt-3 flex items-start gap-2.5 text-sm text-navy-700">
