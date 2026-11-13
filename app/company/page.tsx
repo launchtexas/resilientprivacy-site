@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { CONTACT } from "@/lib/nav";
 import { CtaButtons } from "@/components/sections";
 import { Arrow, Button, Card, Section, SectionHeading } from "@/components/ui";
 import { ContactCard, Icon, ICONS, PageHero } from "@/components/company/parts";
@@ -140,42 +139,6 @@ export default function CompanyPage() {
             <p className="mt-2 text-[0.9375rem] leading-relaxed text-navy-600">Scoping to retest in nine weeks, with the same named lead throughout. Critical findings reach you the day we confirm them, not at the reporting phase.</p>
           </Reveal>
           <Timeline className="min-w-0 lg:col-span-8" {...ENGAGEMENT} title="A typical engagement, week by week" />
-        </div>
-      </Section>
-
-      <Section tone="mist" labelledBy="facts-title">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <SectionHeading id="facts-title" eyebrow="Company facts" title="Who you are working with." lead="The basics procurement and security reviews ask for." />
-            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium">
-              <Link href="/company/careers" className="group inline-flex items-center gap-1.5 text-accent hover:text-accent-hover">Careers <Arrow /></Link>
-              <Link href="/company/partners" className="group inline-flex items-center gap-1.5 text-accent hover:text-accent-hover">Partners <Arrow /></Link>
-              <Link href="/legal/security" className="group inline-flex items-center gap-1.5 text-accent hover:text-accent-hover">Security & disclosure <Arrow /></Link>
-              <Link href="/resources/trust" className="group inline-flex items-center gap-1.5 text-accent hover:text-accent-hover">Trust center <Arrow /></Link>
-              <Link href="/resources/blog" className="group inline-flex items-center gap-1.5 text-accent hover:text-accent-hover">Research <Arrow /></Link>
-            </div>
-          </div>
-          <div className="reveal lg:col-span-7">
-            <Card className="divide-y divide-line">
-              {[
-                ["Legal name", CONTACT.legalName],
-                ["Headquarters and main hub", `${CONTACT.address.slice(0, 2).join(", ")}, USA`],
-                ["Where we deliver", "Remote services to clients in 15+ countries"],
-                ["Support coverage", "24/7, follow-the-sun, with teams in the USA and India"],
-                ["Critical incidents", `Response ${CONTACT.critical}`],
-                ["Founder & CEO", "Vishva Patel"],
-                ["Standards we work to", "NIST CSF 2.0, ISO/IEC 27001, OWASP and MITRE ATLAS (public frameworks, not certifications)"],
-                ["Inquiries", CONTACT.email],
-                ["Security reports", "Responsible disclosure policy", "/legal/security"],
-                ["Legal notices", CONTACT.legal],
-              ].map(([k, v, href]) => (
-                <div key={k} className="grid grid-cols-1 gap-1 px-6 py-4 sm:grid-cols-3 sm:gap-4">
-                  <p className="text-sm font-medium text-navy-500">{k}</p>
-                  <p className="text-navy-900 sm:col-span-2">{href || v.includes("@") ? <a href={href ?? `mailto:${v}`} className="font-medium text-accent hover:text-accent-hover">{v}</a> : v}</p>
-                </div>
-              ))}
-            </Card>
-          </div>
         </div>
       </Section>
 
