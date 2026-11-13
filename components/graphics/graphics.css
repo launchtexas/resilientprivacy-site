@@ -7,7 +7,7 @@ svg.rp-g *, .rp-g svg * { transform-box: fill-box; transform-origin: center; }
 /* SocMap feed: the newest event slides in at the top every 2.4s (12s loop over a doubled list; translate only). */
 .rp-feed { mask-image: linear-gradient(transparent, black 12%, black 82%, transparent); }
 @media (prefers-reduced-motion: no-preference) {
-  .rp-feed-track { animation: rp-feed 12s var(--ease-out) infinite both; }
+  .rp-feed-track { animation: rp-feed 20s var(--ease-out) infinite both; }
 }
 @keyframes rp-feed {
   0%, 16% { translate: 0 -50%; }
