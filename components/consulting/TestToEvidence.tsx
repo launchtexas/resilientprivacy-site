@@ -5,8 +5,8 @@ import { FINDING } from "@/lib/example"; // reuses the ThreatPipeline step/packe
 
 const STEPS = [
   { tag: "Test", title: "Find", body: "Broken object-level authorization exposes other tenants' invoices", meta: `${FINDING.id} · critical` },
-  { tag: "Fix", title: "Verify", body: "Ownership check shipped; our retest confirms the chain is broken", meta: "PR #2841 · retest passed" },
-  { tag: "Detect", title: "Watch", body: "Invoice-ID enumeration becomes a detection rule in the SOC", meta: "Rule DET-118 · live" },
+  { tag: "Fix", title: "Verify", body: "Ownership check shipped; our retest confirms the chain is broken", meta: "PR #418 · retest passed 2026-10-21" },
+  { tag: "Detect", title: "Watch", body: "Invoice-ID enumeration becomes a detection rule in the SOC", meta: "Sigma DET-118 · T1190 · enabled" },
   { tag: "Evidence", title: "Prove", body: "Finding, fix and retest filed against the control they prove", meta: "SOC 2 CC7.1 · ISO 27001 A.8.29" },
 ];
 
