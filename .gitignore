@@ -4,5 +4,6 @@ next-env.d.ts
 *.tsbuildinfo
 .claude
 .env*
+!.env.example
 .DS_Store
 csp-hashes.json

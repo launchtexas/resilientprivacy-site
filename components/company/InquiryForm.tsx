@@ -1,15 +1,27 @@
 "use client";
-// No backend: a valid form opens the visitor's email app with a prefilled message to CONTACT.email.
+// Posts to /api/inquiry (emailed via Resend). Until Resend is configured the route answers 503 + fallback,
+// and the form opens the visitor's email app with a prefilled message to CONTACT.email instead.
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { CONTACT } from "@/lib/nav";
-import { maxLen, mailtoHref, validate, type Field } from "./inquiry";
+import { FORMS, maxLen, mailtoHref, validate, type Field, type FormId } from "./inquiry";
+
+type Status = "" | "sent" | "mailto" | "error" | "limited";
 
 const INPUT =
   "w-full rounded-control bg-canvas px-3.5 text-[0.9375rem] text-navy-950 shadow-hairline outline-none transition-shadow duration-(--duration-fast) placeholder:text-navy-500 focus:shadow-[0_0_0_2px_var(--color-accent)] aria-invalid:shadow-[0_0_0_2px_var(--color-critical)]";
 
-export function InquiryForm({ fields, subject, submitLabel }: { fields: Field[]; subject: string; submitLabel: string }) {
+const MESSAGES: Record<Status, string> = {
+  "": "",
+  sent: "Thanks, your message is on its way. We reply within 2 business days.",
+  mailto: `Your email app should open now. If it doesn't, write to ${CONTACT.email}.`,
+  error: `We couldn't send your message. Try again, or write to ${CONTACT.email}.`,
+  limited: `You've sent several messages in a short time. Wait a few minutes, or write to ${CONTACT.email}.`,
+};
+
+export function InquiryForm({ form: formId, submitLabel }: { form: FormId; submitLabel: string }) {
+  const { fields, subject } = FORMS[formId] as { fields: Field[]; subject: string };
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<Status>("");
   const [busy, setBusy] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -24,7 +36,7 @@ export function InquiryForm({ fields, subject, submitLabel }: { fields: Field[];
     }
   }, [fields]);
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
@@ -35,15 +47,21 @@ export function InquiryForm({ fields, subject, submitLabel }: { fields: Field[];
     setErrors(errs);
     const first = [...fields.map((f) => f.name), "agree"].find((n) => errs[n]);
     if (first) {
-      setSent(false);
+      setStatus("");
       (form.elements.namedItem(first) as HTMLElement | null)?.focus();
       return;
     }
-    // Cool-down so repeated clicks don't open a pile of email drafts.
+    // Cool-down so repeated clicks don't send (or open) a pile of messages.
     setBusy(true);
     setTimeout(() => setBusy(false), 5000);
-    window.location.href = mailtoHref(CONTACT.email, subject, fields, data);
-    setSent(true);
+    let res: Response | undefined;
+    try {
+      res = await fetch("/api/inquiry", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...data, agree: true, form: formId }) });
+    } catch {}
+    const fallback = res?.status === 503 && (await res.json().catch(() => null))?.fallback === "mailto";
+    if (fallback) window.location.href = mailtoHref(CONTACT.email, subject, fields, data);
+    setStatus(fallback ? "mailto" : res?.ok ? "sent" : res?.status === 429 ? "limited" : "error");
+    if (res?.ok) form.reset();
   }
 
   return (
@@ -96,14 +114,14 @@ export function InquiryForm({ fields, subject, submitLabel }: { fields: Field[];
             </label>
           </div>
           {errors.agree && <p id="f-agree-err" className="mt-1.5 text-critical-ink">{errors.agree}</p>}
-          <p className="mt-2 text-navy-500">Opens your email app with the message filled in. Nothing is stored on this site.</p>
+          <p className="mt-2 text-navy-500">Sent by email to our team. Nothing is stored on this site.</p>
         </div>
         <button type="submit" disabled={busy} className="inline-flex disabled:opacity-60 h-12 shrink-0 items-center justify-center rounded-full bg-accent px-6 font-medium text-white transition-colors duration-(--duration-fast) hover:bg-accent-hover">
           {submitLabel}
         </button>
       </div>
-      <p role="status" aria-live="polite" className="text-sm text-ok-ink sm:col-span-2 empty:hidden">
-        {sent ? `Your email app should open now. If it doesn't, write to ${CONTACT.email}.` : ""}
+      <p role="status" aria-live="polite" className={`text-sm sm:col-span-2 empty:hidden ${status === "error" || status === "limited" ? "text-critical-ink" : "text-ok-ink"}`}>
+        {MESSAGES[status]}
       </p>
     </form>
   );

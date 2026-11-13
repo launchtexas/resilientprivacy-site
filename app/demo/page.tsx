@@ -4,22 +4,13 @@ import { Card, CheckList, Section, SectionHeading } from "@/components/ui";
 import { Faq } from "@/components/sections";
 import { PageHero } from "@/components/company/parts";
 import { ThreatPipeline } from "@/components/graphics";
-import { InquiryForm, type Field } from "@/components/company/InquiryForm";
+import { InquiryForm } from "@/components/company/InquiryForm";
 
 export const metadata: Metadata = {
   title: "Book a demo",
   description: "See the Resilient Privacy platform, managed SOC, consulting and GRC services in a 30-minute walkthrough tailored to your environment.",
 };
 
-const FIELDS: Field[] = [
-  { name: "name", label: "Full name", required: true, autoComplete: "name" },
-  { name: "email", label: "Work email", type: "email", required: true, autoComplete: "email" },
-  { name: "company", label: "Company", required: true, autoComplete: "organization" },
-  { name: "role", label: "Job title", autoComplete: "organization-title" },
-  { name: "size", label: "Company size", type: "select", required: true, options: ["1–50", "51–200", "201–1,000", "1,001–5,000", "5,000+"] },
-  { name: "interest", label: "Main interest", type: "select", required: true, options: ["Security platform", "Managed SOC & NOC", "Consulting & penetration testing", "Audit & GRC", "All of it"] },
-  { name: "message", label: "What should we focus on?", type: "textarea" },
-];
 
 const AGENDA = [
   ["5 min", "Your goals", "What you're protecting, what's in place and what's not working."],
@@ -39,7 +30,7 @@ export default function DemoPage() {
           <Card className="p-6 sm:p-8 lg:col-span-7">
             <h2 id="form-title" className="text-h3 font-semibold tracking-[-0.015em]">Request your demo</h2>
             <p className="mt-1 mb-6 text-sm text-navy-500">Fields marked * are required. We'll reply with times that work.</p>
-            <InquiryForm fields={FIELDS} subject="Demo request" submitLabel="Request demo" />
+            <InquiryForm form="demo" submitLabel="Request demo" />
           </Card>
           <div className="space-y-6 lg:col-span-5">
             <Card className="p-6 lg:p-8">

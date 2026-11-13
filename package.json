@@ -8,7 +8,7 @@
     "prebuild": "npm run -s check:copy",
     "build": "node scripts/csp-build.mjs",
     "start": "next start",
-    "check:forms": "node --no-warnings components/company/inquiry.check.mjs"
+    "check:forms": "node --no-warnings components/company/inquiry.check.mjs && node --no-warnings app/api/inquiry/route.check.mjs"
   },
   "dependencies": {
     "geist": "^1.9.2",
