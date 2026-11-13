@@ -114,7 +114,6 @@ export function Hero() {
               </span>
             ))}
           </Marquee>
-          <p className="mt-4 text-xs text-navy-500">Trademarks belong to their owners and are shown to identify platforms we work with, not to imply endorsement or partnership. <Link href="/legal/terms" className="underline hover:text-navy-700">Terms</Link></p>
         </div>
       </div>
     </section>
