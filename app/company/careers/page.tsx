@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { Arrow, Card, Section, SectionHeading } from "@/components/ui";
 import { Faq, FinalCta } from "@/components/sections";
 import { PageHero } from "@/components/company/parts";
+import { CONTACT } from "@/lib/nav";
 
 export const metadata: Metadata = {
   title: "Careers",
   description: "Join Resilient Privacy: security engineers, SOC analysts, penetration testers and GRC consultants working as one team.",
 };
 
-const CAREERS_URL = "https://resilientprivacy.notion.site/Resilient-Privacy-Careers-24b57ead966880b9b019f3d65c3e3efe";
+const CAREERS_URL = "https://binary.so/resilient-privacy-inc";
 
 const VALUES = [
   ["Own the outcome", "You scope it, you do it, you see it through. Nobody hands work over a wall."],
@@ -17,8 +19,10 @@ const VALUES = [
   ["Keep learning", "Time for research, training and certifications is part of the job."],
 ];
 
-const STEPS = [
-  ["Apply", "Send your application through our careers page. A person reads every one."],
+const mail = <a href={`mailto:${CONTACT.careers}`} className="font-medium text-accent hover:text-accent-hover">{CONTACT.careers}</a>;
+
+const STEPS: [string, ReactNode][] = [
+  ["Apply", <>Send your application through our careers page, or email {mail}. A person reads every one.</>],
   ["Intro call", "30 minutes with the hiring manager about the role, your goals and how we work."],
   ["Practical exercise", "A short, paid or time-boxed task that looks like the real work. No trick questions."],
   ["Team conversation", "Meet the people you'd work with, ask anything, then get a decision quickly."],
@@ -94,9 +98,10 @@ export default function CareersPage() {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <SectionHeading id="faq-title" eyebrow="FAQ" title="Questions candidates ask." />
+            <p className="mt-6 text-[0.9375rem] leading-relaxed text-navy-600">Anything else? Email {mail}.</p>
           </div>
           <Faq className="lg:col-span-8" items={[
-            ["Don't see a role that fits?", "Send a short note and your résumé through the careers page. We keep strong profiles on file and reach out when a fit opens."],
+            ["Don't see a role that fits?", `Send a short note and your résumé through the careers page or to ${CONTACT.careers}. We keep strong profiles on file and reach out when a fit opens.`],
             ["Do you sponsor visas?", "It depends on the role. Ask us in your first call and we will give you a straight answer."],
             ["Is the work remote?", "It depends on the role, and each posting says so. Our headquarters is in Richardson, Texas."],
             ["Do I need certifications?", "No. Practical skill matters more than letters. We support certifications once you're here."],

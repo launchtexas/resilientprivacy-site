@@ -204,6 +204,8 @@ export const CONTACT = {
   email: "info@resilientprivacy.com",
   security: "security@resilientprivacy.com", // vulnerability reports, security policy
   legal: "legal@resilientprivacy.com", // legal, privacy and contract notices
+  careers: "career@resilientprivacy.com", // job applications (singular "career" is correct)
+  linkedin: "https://www.linkedin.com/company/resilientprivacy/",
   address: ["2100 N Greenville Ave", "Richardson, TX 75082", "United States"],
   copyright: "© Resilient Privacy Inc.",
   /** Human facts 2026-11-09 (v6). */

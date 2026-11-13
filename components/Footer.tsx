@@ -15,6 +15,7 @@ export function Footer() {
             <address className="mt-6 text-sm not-italic leading-relaxed">
               <a href={`mailto:${CONTACT.email}`} className="text-white hover:underline">{CONTACT.email}</a>
               {CONTACT.address.map((line) => <span key={line} className="block">{line}</span>)}
+              <a href={CONTACT.linkedin} target="_blank" rel="noopener noreferrer" aria-label="Resilient Privacy on LinkedIn (opens in a new tab)" className="mt-3 inline-block text-white hover:underline">LinkedIn</a>
             </address>
           </div>
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-9 lg:grid-cols-6">
