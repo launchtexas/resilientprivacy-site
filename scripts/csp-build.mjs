@@ -8,7 +8,7 @@ import { readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const OUT = "csp-hashes.json";
-const APP = ".next/server/app";
+const APP = ".next/server"; // Vercel writes prerendered pages as .body files, local builds as .html
 
 function inlineHashes() {
   const hashes = new Set();
@@ -16,7 +16,7 @@ function inlineHashes() {
     for (const e of readdirSync(dir, { withFileTypes: true })) {
       const p = join(dir, e.name);
       if (e.isDirectory()) walk(p);
-      else if (p.endsWith(".html"))
+      else if (p.endsWith(".html") || p.endsWith(".body"))
         for (const [, attrs, body] of readFileSync(p, "utf8").matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g))
           // src scripts are covered by 'self'; JSON-LD is data, never executed, so CSP ignores it.
           if (!/\bsrc=/.test(attrs) && !/application\/ld\+json/.test(attrs) && body)
@@ -41,4 +41,6 @@ if (missing.length) {
   console.error(`csp-build: ${missing.length} inline script(s) not in the CSP header (non-deterministic build?):\n${missing.join("\n")}`);
   process.exit(1);
 }
-console.log(`csp-build: ${first.length} inline script hashes in script-src, all covered.`);
+console.log(first.length
+  ? `csp-build: ${first.length} inline script hashes in script-src, all covered.`
+  : "csp-build: WARNING no prerendered HTML found; script-src falls back to 'unsafe-inline'.");

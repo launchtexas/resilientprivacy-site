@@ -13,7 +13,7 @@ if (!dev && !built && !process.env.CSP_PASS && process.argv.includes("build"))
 
 const csp = [
   "default-src 'self'",
-  `script-src 'self' ${dev ? "'unsafe-inline' 'unsafe-eval'" : (built?.hashes.join(" ") ?? "")}`.trim(),
+  `script-src 'self' ${dev ? "'unsafe-inline' 'unsafe-eval'" : (built?.hashes.length ? built.hashes.join(" ") : "'unsafe-inline'")}`.trim(),
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data:",
   "font-src 'self' data:",
