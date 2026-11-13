@@ -7,6 +7,7 @@ import { useEffect, useRef } from "react";
 import { ILLUSTRATIVE, cx } from "../ui";
 import { SOC_FLOW } from "../charts/data";
 import "./gateway.css";
+import { MockBrand } from "../mockup";
 
 type Kind = "pass" | "review" | "catch";
 type Icon = "msg" | "tool" | "bell";
@@ -171,7 +172,8 @@ function Stream({ cfg, className }: { cfg: Cfg; className?: string }) {
       <div ref={root} data-live="off" role="img" aria-label={cfg.label} className="gw @container">
         <div aria-hidden>
           <div className="gw-bar">
-            <span className="min-w-0 truncate font-mono text-[12px] text-navy-500">{cfg.app}</span>
+            <MockBrand nameClass="hidden @md:inline" />
+            <span className="mr-auto min-w-0 truncate font-mono text-[12px] text-navy-500">{cfg.app}</span>
             <span className="gw-live"><span className="gw-dot" />Example data</span>
           </div>
           <dl className="gw-stats">

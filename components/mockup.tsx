@@ -3,6 +3,18 @@
 import { useId, type ReactNode } from "react";
 import { Badge, cx, type Tone } from "./ui";
 
+/* ---------- Product brand ---------- */
+/** Kit symbol (unaltered, via <img>) + name for mockup chrome. `dark`: white symbol. `nameClass` hides the name on narrow frames. */
+export function MockBrand({ dark, nameClass = "hidden sm:inline", className }: { dark?: boolean; nameClass?: string; className?: string }) {
+  return (
+    <span className={cx("flex shrink-0 items-center gap-1.5", className)}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={`/brand/ResilientPrivacy_Symbol_${dark ? "White" : "Black"}.svg`} alt="" width={12} height={16} className="h-4 w-auto" />
+      <span className={cx("text-xs font-semibold tracking-[-0.01em] whitespace-nowrap", dark ? "text-white" : "text-navy-950", nameClass)}>Resilient Privacy</span>
+    </span>
+  );
+}
+
 /* ---------- App window frame ---------- */
 export function AppWindow({
   title,
@@ -26,7 +38,9 @@ export function AppWindow({
           <span className="size-2.5 rounded-full bg-line-strong" />
           <span className="size-2.5 rounded-full bg-line-strong" />
         </span>
-        <span className="mx-auto max-w-[60%] truncate rounded-chip bg-canvas px-3 py-0.5 font-mono text-micro text-navy-500 shadow-hairline">{title}</span>
+        {/* With a sidebar the brand lives there; the sidebar hides below md, so the title bar carries it until then. */}
+        <MockBrand className={sidebar ? "md:hidden" : undefined} />
+        <span className="mx-auto min-w-0 max-w-[60%] truncate rounded-chip bg-canvas px-3 py-0.5 font-mono text-micro text-navy-500 shadow-hairline">{title}</span>
         <span aria-hidden className="shrink-0 font-mono text-[10px] tracking-[0.04em] text-navy-400 uppercase">Example data</span>
       </div>
       <div aria-hidden className="flex">
@@ -40,6 +54,7 @@ export function AppWindow({
 export function AppSidebar({ items, active = 0 }: { items: string[]; active?: number }) {
   return (
     <div className="hidden w-48 shrink-0 flex-col gap-0.5 bg-navy-950 p-3 md:flex">
+      <MockBrand dark nameClass="" className="mb-3 px-1 pt-0.5" />
       <div className="mb-3 flex items-center gap-2 rounded-control bg-white/5 px-2.5 py-2">
         <span className="size-5 rounded-md bg-accent" />
         <span className="text-xs font-medium text-white">Example Corp</span>

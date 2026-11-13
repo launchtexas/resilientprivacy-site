@@ -6,6 +6,7 @@
 import { useEffect, useRef } from "react";
 import { cx } from "../ui";
 import { Check, Shield } from "./kit";
+import { MockBrand } from "../mockup";
 import "./graphics.css";
 
 export type MethodStep = [title: string, body: string];
@@ -59,6 +60,7 @@ export function AiAttackMethod({ steps, className }: { steps: MethodStep[]; clas
         <div aria-hidden>
           <div className="flex h-10 items-center gap-2.5 border-b border-line bg-mist px-3.5">
             <span className="flex shrink-0 gap-1">{[0, 1, 2].map((i) => <span key={i} className="size-2 rounded-full bg-line-strong" />)}</span>
+            <MockBrand nameClass="hidden @md:inline" />
             <span className="min-w-0 truncate font-mono text-micro text-navy-500">ai-red-team · support-agent</span>
             <span className="rp-stack ml-auto shrink-0">
               {["Mapping", "Attacking", "Attacking", "Attacking", "Retest passed"].map((s, i) => (

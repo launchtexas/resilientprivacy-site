@@ -2,6 +2,7 @@
 import type { CSSProperties, ReactNode } from "react";
 import { Scene, type Beat } from "../motion";
 import { cx } from "../ui";
+import { MockBrand } from "../mockup";
 import "./graphics.css";
 
 /** App-window frame. It is the scene root: `relative overflow-hidden` + a size container, so nothing escapes it at any width. */
@@ -12,6 +13,7 @@ export function Frame({ title, status, beats, label, dark, className, children }
         <span className="flex shrink-0 gap-1">
           {[0, 1, 2].map((i) => <span key={i} className={cx("size-2 rounded-full", dark ? "bg-white/15" : "bg-line-strong")} />)}
         </span>
+        <MockBrand dark={dark} nameClass="hidden @md:inline" />
         <span className={cx("min-w-0 truncate font-mono text-micro", dark ? "text-navy-300" : "text-navy-500")}>{title}</span>
         <span className="ml-auto shrink-0 font-mono text-[10px] tracking-[0.04em] text-navy-400 uppercase">Example data</span>
         {status && <span className="shrink-0">{status}</span>}
