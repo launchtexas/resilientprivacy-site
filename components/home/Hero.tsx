@@ -105,8 +105,8 @@ export function Hero() {
         </div>
 
         <div className="mx-auto mt-16 max-w-5xl text-center lg:mt-20">
-          <p className="text-sm text-navy-600">Expertise across the stack you already run</p>
-          <Marquee label="Expertise across the stack you already run" className="mt-6">
+          <p className="text-sm text-navy-600">Built for the tools your team already uses</p>
+          <Marquee label="Built for the tools your team already uses" className="mt-6">
             {PLATFORMS.map(([slug, name, wordmark]) => (
               <span key={slug} role="img" aria-label={name} className="flex h-7 shrink-0 items-center gap-2 text-navy-500 transition-colors hover:text-navy-700">
                 <span aria-hidden className={`h-full bg-current [mask-position:center] [mask-repeat:no-repeat] ${wordmark ? "w-24 [mask-size:cover]" : "w-7 [mask-size:contain]"}`} style={{ maskImage: `url(/logos/${slug}.svg)` }} />
