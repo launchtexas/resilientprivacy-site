@@ -1,7 +1,5 @@
-import Link from "next/link";
 import { CtaButtons } from "@/components/sections";
 import { Tabs } from "@/components/Tabs";
-import { Arrow, Badge, Button } from "@/components/ui";
 import { Marquee, Parallax } from "@/components/motion";
 import { MdrConsole } from "@/components/managed/mockups";
 import { ReportMockup } from "@/components/consulting/parts";
@@ -85,10 +83,7 @@ export function Hero() {
       </Parallax>
       <div className="container-rp relative pt-12 pb-16 lg:pt-20 lg:pb-20">
         <div className="mx-auto max-w-4xl text-center">
-          <Link href="/resources/blog/ai-agent-mcp-security" className="group inline-flex max-w-full items-center gap-2 rounded-full bg-canvas py-1 pr-3 pl-1 text-xs font-medium text-navy-700 shadow-card transition-shadow hover:shadow-lift">
-            <Badge tone="accent">Research</Badge> <span className="truncate">Securing AI agents and MCP tools</span> <Arrow />
-          </Link>
-          <h1 id="hero-title" className="mt-6 text-display font-semibold tracking-[-0.04em] text-balance text-navy-950">
+          <h1 id="hero-title" className="text-display font-semibold tracking-[-0.04em] text-balance text-navy-950">
             We red-team your AI <span className="text-accent">before the internet does.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lead text-navy-600 text-pretty">
