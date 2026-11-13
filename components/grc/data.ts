@@ -1,5 +1,6 @@
-// Copy and illustrative mockup data for the Risk & Compliance practice pages (routes stay under /grc).
-// Every number here is illustrative; pages caption it as illustrative.
+// Copy and example mockup data for the Risk & Compliance practice pages (routes stay under /grc).
+// Control IDs are the public ones (SOC 2 TSC 2017, ISO/IEC 27001:2022, NIST CSF 2.0, HIPAA, GDPR, DORA); numbers are example data and match
+// the rest of the site (SOC 2 = 82 of 89 passing, 92%; ISO = 70 of 88 applicable implemented, 79%). Pages caption it "Example data".
 
 export type Status = "pass" | "progress" | "gap" | "todo";
 export type GrcService = {
@@ -16,7 +17,7 @@ export type GrcService = {
     heading: string;
     stats: [string, string, string][]; // label, value, sub-line
     families: [string, number][];
-    controls: [string, string, string, Status][]; // id, control, owner, status
+    controls: [string, string, string, Status, string?][]; // id, control, owner, status, evidence file or framework mapping
   };
   steps: [string, string, string?][]; // title, body, artefact chip
   /** [eyebrow, title] over the steps; omitted = the readiness default (SOC 2, ISO 27001). */
@@ -39,13 +40,14 @@ export const GRC: Record<string, GrcService> = {
     mockup: {
       url: "app.resilientprivacy.com/grc/soc-2",
       heading: "SOC 2 Type II · Security, Availability",
-      stats: [["Controls passing", "71 / 82", "+9 this month"], ["Evidence collected", "88%", "312 items"], ["Open gaps", "4", "2 due this week"]],
+      stats: [["Controls passing", "82 / 89", "92% · 7 left"], ["Evidence collected", "88%", "312 items"], ["Open gaps", "3", "4 not yet tested"]],
       families: [["CC1 Control environment", 100], ["CC6 Logical access", 86], ["CC7 System operations", 92], ["CC8 Change management", 74], ["A1 Availability", 63]],
       controls: [
-        ["CC6.1", "MFA enforced for production access", "IT", "pass"],
-        ["CC6.3", "Quarterly access reviews", "Security", "progress"],
-        ["CC8.1", "Change approval before deploy", "Engineering", "pass"],
-        ["A1.2", "Backup restore test documented", "Infra", "gap"],
+        ["CC6.1", "MFA enforced for production access", "IT", "pass", "mfa_policy_export.json"],
+        ["CC6.3", "Quarterly access reviews", "Security", "progress", "access_review_q3.csv"],
+        ["CC7.2", "Security events monitored and triaged", "Managed SOC", "pass", "siem_alert_rules.json"],
+        ["CC8.1", "Change approval before deploy", "Engineering", "pass", "branch_protection_billing.json"],
+        ["A1.3", "Backup restore test documented", "Infra", "progress", "restore_job_log.txt · expires 6d"],
       ],
     },
     steps: [
@@ -80,10 +82,11 @@ export const GRC: Record<string, GrcService> = {
       stats: [["Annex A controls applicable", "88 / 93", "5 excluded with reason"], ["Implemented", "79%", "+11% in 30 days"], ["Nonconformities", "3", "1 major, 2 minor"]],
       families: [["A.5 Organizational", 84], ["A.6 People", 92], ["A.7 Physical", 100], ["A.8 Technological", 71], ["Clause 9 Evaluation", 58]],
       controls: [
-        ["A.5.9", "Inventory of information assets", "IT", "pass"],
-        ["A.5.23", "Cloud services security", "Platform", "progress"],
-        ["A.8.28", "Secure coding standard", "Engineering", "pass"],
-        ["9.2", "Internal audit programme", "Compliance", "todo"],
+        ["A.5.9", "Inventory of information assets", "IT", "pass", "asset_inventory_2026-11.csv"],
+        ["A.5.15", "Access control policy", "Security", "pass", "access_control_policy_v3.pdf"],
+        ["A.5.23", "Cloud services security", "Platform", "progress", "cloud_services_register.xlsx"],
+        ["A.8.16", "Monitoring activities", "Managed SOC", "progress", "siem_log_source_coverage.csv"],
+        ["Cl. 9.2", "Internal audit programme", "Compliance", "todo"],
       ],
     },
     steps: [
@@ -118,10 +121,10 @@ export const GRC: Record<string, GrcService> = {
       stats: [["Processing activities", "46", "38 documented"], ["DPIAs", "7", "2 in review"], ["Open data requests", "12", "1 due today"]],
       families: [["Records of processing", 83], ["Lawful basis and notices", 90], ["Data subject rights", 76], ["DPIAs", 58], ["Transfers and vendors", 69]],
       controls: [
-        ["GDPR 30", "Records of processing activities", "DPO", "progress"],
-        ["GDPR 35", "DPIA for customer analytics", "Product", "progress"],
-        ["CCPA 1798.120", "Do-not-sell-or-share link", "Web", "pass"],
-        ["GDPR 33", "72-hour breach notification runbook", "Legal", "gap"],
+        ["GDPR Art. 30", "Records of processing activities", "DPO", "progress", "ropa_2026-11.xlsx"],
+        ["GDPR Art. 35", "DPIA for customer analytics", "Product", "progress", "dpia_customer_analytics_v2.docx"],
+        ["CCPA §1798.120", "Do-not-sell-or-share link", "Web", "pass", "dns_link_footer.png"],
+        ["GDPR Art. 33", "72-hour breach notification runbook", "Legal", "gap"],
       ],
     },
     stepsHead: ["How the program runs", "From data discovery to a privacy program that runs itself."],
@@ -157,10 +160,10 @@ export const GRC: Record<string, GrcService> = {
       stats: [["Risks assessed", "34", "6 rated high"], ["Treatment plans", "28", "82% owned"], ["Residual risk", "−37%", "after planned controls"]],
       families: [["Identity and access", 81], ["Third parties", 64], ["Ransomware resilience", 72], ["Data protection", 88], ["AI models and data", 57]],
       controls: [
-        ["R-07", "Ransomware disrupts order processing", "COO", "progress"],
-        ["R-12", "Compromised vendor credentials", "Security", "gap"],
-        ["R-03", "Customer data exposed via API", "Engineering", "pass"],
-        ["R-24", "Customer data sent to an external LLM", "CTO", "todo"],
+        ["R-07", "Ransomware disrupts order processing", "COO", "progress", "CSF PR.DS-11 · RC.RP-01"],
+        ["R-12", "Compromised vendor credentials", "Security", "gap", "CSF GV.SC-07 · PR.AA-01"],
+        ["R-03", "Customer data exposed via API", "Engineering", "pass", "CSF PR.AA-05 · PR.DS-01"],
+        ["R-24", "Customer data sent to an external LLM", "CTO", "todo", "CSF ID.AM-07 · NIST AI RMF MAP 4.1"],
       ],
     },
     stepsHead: ["How the assessment runs", "Five steps from risk framing to a treatment plan."],
@@ -196,9 +199,9 @@ export const GRC: Record<string, GrcService> = {
       stats: [["Critical vendors", "18", "all assessed"], ["Assessments due", "9", "next 30 days"], ["Open findings", "23", "5 high"]],
       families: [["Tier 1 assessed", 100], ["Tier 2 assessed", 78], ["Contracts with security terms", 84], ["SOC 2 / ISO reports on file", 71], ["Offboarding completed", 92]],
       controls: [
-        ["V-001", "Payroll provider · Tier 1", "HR", "pass"],
-        ["V-014", "Analytics SDK · Tier 2", "Product", "gap"],
-        ["V-022", "Cloud backup · Tier 1", "IT", "progress"],
+        ["V-001", "Payroll provider · Tier 1", "HR", "pass", "soc2_type2_report_2026.pdf"],
+        ["V-014", "Analytics SDK · Tier 2", "Product", "gap", "security_questionnaire.xlsx · 3 high"],
+        ["V-022", "Cloud backup · Tier 1", "IT", "progress", "iso27001_certificate.pdf · bridge letter due"],
         ["V-109", "Marketing agency · Tier 3", "Marketing", "todo"],
       ],
     },
@@ -235,10 +238,10 @@ export const GRC: Record<string, GrcService> = {
       stats: [["Controls tested", "64", "of 64 in plan"], ["Effective", "57", "89% of tested"], ["Findings", "7", "1 high, 6 medium"]],
       families: [["Access management", 91], ["Change management", 83], ["IT operations", 94], ["Backup and recovery", 70], ["Vendor oversight", 76]],
       controls: [
-        ["ITGC-04", "Terminated users removed in 24h", "IT", "pass"],
-        ["ITGC-11", "Emergency changes reviewed", "Engineering", "gap"],
-        ["ITGC-17", "Restore test performed quarterly", "Infra", "progress"],
-        ["ITGC-21", "Privileged access recertified", "Security", "pass"],
+        ["ITGC-04", "Terminated users removed in 24h", "IT", "pass", "wp_itgc04_leaver_sample_25.xlsx"],
+        ["ITGC-11", "Emergency changes reviewed", "Engineering", "gap", "wp_itgc11_emergency_changes.xlsx"],
+        ["ITGC-17", "Restore test performed quarterly", "Infra", "progress", "restore_job_log.txt"],
+        ["ITGC-21", "Privileged access recertified", "Security", "pass", "wp_itgc21_admin_recert.xlsx"],
       ],
     },
     stepsHead: ["How the audit runs", "From audit plan to management letter."],
@@ -274,10 +277,11 @@ export const GRC: Record<string, GrcService> = {
       stats: [["Unified controls", "146", "mapped to 9 frameworks"], ["Reuse rate", "68%", "evidence used more than once"], ["Frameworks in scope", "5", "2 audits this year"]],
       families: [["HIPAA Security Rule", 81], ["PCI DSS v4.0", 66], ["NIST CSF 2.0", 88], ["CMMC Level 2", 54], ["DORA", 47]],
       controls: [
-        ["UC-012", "Encryption of data at rest", "Platform", "pass"],
-        ["UC-033", "Incident reporting within deadlines", "Security", "progress"],
-        ["UC-058", "ICT third-party register", "Procurement", "gap"],
-        ["UC-071", "AI system risk classification", "AI lead", "todo"],
+        ["UC-004", "Unique user IDs and MFA", "IT", "pass", "HIPAA §164.312(a)(2)(i) · CSF PR.AA-01 · SOC 2 CC6.1"],
+        ["UC-012", "Encryption of data at rest", "Platform", "pass", "HIPAA §164.312(a)(2)(iv) · PCI DSS 3.5.1 · CSF PR.DS-01"],
+        ["UC-033", "Incident reporting within deadlines", "Security", "progress", "DORA Art. 19 · CSF RS.CO-02"],
+        ["UC-058", "ICT third-party register", "Procurement", "gap", "DORA Art. 28(3)"],
+        ["UC-071", "AI system risk classification", "AI lead", "todo", "EU AI Act Art. 6 · NIST AI RMF MAP 1.1"],
       ],
     },
     stepsHead: ["How the mapping works", "From framework list to one control set that serves them all."],

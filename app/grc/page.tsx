@@ -179,10 +179,10 @@ function Showcase() {
                 <DataTable
                   columns={["Evidence", "Source", "Control", "Status"]}
                   rows={[
-                    ["MFA policy export", "Okta", "CC6.1", <Badge key="a" tone="ok" dot>Current</Badge>],
-                    ["Production change log", "GitHub", "CC8.1", <Badge key="b" tone="ok" dot>Current</Badge>],
-                    ["Incident case CASE-8812", "Managed SOC", "CC7.4", <Badge key="c" tone="ok" dot>Current</Badge>],
-                    ["Backup restore test", "Manual upload", "A1.2", <Badge key="d" tone="medium" dot>Expires 6d</Badge>],
+                    [<span key="e1" className="font-mono text-xs">mfa_policy_export.json</span>, "Okta", "CC6.1", <Badge key="a" tone="ok" dot>Current</Badge>],
+                    [<span key="e2" className="font-mono text-xs">branch_protection_billing.json</span>, "GitHub", "CC8.1", <Badge key="b" tone="ok" dot>Current</Badge>],
+                    [<span key="e3" className="font-mono text-xs">CASE-8812_timeline.pdf</span>, "Managed SOC", "CC7.4", <Badge key="c" tone="ok" dot>Current</Badge>],
+                    [<span key="e4" className="font-mono text-xs">restore_job_log.txt</span>, "AWS Backup", "A1.3", <Badge key="d" tone="medium" dot>Expires 6d</Badge>],
                   ]}
                 />
               </Panel>

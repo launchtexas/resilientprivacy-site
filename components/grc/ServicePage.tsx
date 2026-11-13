@@ -45,9 +45,9 @@ export function ControlMockup({ m, label }: { m: GrcService["mockup"]; label: st
             <DataTable
               className="-mx-3"
               columns={["ID", "Control", "Owner", "Status"]}
-              rows={m.controls.map(([id, c, o, s]) => [
-                <span key="id" className="font-mono text-xs">{id}</span>,
-                c,
+              rows={m.controls.map(([id, c, o, s, ev]) => [
+                <span key="id" className="font-mono text-xs whitespace-nowrap">{id}</span>,
+                <span key="c">{c}{ev && <span className="block font-mono text-micro text-navy-500">{ev}</span>}</span>,
                 o,
                 <Badge key="s" tone={STATUS[s][0]} dot>{STATUS[s][1]}</Badge>,
               ])}
