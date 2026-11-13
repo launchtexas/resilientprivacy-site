@@ -40,6 +40,7 @@ const ICON: Record<Icon, string> = {
   tool: '<path d="M6 4 2.5 8 6 12M10 4l3.5 4-3.5 4" />',
   bell: '<path d="M4 11V7a4 4 0 0 1 8 0v4l1 1.5H3zM6.5 14h3" />',
 };
+// Safe for innerHTML: only ever built from the static ICON constants above, never from data.
 const svg = (i: Icon) => `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="gw-ico">${ICON[i]}</svg>`;
 const ROWS = 4;
 const fmt = (n: number) => n.toLocaleString("en-US");
@@ -86,7 +87,7 @@ function Stream({ cfg, className }: { cfg: Cfg; className?: string }) {
       c.innerHTML = svg(icon);
       const t = document.createElement("span"); t.className = "truncate"; t.textContent = text; c.append(t);
       if (kind === "catch") { const s = document.createElement("span"); s.className = "gw-stamp"; s.textContent = cfg.stamp; c.append(s); }
-      if (kind === "review") { const s = document.createElement("span"); s.className = "gw-stamp gw-stamp-review"; s.innerHTML = `<span class="gw-av">${cfg.review[1]}</span>${cfg.review[0]}`; c.append(s); }
+      if (kind === "review") { const s = document.createElement("span"); s.className = "gw-stamp gw-stamp-review"; const av = document.createElement("span"); av.className = "gw-av"; av.textContent = cfg.review[1]; s.append(av, cfg.review[0]); c.append(s); }
       c.addEventListener("animationend", (e) => { if (e.target === c) c.remove(); });
       lane.append(c);
     }
