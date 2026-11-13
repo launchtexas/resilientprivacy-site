@@ -153,7 +153,8 @@ export default function CompanyPage() {
             <p className="mt-8 text-[0.9375rem] leading-relaxed text-navy-600">
               Want to join us? See <Link href="/company/careers" className="font-medium text-accent hover:text-accent-hover">open roles</Link> or email <a href={`mailto:${CONTACT.careers}`} className="font-medium text-accent hover:text-accent-hover">{CONTACT.careers}</a>.
             </p>
-            <a href={CONTACT.linkedin} target="_blank" rel="noopener noreferrer" aria-label="Resilient Privacy on LinkedIn (opens in a new tab)" className="group mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-hover">
+            <a href={CONTACT.linkedin} target="_blank" rel="noopener noreferrer" aria-label="Resilient Privacy on LinkedIn (opens in a new tab)" className="group mt-4 inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-accent-hover">
+              <Image src="/logos/linkedin-in-bug.png" alt="" width={28} height={24} unoptimized />
               Follow us on LinkedIn <Arrow />
             </a>
           </div>

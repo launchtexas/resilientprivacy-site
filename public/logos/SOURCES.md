@@ -22,3 +22,12 @@ Simple Icons asks users to read its disclaimer: https://github.com/simple-icons/
 
 ## Left out
 AWS, Microsoft Azure, Microsoft 365 / Sentinel, CrowdStrike and OpenAI are not in Simple Icons (removed or never added at the brands' request), so there is no clean CC0 source. Their own trademark rules restrict logo use to licensed partners or need permission. Add them only from an official kit with written OK.
+
+## LinkedIn
+
+| File | Brand | Source | Brand guidelines |
+|---|---|---|---|
+| linkedin-in-bug.png | LinkedIn "In" bug, blue (on white, /company) | `LI-In-Bug.png` from https://content.linkedin.com/content/dam/me/business/en-us/amp/xbu/linkedin-revised-brand-guidelines/logos/in-logo.zip (linked from https://brand.linkedin.com/downloads), downloaded 2026-11-12 | https://brand.linkedin.com/policies |
+| linkedin-in-bug-white.png | LinkedIn "In" bug, white (on navy-950 footer) | `InBug-White.png` from the same in-logo.zip | https://brand.linkedin.com/policies |
+
+PNG files are byte-for-byte copies from the zip (not recoloured, cropped or resized); only the displayed size is set in code. Used only to link to RP's LinkedIn company page.

@@ -43,6 +43,7 @@ export default function PrivacyPage() {
             <li>Authorities, when required by law or to protect rights, property or safety.</li>
             <li>A buyer or successor in a merger, acquisition or sale of assets, subject to this policy.</li>
           </ul>
+          <p>For example, when you submit our contact or demo request form, we use Resend (Resend, Inc.) to deliver your submission to our team by email. Resend processes that information on our behalf.</p>
         </>],
         ["Cookies", <p>This website does not use analytics, advertising or tracking cookies. If it sets a cookie, that cookie is strictly necessary for the site to work, so there is nothing to opt out of. You can still block or delete cookies in your browser settings. If we ever add optional cookies, we will update this policy and ask for your consent where the law requires it.</p>],
         ["Data retention", <p>We keep personal information only as long as needed for the purposes above, including legal, accounting and reporting requirements, then delete or de-identify it. Our standard periods: inquiries, 2 years after our last contact with you; job applications, 1 year (longer where local law requires); customer and billing records, the contract term plus 7 years for tax purposes; server logs, 30 to 90 days. You can ask us to delete your information at any time, and we will unless the law requires us to keep it.</p>],
