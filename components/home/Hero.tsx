@@ -34,7 +34,7 @@ function PlatformConsole() {
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
           <StatTile label="Open critical findings" value="7" delta="−42% vs last week" good spark={[14, 13, 12, 12, 10, 9, 7]} />
           <StatTile label="APIs monitored" value="1,284" delta="+36 discovered" good spark={[1180, 1200, 1210, 1236, 1250, 1270, 1284]} />
-          <StatTile label="SOC 2 readiness" value="92%" delta="4 controls left" good className="hidden lg:block" />
+          <StatTile label="SOC 2 readiness" value="92%" delta="7 of 89 controls left" good className="hidden lg:block" />
         </div>
         <div className="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-5">
           <Panel title="Alerts triaged" action={<Legend items={[["bg-accent", "This week"], ["bg-navy-300", "Last week"]]} />} className="lg:col-span-3">

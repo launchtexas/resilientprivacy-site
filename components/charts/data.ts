@@ -88,9 +88,10 @@ export const CONTROLS = {
   title: "SOC 2 controls passing",
   desc: "Automated control tests in the last run.",
   segments: [
-    { label: "Passing", value: 74, color: "#138a52" },
-    { label: "Failing", value: 6, color: SEV.critical },
-    { label: "Not yet tested", value: 9, color: INK.soft },
+    // 82 of 89 = 92%, the SOC 2 readiness the hero, platform and compliance scenes show.
+    { label: "Passing", value: 82, color: "#138a52" },
+    { label: "Failing", value: 3, color: SEV.critical },
+    { label: "Not yet tested", value: 4, color: INK.soft },
   ],
 };
 

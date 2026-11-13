@@ -41,7 +41,7 @@ export const AI_SERVICES: Service[] = [
         id: "AI-0115-01",
         title: "Ticket text can make the agent issue refunds",
         sev: "critical",
-        score: "OWASP LLM01 · LLM06",
+        score: "LLM01:2025 · LLM06:2025 · AML.T0051",
         asset: "support-agent · tool: issue_refund",
         summary: "Instructions hidden in a customer ticket are followed by the agent, which calls issue_refund for any order without a human check or amount limit.",
         evidenceLabel: "Transcript excerpt",
