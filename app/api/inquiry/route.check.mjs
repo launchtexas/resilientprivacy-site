@@ -46,12 +46,20 @@ assert.equal(sent.length, 1);
 assert.equal(sent[0].url, "https://api.resend.com/emails");
 assert.equal(sent[0].init.headers.Authorization, "Bearer re_test_dummy");
 const mail = JSON.parse(sent[0].init.body);
-assert.deepEqual(mail.to, ["info@resilientprivacy.com"]);
+assert.deepEqual(mail.to, ["vishva@resilientprivacy.com"]);
 assert.equal(mail.from, "Website <no-reply@resilientprivacy.com>");
 assert.equal(mail.reply_to, "ann@acme.com");
-assert.equal(mail.subject, "Website inquiry: AI security");
-assert.match(mail.text, /^Full name: AnnBcc: x@evil.test\nWork email: ann@acme.com\n/);
+assert.equal(mail.subject, "Website Inquiry from AnnBcc: x@evil.test");
+assert.match(mail.text, /^Form: Website inquiry: AI security\nFull name: AnnBcc: x@evil.test\nWork email: ann@acme.com\n/);
 assert.ok(!("html" in mail));
+
+// Demo form: same subject shape, form type in the body.
+const demo = { form: "demo", name: "Bo", email: "bo@acme.com", company: "Acme", size: "1–50", interest: "All of it", agree: true };
+assert.equal((await post(demo)).status, 200);
+const dm = JSON.parse(sent[1].init.body);
+assert.equal(dm.subject, "Website Inquiry from Bo");
+assert.equal(dm.reply_to, "bo@acme.com");
+assert.match(dm.text, /^Form: Demo request\n/);
 
 // Resend failure: generic 502, no internal detail.
 globalThis.fetch = async () => new Response("boom", { status: 500 });

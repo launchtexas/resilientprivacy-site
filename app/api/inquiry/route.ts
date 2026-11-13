@@ -58,17 +58,18 @@ export async function POST(req: Request) {
   const key = process.env.RESEND_API_KEY;
   if (!key) return json(503, { ok: false, fallback: "mailto" }); // Resend not set up yet: the client opens the email app
 
-  const { subject, body } = compose(form.subject, form.fields, data);
+  const { subject: kind, body } = compose(form.subject, form.fields, data); // kind = form type + topic, e.g. "Demo request"
+  const name = clean(data.name, false, 120);
   try {
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         from: process.env.INQUIRY_FROM || "Website <no-reply@resilientprivacy.com>",
-        to: [process.env.INQUIRY_TO || "info@resilientprivacy.com"],
+        to: [process.env.INQUIRY_TO || "vishva@resilientprivacy.com"],
         reply_to: clean(data.email, false, 254),
-        subject,
-        text: body,
+        subject: name ? `Website Inquiry from ${name}` : "Website Inquiry",
+        text: `Form: ${kind}\n${body}`, // keeps contact vs demo visible now the subject is uniform
       }),
       signal: AbortSignal.timeout(10_000),
     });
