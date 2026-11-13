@@ -45,7 +45,7 @@ type Leader = { name: string; title: string; bio?: string; photo?: string; w?: n
 const LEADERS: Leader[] = [
   { name: "Mitt Mehta", title: "CFO & COO", bio: "Serial entrepreneur, investor and advisor bringing 15+ years of experience.", photo: "/team/mitt-mehta.jpg", linkedin: "https://www.linkedin.com/in/mitt-mehta/", w: 960, h: 1280 },
   { name: "Siddhi Patel", title: "Chief Human Resources Officer", bio: "15+ years of enterprise experience as CHRO and Chief Administrative Officer (CAO).", photo: "/team/siddhi-patel.png", linkedin: "https://www.linkedin.com/in/siddhipatel772", w: 1183, h: 1329 },
-  { name: "Vishwaa Shah", title: "Chief Product Officer", photo: "/team/vishwaa-shah.png", w: 1254, h: 1254, linkedin: "https://www.linkedin.com/in/vishwaa-shah" },
+  { name: "Vishwaa Shah", title: "Chief Product Officer", bio: "Product builder with 5+ years of experience in product development, architecting platforms from the core up.", photo: "/team/vishwaa-shah.png", w: 1254, h: 1254, linkedin: "https://www.linkedin.com/in/vishwaa-shah" },
   { name: "Aditya Desai", title: "Board Member & Advisor", bio: "Serves on the Resilient Privacy board and advises its leadership.", photo: "/team/aditya-desai.png", w: 1254, h: 1254 },
 ];
 
