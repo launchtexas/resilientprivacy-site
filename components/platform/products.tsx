@@ -47,17 +47,16 @@ const Head = ({ title, sub, right }: { title: string; sub: string; right?: React
     {right}
   </div>
 );
+// Neutral scope label (mode, filter, poll interval) in place of a pulsing "live" badge: the data is an example.
 const Live = ({ children }: { children: ReactNode }) => (
-  <span className="inline-flex items-center gap-1.5 rounded-full bg-canvas px-2.5 py-1 text-micro font-medium text-navy-700 shadow-card">
-    <span className="pulse-dot size-1.5 rounded-full bg-accent" /> {children}
-  </span>
+  <span className="inline-flex items-center rounded-control border border-line bg-canvas px-2 py-0.5 font-mono text-micro text-navy-600">{children}</span>
 );
 
 /* ---------------------------------------------------------------- mockups */
 const shieldMock = (
   <AppWindow title="app.resilientprivacy.com/apis" label="APIWall API inventory: endpoint, shadow API, sensitive endpoint and blocked request counts, attacks blocked by type, and a table of risky endpoints." sidebar={sidebar(1)}>
     <Scene beats={[900, 2600, 3400]} className="bg-mist p-4 sm:p-5">
-      <Head title="API inventory" sub="14 gateways · 3 clusters · last 24h" right={<Live>Inline protection on</Live>} />
+      <Head title="API inventory" sub="14 gateways · 3 clusters · last 24h" right={<Live>Mode: inline block ▾</Live>} />
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <StatTile label="Endpoints" value="1,284" delta="+36 discovered" good spark={[1180, 1200, 1210, 1236, 1250, 1270, 1284]} />
         <StatTile label="Shadow APIs" value={<Swap steps={[["23", undefined, 1], ["24", 1]]} />} delta={<Swap steps={[["+4 this week", undefined, 1], ["+5 this week", 1]]} />} />
@@ -66,13 +65,15 @@ const shieldMock = (
       </div>
       <div className="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-5">
         <Panel title="Attacks blocked by type" className="lg:col-span-2">
-          <Bars rows={[["BOLA / IDOR", 6420], ["Credential stuffing", 5110], ["Scraping bots", 3870], ["Injection", 1940], ["Mass assignment", 860]]} />
+          <Bars rows={[["API1 BOLA / IDOR", 6420], ["API2 Credential stuffing", 5110], ["API6 Scraping bots", 3870], ["API8 Injection", 1940], ["API3 Mass assignment", 860]]} />
         </Panel>
         <Panel title="Endpoints at risk" action={<span className="text-micro font-medium text-accent">Export</span>} className="lg:col-span-3">
           <DataTable
             className="-mx-3"
             columns={["Endpoint", "Data", "Auth", "Risk"]}
             rowAt={[1]}
+            sort={3}
+            total={1284}
             rows={[
               [<span key="n" className="flex flex-col items-start gap-1">{code("GET /v1/users/export")}<Badge tone="medium">Shadow</Badge></span>, "PII", <Swap steps={[[<Badge key="x" tone="critical">None</Badge>, undefined, 2], [<Badge key="y" tone="ok">Blocked</Badge>, 2]]} />, <Progress key="p0" value={88} tone="bg-critical" />],
               [code("GET /v2/admin/users"), "PII", <Badge key="a" tone="critical">None</Badge>, <Progress key="p" value={94} tone="bg-critical" />],
@@ -121,7 +122,7 @@ const veilMock = (
 const sentinelMock = (
   <AppWindow title="app.resilientprivacy.com/detections" label="AlertRank detections: open incidents, response time, alerts suppressed and auto-contained counts, an alerts versus incidents trend, an AI incident summary and a ranked incident queue." sidebar={sidebar(3)}>
     <Scene beats={[1000, 2000, 3000]} className="bg-mist p-4 sm:p-5">
-      <Head title="Detections" sub="Endpoint · identity · cloud · SaaS" right={<Live>Correlating</Live>} />
+      <Head title="Detections" sub="Endpoint · identity · cloud · SaaS" right={<Live>Status: Open ▾</Live>} />
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <StatTile label="Open incidents" value={<Swap steps={[["9", undefined, 3], ["8", 3]]} />} delta={<Swap steps={[["−5 vs yesterday", undefined, 3], ["−6 vs yesterday", 3]]} />} good spark={[16, 15, 13, 14, 12, 11, 9]} />
         <StatTile label="Mean time to respond" value="11m" delta="−3m" good spark={[18, 16, 17, 14, 13, 12, 11]} />
@@ -129,10 +130,10 @@ const sentinelMock = (
         <StatTile label="Auto-contained" value={<Swap steps={[["31", undefined, 3], ["32", 3]]} />} delta="by approved playbooks" good className="hidden lg:block" />
       </div>
       <div className="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-5">
-        <Panel title="INC-2304 · Token theft" action={<Swap steps={[[<Badge key="i" tone="high" dot>Investigating</Badge>, undefined, 3], [<Badge key="c" tone="ok" dot>Contained</Badge>, 3]]} />} className="lg:col-span-2">
+        <Panel title="INC-2304 · Session cookie replay (T1550.004)" action={<Swap steps={[[<Badge key="i" tone="high" dot>Investigating</Badge>, undefined, 3], [<Badge key="c" tone="ok" dot>Contained</Badge>, 3]]} />} className="lg:col-span-2">
           <div className="rounded-control bg-accent-soft p-3 text-xs leading-relaxed text-accent-ink">
             <p className="mb-1 font-mono text-micro tracking-[0.08em] uppercase">Why this ranks first</p>
-            A session token for a finance admin was replayed from a new country 4 minutes after a phishing click. The account can approve payments.
+            The session cookie of finance-admin@example.com was replayed from 198.51.100.9 four minutes after a phishing click (T1566.002). The account can approve payments.
           </div>
           <ul className="mt-3 space-y-1.5 text-xs text-navy-700">
             <li><Swap steps={[["→ Revoke sessions and reset MFA", undefined, 1], [<span className="text-ok-ink">✓ Revoke sessions and reset MFA</span>, 1]]} /></li>
@@ -169,7 +170,7 @@ const atlasMock = (
         </Panel>
         <Panel title="Validated attack path" action={<Swap steps={[[<Badge key="e" tone="critical">Exploitable</Badge>, undefined, 5], [<Badge key="f" tone="ok">Path closed</Badge>, 5]]} />} className="md:col-span-3">
           <ol className="flex flex-col gap-2 text-xs sm:flex-row sm:items-center">
-            {[["Internet", "entry"], ["vpn.example.com", "CVE, exploit public"], ["jump-01", "shared local admin"], ["prod-db", "customer PII"]].map(([n, d], i, a) => (
+            {[["Internet", "203.0.113.0/24"], ["vpn.example.com", "CVE-2024-21762 · CISA KEV"], ["jump-01.internal", "T1078.003 shared local admin"], ["prod-db-01.internal", "customer PII"]].map(([n, d], i, a) => (
               <li key={n} data-at={i + 1} className="rp-slide flex items-center gap-2 sm:flex-1">
                 <div className="relative flex-1 rounded-control bg-critical-soft px-3 py-2">
                   <span data-at="5" className="absolute inset-0 rounded-control bg-ok-soft" />
@@ -185,10 +186,12 @@ const atlasMock = (
           <DataTable
             className="-mx-3"
             columns={["Asset", "Issue", "Severity", "Owner"]}
+            sort={2}
+            total={61}
             rows={[
-              ["vpn.example.com", "Outdated SSL VPN, known exploit", <Swap steps={[[<Badge key="c" tone="critical">Critical</Badge>, undefined, 5], [<Badge key="c2" tone="ok">Fixed</Badge>, 5]]} />, "Infra"],
-              ["staging-k8s", "Dashboard exposed without auth", <Badge key="h" tone="high">High</Badge>, "Platform"],
-              ["prod-exports", "Public bucket listing", <Badge key="h2" tone="high">High</Badge>, "Data"],
+              ["vpn.example.com", "CVE-2024-21762 FortiOS SSL VPN, CVSS 9.8", <Swap steps={[[<Badge key="c" tone="critical">Critical</Badge>, undefined, 5], [<Badge key="c2" tone="ok">Fixed</Badge>, 5]]} />, "Infra"],
+              ["staging-k8s", "K8s dashboard without auth · CWE-306", <Badge key="h" tone="high">High</Badge>, "Platform"],
+              ["prod-exports", "S3 ListBucket allowed to * · CWE-284", <Badge key="h2" tone="high">High</Badge>, "Data"],
             ]}
           />
         </Panel>
@@ -200,7 +203,7 @@ const atlasMock = (
 const cloudMock = (
   <AppWindow title="app.resilientprivacy.com/cloud" label="Cloud posture view: misconfigurations, exposed workloads, risky identities and infrastructure-as-code findings, a per-account benchmark table, and pull-request fix suggestions." sidebar={sidebar(5)}>
     <Scene beats={[900, 2200, 3500]} className="bg-mist p-4 sm:p-5">
-      <Head title="Cloud posture" sub="AWS · Azure · GCP · 212 accounts and projects" right={<Live>Scanning continuously</Live>} />
+      <Head title="Cloud posture" sub="AWS · Azure · GCP · 212 accounts and projects" right={<Live>Benchmark: CIS AWS 3.0 ▾</Live>} />
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <StatTile label="Misconfigurations" value={<Swap steps={[["146", undefined, 3], ["145", 3]]} />} delta={<Swap steps={[["−31 this week", undefined, 3], ["−32 this week", 3]]} />} good spark={[220, 205, 198, 180, 171, 160, 146]} />
         <StatTile label="Internet-exposed workloads" value="12" delta="3 with critical CVEs" />
@@ -212,11 +215,13 @@ const cloudMock = (
           <DataTable
             className="-mx-3"
             columns={["Account", "Cloud", "Critical", "CIS benchmark"]}
+            sort={2}
+            total={212}
             rows={[
-              ["prod-core", "AWS", <Swap steps={[[<Badge key="a" tone="critical">4</Badge>, undefined, 3], [<Badge key="a2" tone="critical">3</Badge>, 3]]} />, <Progress key="p1" value={82} />],
-              ["payments", "AWS", <Badge key="b" tone="high">2</Badge>, <Progress key="p2" value={88} />],
-              ["data-lake", "GCP", <Badge key="c" tone="critical">3</Badge>, <Progress key="p3" value={71} />],
-              ["corp-it", "Azure", <Badge key="d" tone="ok">0</Badge>, <Progress key="p4" value={94} />],
+              [code("prod-core · 111122223333"), "AWS", <Swap steps={[[<Badge key="a" tone="critical">4</Badge>, undefined, 3], [<Badge key="a2" tone="critical">3</Badge>, 3]]} />, <Progress key="p1" value={82} />],
+              [code("payments · 444455556666"), "AWS", <Badge key="b" tone="high">2</Badge>, <Progress key="p2" value={88} />],
+              [code("example-data-lake"), "GCP", <Badge key="c" tone="critical">3</Badge>, <Progress key="p3" value={71} />],
+              [code("corp-it-sub"), "Azure", <Badge key="d" tone="ok">0</Badge>, <Progress key="p4" value={94} />],
             ]}
           />
         </Panel>
@@ -244,7 +249,7 @@ const cloudMock = (
 const assureMock = (
   <AppWindow title="app.resilientprivacy.com/compliance" label="ComplyLoop compliance view: framework readiness, controls passing, evidence collected automatically, and a control table with evidence source and status." sidebar={sidebar(6)}>
     <Scene beats={[1200, 2800]} className="bg-mist p-4 sm:p-5">
-      <Head title="Compliance" sub="Audit window opens in 41 days" right={<Badge tone="ok" dot>Trust center live</Badge>} />
+      <Head title="Compliance" sub="Audit window opens in 41 days" right={<Live>Period: 2026-04-01 → 2026-12-31</Live>} />
       <div className="grid grid-cols-1 gap-3 lg:grid-cols-5">
         <Panel title="Framework readiness" className="lg:col-span-2">
           <ul className="space-y-3.5">
@@ -264,9 +269,9 @@ const assureMock = (
               className="-mx-3"
               columns={["Control", "Evidence from", "Status"]}
               rows={[
-                ["Access reviews (CC6.2)", "Okta", <Swap key="a" steps={[[<Badge key="a0" tone="high" dot>Overdue</Badge>, undefined, 1], [<Badge key="a1" tone="accent" dot>Collecting</Badge>, 1, 2], [<Badge key="a2" tone="ok" dot>Passing</Badge>, 2]]} />],
-                ["Encryption at rest (CC6.1)", "AWS", <Badge key="b" tone="ok" dot>Passing</Badge>],
-                ["Vendor assessments (CC9.2)", "Manual", <Badge key="c" tone="medium" dot>Due in 9d</Badge>],
+                ["CC6.3 · A.5.18 Access reviews", "Okta", <Swap key="a" steps={[[<Badge key="a0" tone="high" dot>Overdue</Badge>, undefined, 1], [<Badge key="a1" tone="accent" dot>Collecting</Badge>, 1, 2], [<Badge key="a2" tone="ok" dot>Passing</Badge>, 2]]} />],
+                ["CC6.1 · A.8.24 Encryption at rest", "AWS KMS", <Badge key="b" tone="ok" dot>Passing</Badge>],
+                ["CC9.2 · A.5.19 Vendor assessments", "Manual upload", <Badge key="c" tone="medium" dot>Due in 9d</Badge>],
               ]}
             />
           </Panel>
