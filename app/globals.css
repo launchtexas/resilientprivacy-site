@@ -145,3 +145,6 @@
   background-image: radial-gradient(var(--color-line-strong) 1px, transparent 1px);
   background-size: 22px 22px;
 }
+
+/* Tables ignore width:1px, so a screen-reader-only table would still widen the page on narrow phones. */
+table.sr-only { display: block; }
